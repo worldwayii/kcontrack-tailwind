@@ -19,6 +19,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.5.6",
         "laravel-mix": "^6.0.49"
     }
 }
