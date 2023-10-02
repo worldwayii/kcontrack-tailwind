@@ -20,6 +20,6 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/company/register/step/1', [AuthController::class, 'registerStepOne'])->name('register.one');
-Route::post('/company/register/step/1', [AuthController::class, 'postStepTwo'])->name('register.one.post');
+Route::post('/company/register/step/1', [AuthController::class, 'postStepOne'])->name('register.one.post');
 Route::get('/company/register/step/2', [AuthController::class, 'registerStepTwo'])->name('register.two');
 Route::post('/company/register/step/2', [AuthController::class, 'postStepTwo'])->name('register.two.post');

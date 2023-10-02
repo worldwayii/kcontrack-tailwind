@@ -28,67 +28,79 @@
             <div class="flex flex-col w-full mb-5">
                 <span class="text-black-10 text-xs font-semibold mb-1">What is your business name</span>
                 <input name="name" value="{{ old('name') }}" class="p-4  border-[0.5px] rounded-lg outline-none border-gray-10 focus:border-brand-0"
-                        placeholder="What is your company's name"
-                />
+                        placeholder="What is your company's name" required/>
                 @error('name')
-                <div class="text-red-500">{{ $message }}</div>
+                    <div class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </div>
                 @enderror
             </div>
             <div class="flex flex-col w-full mb-5">
                 <span class="text-black-10 text-xs font-semibold mb-1">Business description</span>
                 <input name="description" value="{{ old('description') }}" class="p-4 border-[0.5px] rounded-lg outline-none border-gray-10 focus:border-brand-0 "
-                       placeholder='What does your business do?'/>
+                       placeholder='What does your business do?' required/>
                 @error('description')
-                <div class="text-red-500">{{ $message }}</div>
+                    <div class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </div>
                 @enderror
             </div>
             <div class="flex flex-col mb-5">
                 <span class="text-black-10 text-xs font-semibold mb-1">Business category</span>
-                <select name="category_id" class="p-5 rounded-lg border-gray-10 bg-white-0 outline-none focus:border-brand-0 border-[0.5px]">
+                <select name="category" class="p-5 rounded-lg border-gray-10 bg-white-0 outline-none focus:border-brand-0 border-[0.5px]" required>
                     <option value="" disabled selected>Please select a category</option>
                     @foreach(App\Enums\Category::cases() as $category)
-                        <option value="{{ $category->value }}" {{ old('category_id') == $category ? 'selected' : '' }}>
+                        <option value="{{ $category->value }}" {{ old('category') == $category->value ? 'selected' : '' }}>
                             {{ $category->label() }}
                         </option>
                     @endforeach
                 </select>
-                @error('category_id')
-                <div class="text-red-500">{{ $message }}</div>
+                @error('category')
+                    <div class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </div>
                 @enderror
             </div>
             <label class="ext-black-10 text-xs font-semibold mb-1">How many workers do you have?</label>
             <div class=" flex justify-between mb-10">
                 <div
                     class=" w-[65px] flex  items-center space-x-1 p-1 bg-gray-30 rounded-md cursor-pointer border-gray-0 text-xs text-black-0 font-medium hover:bg-brand-10 border-[0.5px]">
-                    <input name="no_of_staff" value="1-5" type="radio" />
+                    <input name="staff_size" value="1-5" type="radio" />
                     <span>1 - 5</span>
                 </div>
                 <div
                     class=" w-[65px] flex  items-center space-x-1 p-1 bg-gray-30 rounded-md cursor-pointer border-gray-0 text-xs text-black-0 font-medium hover:bg-brand-10 border-[0.5px]">
-                    <input name="no_of_staff" value="6 - 10" type="radio" />
+                    <input name="staff_size" value="6 - 10" type="radio" />
                     <span>6 - 10</span>
                 </div>
                 <div
                     class=" w-[75px] flex   items-center space-x-1 p-1 bg-gray-30 rounded-md cursor-pointer border-gray-0 text-xs text-black-0 font-medium hover:bg-brand-10 border-[0.5px]">
-                    <input name="no_of_staff" value="11 - 19" type="radio" />
+                    <input name="staff_size" value="11 - 19" type="radio" />
                     <span>11 - 19</span>
                 </div>
                 <div
                     class=" w-[75px] flex  items-center space-x-1 p-1 bg-gray-30 rounded-md cursor-pointer border-gray-0 text-xs text-black-0 font-medium hover:bg-brand-10 border-[0.5px]">
-                    <input name="no_of_staff" value="20 - 29" type="radio" />
+                    <input name="staff_size" value="20 - 29" type="radio" />
                     <span>20 - 29</span>
                 </div>
                 <div
                     class=" w-[75px] flex  items-center space-x-1 p-1 bg-gray-30 rounded-md cursor-pointer border-gray-0 text-xs text-black-0 font-medium hover:bg-brand-10 border-[0.5px]">
-                    <input name="no_of_staff" value="30 - 50" type="radio" />
+                    <input name="staff_size" value="30 - 50" type="radio" />
                     <span>30 - 50</span>
                 </div>
 
                 <div
                     class=" w-[55px] flex items-center space-x-1 p-1 bg-gray-30 rounded-md cursor-pointer border-gray-0 text-xs text-black-0 font-medium hover:bg-brand-10 border-[0.5px]">
-                    <input name="no_of_staff" value="50+" type="radio" />
+                    <input name="staff_size" value="50+" type="radio" />
                     <span>50+</span>
                 </div>
+            </div>
+            <div class="mb-5 mt-2">
+                @error('staff_size')
+                     <div class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                     </div>
+                @enderror
             </div>
 
             <button
@@ -110,7 +122,7 @@
 <div
     class="w-[49%] bg-auth bg-no-repeat bg-cover h-[95vh] rounded-3xl m-5 md:flex flex-col justify-end items-center  hidden">
     <div class="bg-white-10 m-5 py-2 px-4 rounded-full">
-        <Text class="text-gray-10 text-lg font-medium">Create an account for your company</Text>
+        <span class="text-gray-10 text-lg font-medium">Create an account for your company</span>
     </div>
 </div>
 </body>

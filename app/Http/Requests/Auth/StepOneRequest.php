@@ -23,7 +23,7 @@ class StepOneRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'category_id' => 'required',
+            'category' => 'required',
             'description' => 'required',
             'staff_size' => 'required|string',
         ];

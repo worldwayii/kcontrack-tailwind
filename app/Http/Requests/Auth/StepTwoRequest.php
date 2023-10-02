@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\CanadianPostalCode;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StepTwoRequest extends FormRequest
@@ -22,7 +23,13 @@ class StepTwoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required',
+            'zip_code' => ['required', new CanadianPostalCode],
+            'password' => 'required',
+            'remember_me' => 'nullable'
         ];
     }
 }

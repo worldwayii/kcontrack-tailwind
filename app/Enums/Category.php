@@ -7,21 +7,17 @@ enum Category: int
     case LOGISTICS = 1;
     case TECH = 2;
     case SALES = 3;
+    case HOSPITALITY = 4;
+    case OTHERS = 5;
 
     public function label(): string
     {
         return match ($this) {
-            static::LOGISTICS => 'Logistic',
+            static::LOGISTICS => 'Logistics',
             static::TECH => 'Tech',
             static::SALES => 'Sales',
+            static::HOSPITALITY => 'Hospitality',
+            static::OTHERS => 'Others',
         };
     }
-
-    public static function options(): ArrayObject
-    {
-        $optionsArray = [ '' => 'Select Status' ] + array_combine(self::typeValue(), self::type());
-
-        return new ArrayObject($optionsArray);
-    }
-
 }
