@@ -7,33 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <title>kcontrack</title>
+    <title>kontrack</title>
 </head>
 
 <body>
 <div>
     <div class="flex  justify-center md:justify-between py-8 mx-[10%]">
-        @include('partials/logo', [ 'h' => 12, 'w' => 12 ])
+        <a href="{{route('home')}}">
+            @include('partials/logo')
+        </a>
         <div class="hidden md:block ">
             <span class="text-black-0 text-sm font-medium me-2">Already have an account?</span>
-            <a to='login' class="text-brand-0 border-none bg-white-0 font-medium text-sm cursor-pointer">
+            <a href="{{ route('login') }}" class="text-brand-0 border-none bg-white-0 font-medium text-sm cursor-pointer">
                 <span>Sign in</span>
             </a>
         </div>
     </div>
-    <div class="flex justify-center mt-20 mb-2">
-        <Text class="w-full text-center text-8xl text-black-0 font-normal">
+    <div class="flex justify-center md:mt-20 mb-2">
+        <Text class="w-full text-center text-4xl md:text-8xl text-black-0 font-normal">
             Welcome to kontrack
         </Text>
     </div>
     <div class="flex justify-center m-0">
-        <Text class="bg-brand-50 text-center px-4 py-2 text-brand-0 font-semibold text-base rounded-lg">What account
+        <Text class="bg-brand-50 text-center px-4 py-2 text-brand-0 font-semibold md:text-base text-sm rounded-lg">What account
             will you like to create?</Text>
     </div>
 
-    <div class="flex flex-col md:flex-row items-center justify-between mx-[10%] my-20">
-        <div class="group flex flex-col items-center border-gray-0 border-solid h-[302px] rounded-lg w-[80%] md:w-[30%] my-5 justify-center cursor-pointer hover:bg-yellow-0  hover:shadow-lg"
-             style=" border-width: .5px;">
+    <div class="flex flex-col md:flex-row items-center justify-between mx-[10%] md:my-20">
+        <div class="group border-[0.5px] flex flex-col items-center border-gray-0 border-solid h-[302px] rounded-lg w-[80%] md:w-[30%] my-5 justify-center cursor-pointer hover:bg-yellow-0  hover:shadow-lg"
+        >
             <svg width="75" height="76" viewBox="0 0 75 76" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M63.0313 43.2054C65.5811 42.728 67.2309 40.6526 67.2309 38.1717V32.0071C67.2309 31.7962 67.2396 31.5178 67.1305 31.5178H67.1936L67.2225 31.4738C67.2222 31.4733 67.2375 31.4527 67.2372 31.4522L62.2237 23.7782C61.3999 22.5426 59.6669 21.469 58.182 21.469H46.6832V19.4442H51.5037C53.2034 19.4442 54.2573 18.2953 54.2573 16.5956V8.37604C54.2573 6.67635 53.2034 5.12073 51.5037 5.12073H23.7629C22.0632 5.12073 20.5111 6.67635 20.5111 8.37604V16.5955C20.5111 18.2952 22.0632 19.4441 23.7629 19.4441H28.1602V21.4689H17.0846C15.5996 21.4689 13.8588 22.5324 13.035 23.7681L8.0136 31.3661C8.01338 31.3666 8.013 31.4281 8.0127 31.4285L8.01023 31.4769L7.89804 31.4851C7.78908 31.4851 7.61255 31.7962 7.61255 32.0071V38.1717C7.61255 40.6526 9.63732 42.728 11.6621 43.2054V66.9399C11.6621 67.6888 12.152 68.1887 12.5035 68.7887H8.58744V70.8884H66.181V68.7887H62.7631C63.1146 68.1887 63.0313 67.6888 63.0313 66.9399V43.2054ZM61.0066 64.7391H33.2597V51.5284C33.2597 49.8287 32.141 48.241 30.4413 48.241H22.2217C20.5221 48.241 18.8613 49.8287 18.8613 51.5284V64.7391H13.6869V43.2054C15.3367 42.9496 16.1854 42.2312 16.9269 41.2409C17.8647 42.4933 19.4342 43.3089 21.1155 43.3089C22.7967 43.3089 24.3269 42.4933 25.2646 41.2409C26.2024 42.4933 27.7128 43.3089 29.3941 43.3089C31.0753 43.3089 32.5759 42.4933 33.5137 41.2409C34.4514 42.4933 35.9471 43.3089 37.6283 43.3089C39.3096 43.3089 40.8028 42.4933 41.7406 41.2409C42.6783 42.4933 44.1703 43.3089 45.8515 43.3089C47.5328 43.3089 49.0241 42.4933 49.9619 41.2409C50.8997 42.4933 52.3907 43.3089 54.0719 43.3089C55.7532 43.3089 57.1152 42.4933 58.053 41.2409C58.7945 42.2312 59.9567 42.9496 61.0066 43.2054V64.7391ZM31.2349 52.4404H20.8861V51.5283C20.8861 50.9617 21.6553 50.2657 22.2217 50.2657H30.4412C31.0076 50.2657 31.2348 50.9617 31.2348 51.5283V52.4404H31.2349ZM17.8864 32.7926H23.9607V38.1716C23.9607 39.8713 22.6232 41.2539 20.9236 41.2539C19.2239 41.2539 17.8864 39.8713 17.8864 38.1716V32.7926ZM25.9855 32.7926H32.2098V38.1716C32.2098 39.8713 30.7973 41.2539 29.0976 41.2539C27.398 41.2539 25.9855 39.8713 25.9855 38.1716V32.7926ZM34.2346 32.7926H40.5339V38.1716C40.5339 39.8713 39.0839 41.2539 37.3842 41.2539C35.6845 41.2539 34.2346 39.8713 34.2346 38.1716V32.7926ZM42.5586 32.7926H48.7079V38.1716C48.7079 39.8713 47.333 41.2539 45.6333 41.2539C43.9336 41.2539 42.5586 39.8713 42.5586 38.1716V32.7926ZM50.7327 32.7926H56.957V38.1716C56.957 39.8713 55.5446 41.2539 53.8449 41.2539C52.1452 41.2539 50.7327 39.8713 50.7327 38.1716V32.7926ZM65.2061 38.1717C65.2061 39.8714 63.7936 41.254 62.0939 41.254C60.3943 41.254 58.9818 39.8714 58.9818 38.1717V32.7927H65.2061V38.1717ZM52.2326 16.392C52.2326 16.9594 51.7726 17.4194 51.2051 17.4194H23.5633C22.9959 17.4194 22.5359 16.9594 22.5359 16.392V8.17296C22.5359 7.6055 22.9959 7.1455 23.5633 7.1455H51.2052C51.7726 7.1455 52.2326 7.6055 52.2326 8.17296V16.392H52.2326ZM14.7448 24.8245C15.1818 24.1693 16.297 23.5687 17.0846 23.5687H37.3092V21.469H30.185V19.4442H44.5834V23.5687H58.182C58.9696 23.5687 60.0849 24.1693 60.5218 24.8245L64.4817 30.7679H10.7849L14.7448 24.8245ZM9.63732 38.1717V32.7927H15.8616V38.1717C15.8616 39.8714 14.4492 41.254 12.7495 41.254C11.0498 41.254 9.63732 39.8714 9.63732 38.1717ZM16.0571 68.7886C14.9239 68.7886 14.0023 68.1887 14.0023 66.7638H18.8613V68.7886H16.0571ZM20.8861 68.7886V54.4652H31.2349V68.7886H20.8861ZM33.2597 68.7886V66.7638H61.2643C61.2643 68.1887 60.3427 68.7886 59.2095 68.7886H33.2597Z"
@@ -45,11 +47,11 @@
                     d="M27.6353 59.5646H29.66V63.6142H27.6353V59.5646ZM29.2101 9.17029H45.6332V11.1951H29.2101V9.17029ZM32.7347 13.2198H41.9587V15.3946H32.7347V13.2198Z"
                     fill="#F9B54C" />
             </svg>
-            <span class="text-2xl text-black-0 font-semibold">Business Account</span>
-            <span class="text-black-0 text-sm font-normal">Do you want to own or manage a business?</span>
-            <button
-                class="group-hover:bg-brand-0 group-hover:text-white-0  bg-white-0 border-solid border-brand-0 rounded-lg flex justify-center items-center p-2 mt-5 text-brand-0 font-semibold text-sm w-[70%] cursor-pointer"
-                style=" border-width: .5px;">
+            <span class="md:text-2xl text-base text-center text-black-0 font-semibold">Business Account</span>
+            <span class="text-black-0 text-xs text-center  md:text-sm font-normal">Do you want to own or manage a business?</span>
+            <a href="{{route('register.one')}}"
+                class=" border-[0.5px] group-hover:bg-brand-0 group-hover:text-white-0  bg-white-0 border-solid border-brand-0 rounded-lg flex justify-center items-center p-2 mt-5 text-brand-0 font-semibold md:text-sm text-xs w-[80%] cursor-pointer"
+            >
                 <span>Setup a business account</span>
                 <svg class="group-hover:stroke-white-0 stroke-brand-0" width="20" height="21" viewBox="0 0 20 21"
                      fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,10 +59,11 @@
                           d="M17.1082 10.0583C17.2253 10.1755 17.291 10.3343 17.291 10.5C17.291 10.6656 17.2253 10.8244 17.1082 10.9416L12.1082 15.9416C12.051 16.003 11.982 16.0523 11.9053 16.0864C11.8287 16.1206 11.7459 16.139 11.662 16.1405C11.5781 16.1419 11.4947 16.1265 11.4169 16.0951C11.3391 16.0636 11.2684 16.0168 11.209 15.9575C11.1497 15.8981 11.1029 15.8275 11.0715 15.7496C11.04 15.6718 11.0246 15.5884 11.0261 15.5045C11.0276 15.4206 11.0459 15.3378 11.0801 15.2612C11.1142 15.1845 11.1635 15.1155 11.2249 15.0583L15.1582 11.125L3.33323 11.125C3.16747 11.125 3.0085 11.0591 2.89129 10.9419C2.77408 10.8247 2.70823 10.6657 2.70823 10.5C2.70823 10.3342 2.77408 10.1752 2.89129 10.058C3.0085 9.94081 3.16747 9.87497 3.33323 9.87497L15.1582 9.87497L11.2249 5.94163C11.1635 5.88441 11.1142 5.81541 11.0801 5.73875C11.0459 5.66208 11.0276 5.57932 11.0261 5.4954C11.0246 5.41148 11.04 5.32812 11.0715 5.2503C11.1029 5.17248 11.1497 5.10178 11.209 5.04243C11.2684 4.98308 11.3391 4.9363 11.4169 4.90486C11.4947 4.87343 11.5781 4.85799 11.662 4.85947C11.7459 4.86095 11.8287 4.87932 11.9053 4.91348C11.982 4.94764 12.051 4.99689 12.1082 5.0583L17.1082 10.0583Z"
                           fill={arrowColor} />
                 </svg>
-            </button>
+            </a>
         </div>
-        <div class="group flex flex-col items-center border-gray-0 border-solid h-[302px] rounded-lg  w-[80%] md:w-[30%] my-5 justify-center cursor-pointer hover:bg-yellow-0  hover:shadow-lg"
-             style=" border-width: .5px;">
+
+        <div class="group border-[0.5px] flex flex-col items-center border-gray-0 border-solid h-[302px] rounded-lg  w-[80%] md:w-[30%] my-5 justify-center cursor-pointer hover:bg-yellow-0  hover:shadow-lg"
+        >
             <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_2733_1392)">
                     <path
@@ -98,11 +101,11 @@
                     </clipPath>
                 </defs>
             </svg>
-            <span class="text-2xl text-black-0 font-semibold">Employee Account</span>
-            <span class="text-black-0 text-sm font-normal">Join your company’s work space</span>
+            <span class="md:text-2xl text-base text-center text-black-0 font-semibold">Employee Account</span>
+            <span class="text-black-0 text-xs text-center  md:text-sm font-normal">Join your company’s work space</span>
             <button
-                class="group-hover:bg-brand-0 group-hover:text-white-0  bg-white-0 border-solid border-brand-0 rounded-lg flex justify-center items-center p-2 mt-5 text-brand-0 font-semibold text-sm w-[70%] cursor-pointer"
-                style=" border-width: .5px;">
+                class=" border-[0.5px] group-hover:bg-brand-0 group-hover:text-white-0  bg-white-0 border-solid border-brand-0 rounded-lg flex justify-center items-center p-2 mt-5 text-brand-0 font-semibold d md:text-sm text-xs w-[80%] cursor-pointer"
+            >
                 <span>Join an existing team</span>
                 <svg class="group-hover:stroke-white-0 stroke-brand-0" width="20" height="21" viewBox="0 0 20 21"
                      fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,8 +115,8 @@
                 </svg>
             </button>
         </div>
-        <div class="group flex flex-col items-center border-gray-0 border-solid h-[302px] rounded-lg  w-[80%] md:w-[30%] my-5 justify-center cursor-pointer hover:bg-yellow-0  hover:shadow-lg"
-             style=" border-width: .5px;">
+        <div class="group border-[0.5px] flex flex-col items-center border-gray-0 border-solid h-[302px] rounded-lg  w-[80%] md:w-[30%] my-5 justify-center cursor-pointer hover:bg-yellow-0  hover:shadow-lg"
+        >
             <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_2733_1430)">
                     <path
@@ -130,11 +133,11 @@
                     </clipPath>
                 </defs>
             </svg>
-            <span class="text-2xl text-black-0 font-semibold">Freelance Account</span>
-            <span class="text-black-0 text-sm font-normal">Apply for jobs as a freelancer</span>
+            <span class="md:text-2xl text-base text-center text-black-0 font-semibold">Freelance Account</span>
+            <span class="text-black-0 text-xs text-center  md:text-sm font-normal">Apply for jobs as a freelancer</span>
             <button
-                class="group-hover:bg-brand-0 group-hover:text-white-0  bg-white-0 border-solid border-brand-0 rounded-lg flex justify-center items-center p-2 mt-5 text-brand-0 font-semibold text-sm w-[70%] cursor-pointer"
-                style=" border-width: .5px;">
+                class=" border-[0.5px] group-hover:bg-brand-0 group-hover:text-white-0  bg-white-0 border-solid border-brand-0 rounded-lg flex justify-center items-center p-2 mt-5 text-brand-0 font-semibold d md:text-sm text-xs w-[80%] cursor-pointer"
+            >
                 <span>Create account</span>
                 <svg class="group-hover:stroke-white-0 stroke-brand-0" width="20" height="21" viewBox="0 0 20 21"
                      fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,8 +149,8 @@
         </div>
     </div>
     <div class=" md:hidden flex justify-center mb-20 ">
-        <span class="text-black-0 text-sm font-medium me-2">Already have an account?</span>
-        <a to='login' class="text-brand-0 border-none bg-white-0 font-medium text-sm cursor-pointer">
+        <span class="text-black-0 text-xs font-medium me-2">Already have an account?</span>
+        <a to='login' class="text-brand-0 border-none bg-white-0 font-medium text-xs cursor-pointer">
             <span>Sign in</span>
         </a>
     </div>

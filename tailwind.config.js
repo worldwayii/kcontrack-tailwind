@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
         backgroundImage: {
-            'login-background': "url('/img/authImage.png')",
+            'auth': "url('/img/authImage.png')",
         },
         "colors": {
             "black": {

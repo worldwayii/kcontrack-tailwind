@@ -2132,9 +2132,12 @@ module.exports = Array.isArray || function (arr) {
 /*!*******************************!*\
   !*** ./resources/css/app.css ***!
   \*******************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):\nSyntaxError: Unexpected token, expected \",\" (13:5)\n    at unexpected (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/util.js:99:15)\n    at expect (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/util.js:86:5)\n    at parseObj (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:759:20)\n    at parseExprAtom (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:553:7)\n    at parseExprSubscripts (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:276:20)\n    at parseMaybeUnary (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:257:20)\n    at parseExprOps (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:185:20)\n    at parseMaybeConditional (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:157:20)\n    at baseParseMaybeAssign (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:142:20)\n    at tsParseMaybeAssignWithoutJSX (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/plugins/typescript.js:1580:45)\n    at tsParseMaybeAssign (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/plugins/typescript.js:1548:12)\n    at parseMaybeAssign (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:121:43)\n    at parseObjectProperty (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:851:7)\n    at parseObjPropValue (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:892:5)\n    at parseObj (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:808:5)\n    at parseExprAtom (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:553:7)\n    at parseExprSubscripts (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:276:20)\n    at parseMaybeUnary (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:257:20)\n    at parseExprOps (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:185:20)\n    at parseMaybeConditional (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:157:20)\n    at baseParseMaybeAssign (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:142:20)\n    at tsParseMaybeAssignWithoutJSX (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/plugins/typescript.js:1580:45)\n    at tsParseMaybeAssign (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/plugins/typescript.js:1548:12)\n    at parseMaybeAssign (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/expression.js:121:43)\n    at parseExportDefaultExpression (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/statement.js:1024:34)\n    at parseExport (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/statement.js:988:5)\n    at parseStatementContent (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/statement.js:200:9)\n    at parseStatement (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/statement.js:116:3)\n    at parseBlockBody (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/statement.js:586:5)\n    at parseTopLevel (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/statement.js:92:3)\n    at parseFile (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/traverser/index.js:17:35)\n    at parse (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/parser/index.js:26:35)\n    at getSucraseContext (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/index.js:95:30)\n    at transform (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/sucrase/dist/index.js:38:28)\n    at Object.transform (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/tailwindcss/lib/lib/load-config.js:23:43)\n    at /Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/jiti/dist/jiti.js:1:251421\n    at opts.transform.Object.assign.Object.assign.Object.assign.legacy (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/jiti/dist/jiti.js:1:251242)\n    at transform (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/jiti/dist/jiti.js:1:251364)\n    at evalModule (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/jiti/dist/jiti.js:1:254529)\n    at jiti (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/jiti/dist/jiti.js:1:253542)\n    at /Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/tailwindcss/lib/lib/load-config.js:37:30\n    at loadConfig (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/tailwindcss/lib/lib/load-config.js:39:6)\n    at getTailwindConfig (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/tailwindcss/lib/lib/setupTrackingContext.js:71:116)\n    at /Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/tailwindcss/lib/lib/setupTrackingContext.js:100:92\n    at /Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/tailwindcss/lib/processTailwindFeatures.js:48:11\n    at plugins (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/tailwindcss/lib/plugin.js:38:69)\n    at LazyResult.runOnRoot (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/postcss/lib/lazy-result.js:329:16)\n    at LazyResult.runAsync (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/postcss/lib/lazy-result.js:258:26)\n    at LazyResult.async (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/postcss/lib/lazy-result.js:160:30)\n    at LazyResult.then (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/postcss/lib/lazy-result.js:404:17)\n    at processResult (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/webpack/lib/NormalModule.js:764:19)\n    at /Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/webpack/lib/NormalModule.js:866:5\n    at /Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/loader-runner/lib/LoaderRunner.js:400:11\n    at /Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/loader-runner/lib/LoaderRunner.js:252:18\n    at context.callback (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/loader-runner/lib/LoaderRunner.js:124:13)\n    at Object.loader (/Users/chukwuma.elui/Dev/kcontrack-docker/app/node_modules/postcss-loader/dist/index.js:142:7)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -6271,7 +6274,42 @@ const isThenable = (thing) =>
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -6312,13 +6350,68 @@ const isThenable = (thing) =>
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/js/app": 0,
+/******/ 			"css/app": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	__webpack_require__("./resources/js/app.js");
-/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./resources/css/app.css");
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;

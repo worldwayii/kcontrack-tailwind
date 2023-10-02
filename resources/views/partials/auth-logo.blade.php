@@ -1,4 +1,5 @@
-<svg class="cursor-pointer" width="138" height="38" viewBox="0 0 138 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class="cursor-pointer m-5" width="138" height="38" viewBox="0 0 138 38" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
     <circle cx="19" cy="19" r="19" fill="#092C86" />
     <path
         d="M17.5235 6.02637L8.9758 6.25532C8.67052 6.2635 8.84988 6.48428 8.9758 6.71324C10.0951 8.74841 12.4254 12.9561 12.7917 13.5056C13.1581 14.0551 13.6313 13.9635 13.8602 13.5056L17.5235 6.94219C17.8288 6.40796 17.7525 6.10269 17.5235 6.02637Z"
