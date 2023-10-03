@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->string('name')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('staff_size')->nullable();
             $table->text('description')->nullable();
             $table->string('category')->nullable();
-            $table->string('country_code', 5)->nullable();
-            $table->string('phone', 12)->unique()->nullable();
-            $table->string('zip_code', 10)->nullable();
+            $table->string('phone_number', 12)->unique()->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->string('zip_code', 7)->nullable();
             $table->timestamps();
         });
     }

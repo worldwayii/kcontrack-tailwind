@@ -25,8 +25,8 @@ class StepTwoRequest extends FormRequest
         return [
             'last_name' => 'required',
             'first_name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone_number' => 'required|unique:companies',
             'zip_code' => ['required', new CanadianPostalCode],
             'password' => 'required',
             'remember_me' => 'nullable'

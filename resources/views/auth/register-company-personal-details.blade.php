@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.auth')
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@section('meta-title', 'Register - Company personal details')
+@section('page-title', 'Register - Company personal details')
 
-    <title>kcontrack</title>
-</head>
-
-<body class="flex justify-between">
-<div class="w-full md:w-[50%] ">
-    <a href="{{route('home')}}">
-        @include('partials/auth-logo')
-    </a>
+@section('content')
     <div  class="flex h-[80vh] flex-col items-center justify-center w-full">
         <form class="flex flex-col w-[80%] md:w-[60%]" action="{{ route('register.two.post') }}" method="POST" autocomplete="off" id="withdraw-letter-form">
             @csrf
@@ -92,7 +81,7 @@
             </div>
             <div class="flex flex-col mb-2  w-full">
                 <span class="text-black-10 text-xs font-semibold mb-1">Password</span>
-                <input name="password" value="{{old('password')}}"
+                <input name="password" value="{{old('password')}}" type="password"
                     class="p-4 border-[0.5px] rounded-lg outline-none border-gray-10 focus:border-brand-0"
                     placeholder="Enter email password" />
                     @error('password')
@@ -121,14 +110,4 @@
             </div>
         </form>
     </div>
-</div>
-<div
-    class="w-[49%]  bg-auth bg-no-repeat bg-cover h-[95vh] rounded-3xl m-5 md:flex flex-col justify-end items-center  hidden">
-    <div class="bg-white-10 m-5 py-2 px-4 rounded-full">
-        <span class="text-gray-10 text-lg font-medium">Create an account for your company</span>
-    </div>
-</div>
-</body>
-
-
-</html>
+@endsection

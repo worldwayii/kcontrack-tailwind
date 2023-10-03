@@ -21,10 +21,11 @@ class Company extends Model
         'description',
         'category',
         'staff_size',
-        'last_name',
         'first_name',
+        'last_name',
         'phone_number',
         'zip_code',
+        'user_id'
     ];
 
     /**

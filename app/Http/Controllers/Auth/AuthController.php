@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
 
@@ -28,15 +29,13 @@ class AuthController extends Controller
     {
         $validatedData = $request->validated();
 
-        // Add to session with key name of company_details
         Session::put('company_details', $validatedData);
 
         return redirect()->route('register.two');
     }
 
-    public function registerStepTwo()
+    public function registerStepTwo(): View|RedirectResponse
     {
-        // Check if the 'company_details' session variable exists
         if (!session()->has('company_details')) {
             return redirect()->route('register.one');
         }
@@ -48,33 +47,33 @@ class AuthController extends Controller
         if (!session()->has('company_details')) {
             return redirect()->route('register.one');
         }
+        try {
 
-        dd($request->validated());
-        //get validated form details and save to session
-        //get the validated request data
-        //save the user bits to user table, assign company role with spatie roles
-        //send the company data to company model create($validated)
+            DB::beginTransaction();
 
-        // Get the validated form details
-        $validatedData = $request->validated();
+            $validatedData = $request->validated();
 
-        // Create a new user in the user table
-        $user = User::create([
-            'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
-        ]);
+            $user = User::create([
+                'email' => $validatedData['email'],
+                'password' => bcrypt($validatedData['password']),
+            ]);
 
-        // Assign the 'company' role using Spatie Roles
-        $companyRole = Role::where('name', 'company')->first();
-        $user->assignRole($companyRole);
+            $validatedData = array_merge($validatedData, session()->get('company_details'));
+            $validatedData['user_id'] = $user->id;
 
-        // Create a new company in the company model
-        Company::create($validatedData['company_details']);
+            $companyRole = Role::where('name', 'company')->first();
+            $user->assignRole($companyRole);
 
-        // Clear the 'company_details' session variable
-        session()->forget('company_details');
+            Company::create($validatedData);
 
-        // Redirect to a success page or the next step
-        return redirect()->route('your.success.route');
+            DB::commit();
+
+            session()->forget('company_details');
+
+            return view('auth.confirm-email');
+        }catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back();
+        }
     }
 }
