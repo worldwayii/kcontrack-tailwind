@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('staff_size')->nullable();
             $table->text('description')->nullable();
-            $table->foreignId('category')->constrained();
+            $table->string('category')->nullable();
             $table->string('country_code', 5)->nullable();
             $table->string('phone', 12)->unique()->nullable();
             $table->string('zip_code', 10)->nullable();
