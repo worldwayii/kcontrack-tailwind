@@ -28,4 +28,4 @@ jobs:
         run: scp -r ./* root@77.68.55.121:/var/www/test-kontrack
 
       - name: Restart Nginx
-        run: ssh user@your-server-ip "sudo systemctl reload nginx"
+        run: ssh root@77.68.55.121 "sudo systemctl reload nginx"
