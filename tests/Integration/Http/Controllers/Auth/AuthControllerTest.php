@@ -19,4 +19,5 @@ class AuthControllerTest extends TestCase
 
         $response->assertViewIs('auth.register-company-details');
     }
+
 }
