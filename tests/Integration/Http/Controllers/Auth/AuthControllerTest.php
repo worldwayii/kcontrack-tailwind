@@ -11,7 +11,6 @@ class AuthControllerTest extends TestCase
 
     /**
      * @test
-     * @group tt
      */
     public function registerStepOneReturnTheCorrectView(): void
     {
@@ -20,4 +19,13 @@ class AuthControllerTest extends TestCase
         $response->assertViewIs('auth.register-company-details');
     }
 
+    /**
+     * @test
+     */
+    public function registerStepTwoReturnsTheCorrectView(): void
+    {
+        $response = $this->get(route('register.two'));
+
+        $response->assertViewIs('auth.register-company-personal-details');
+    }
 }
