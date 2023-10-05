@@ -16,10 +16,8 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: root_password
-          MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
-          MYSQL_USER: ${{ secrets.DB_USERNAME }}
-          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: pass
+          MYSQL_DATABASE: dev
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -42,10 +40,10 @@ jobs:
 
       - name: Configure .env with secrets
         run: |
-          sed -i "s/DB_HOST=.*/DB_HOST=${{ secrets.DB_HOST }}/" .env
-          sed -i "s/DB_USERNAME=.*/DB_USERNAME=${{ secrets.DB_USERNAME }}/" .env
-          sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=${{ secrets.DB_PASSWORD }}/" .env
-          sed -i "s/DB_DATABASE=.*/DB_DATABASE=${{ secrets.DB_DATABASE }}/" .env
+          sed -i "s/DB_HOST=.*/DB_HOST=127.0.0.1/" .env
+          sed -i "s/DB_USERNAME=.*/DB_USERNAME=root/" .env
+          sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=pass/" .env
+          sed -i "s/DB_DATABASE=.*/DB_DATABASE=dev/" .env
 
       - name: Generate application key
         run: php artisan key:generate
