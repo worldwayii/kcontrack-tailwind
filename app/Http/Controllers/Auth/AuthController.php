@@ -29,16 +29,19 @@ class AuthController extends Controller
     {
         $validatedData = $request->validated();
 
-        Session::put('company_details', $validatedData);
+        if(!empty($validatedData)){
+            Session::put('company_details', $validatedData);
+        }
 
         return redirect()->route('register.two');
     }
 
     public function registerStepTwo(): View|RedirectResponse
     {
-        if (!session()->has('company_details')) {
+        if (session()->has('company_details')) {
             return redirect()->route('register.one');
         }
+
         return view('auth.register-company-personal-details');
     }
 
