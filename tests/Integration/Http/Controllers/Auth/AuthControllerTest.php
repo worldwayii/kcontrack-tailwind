@@ -15,7 +15,7 @@ class AuthControllerTest extends TestCase
      */
     public function registerStepOneReturnTheCorrectView(): void
     {
-        $response = $this->get(route('register.on'));
+        $response = $this->get(route('register.one'));
 
         $response->assertViewIs('auth.register-company-details');
     }
