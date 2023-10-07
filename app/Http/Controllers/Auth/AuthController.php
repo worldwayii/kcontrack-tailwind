@@ -8,7 +8,9 @@ use App\Http\Requests\Auth\StepTwoRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
@@ -38,7 +40,7 @@ class AuthController extends Controller
 
     public function registerStepTwo(): View|RedirectResponse
     {
-        if (session()->has('company_details')) {
+        if (!session()->has('company_details')) {
             return redirect()->route('register.one');
         }
 
@@ -71,6 +73,9 @@ class AuthController extends Controller
 
             DB::commit();
 
+            //create an email for account
+            $user->sendEmailVerificationNotification();
+
             session()->forget('company_details');
 
             return view('auth.confirm-email');
@@ -78,5 +83,20 @@ class AuthController extends Controller
             DB::rollback();
             return redirect()->back();
         }
+    }
+
+    public function verifyEmail(EmailVerificationRequest $request): View
+    {
+        dd('');
+        $request->fulfill();
+
+        return view('auth.email-verified');
+    }
+
+    public function sendVerification(Request $request): RedirectResponse
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Verification link sent!');
     }
 }
