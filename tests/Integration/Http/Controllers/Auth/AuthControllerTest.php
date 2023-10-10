@@ -24,6 +24,7 @@ class AuthControllerTest extends TestCase
      */
     public function registerStepTwoReturnsTheCorrectView(): void
     {
+        session()->put('company_details', ['name'=> 'Lorem ipsum']);
         $response = $this->get(route('register.two'));
 
         $response->assertViewIs('auth.register-company-personal-details');

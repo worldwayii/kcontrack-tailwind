@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
@@ -20,6 +21,22 @@ class AuthController extends Controller
     public function login() : View
     {
         return view('auth.login');
+    }
+
+    public function postLogin(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = Auth::attempt($credentials);
+
+        if ($user->can('view', Company::class)) {
+            return redirect()->route('company.dashboard');
+        } else {
+            return redirect()->route('login')->with('error', 'You do not have the necessary role.');
+        }
     }
 
     public function registerStepOne() : View
@@ -87,7 +104,6 @@ class AuthController extends Controller
 
     public function verifyEmail(EmailVerificationRequest $request): View
     {
-        dd('');
         $request->fulfill();
 
         return view('auth.email-verified');

@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss');
 
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 
@@ -14,6 +15,11 @@ const spritemap = new SVGSpritemapPlugin('resources/svg/heroicons/*.svg', {
 mix.js("resources/js/app.js", "public/js")
     .postCss("resources/css/app.css", "public/css", [
         require("tailwindcss"),
-    ]);
+    ]).options({
+        processCssUrls: false,
+        postCss: [
+            tailwindcss('./tailwind.config.js')
+        ]
+    });
 
 mix.copy('resources/svg/*.svg', 'public/svg/');

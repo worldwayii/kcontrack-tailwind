@@ -2,6 +2,8 @@
 export default {
     content: [
         "./resources/**/*.blade.php",
+        "./resources/*/*.blade.php",
+        "./resources/blade/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
@@ -32,6 +34,9 @@ export default {
                 "30": '#F5F5F5',
                 "40": '#E6E6E6',
                 "50": '#F2F2F2',
+                "60": '#80868C',
+                "70": '#EDEFF4',
+                "80": '#F3F5F7',
             },
             "yellow": {
                 "0": '#FEFAF1',
