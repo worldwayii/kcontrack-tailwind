@@ -5,14 +5,18 @@
 
 @section('content')
     <div class="flex h-[80vh] flex-col items-center justify-center w-full">
-        <form class="flex flex-col w-[80%] md:w-[60%]">
+        @if(session('success'))
+            @include('partials.alerts.success')
+        @endif
+        <form class="flex flex-col w-[80%] md:w-[60%]" action="{{ route('login') }}" method="POST" autocomplete="off">
+            @csrf
             <p class="text-black-0  text-6xl font-extrabold">Welcome</p>
             <p class="text-black-0  text-6xl font-extrabold mb-10">Back</p>
             <div class="flex flex-col w-full mb-5">
                 <span class="text-black-10 text-xs font-semibold mb-1">Email address</span>
                 <input name="email" value="{{old('email')}}"
                        class="p-4 border-[0.5px] rounded-lg outline-none border-gray-10 focus:border-brand-0"
-                       placeholder="Enter email address" aria-describedby="email-error"/>
+                       placeholder="Enter email address" aria-describedby="email-error" required/>
                 @error('email')
                     <div class="mt-2 text-sm text-red-600" id="email-error">
                         {{ $message }}
@@ -21,9 +25,9 @@
             </div>
             <div class="flex flex-col w-full mb-5">
                 <span class="text-black-10 text-xs font-semibold mb-1">Password</span>
-                <input name="password" value="{{old('password')}}" type="password"
+                <input name="password" type="password"
                        class="p-4 border-[0.5px] rounded-lg outline-none border-gray-10 focus:border-brand-0"
-                       placeholder="Enter email password" />
+                       placeholder="Enter email password" required/>
                 @error('password')
                     <div class="mt-2 text-sm text-red-600">
                         {{ $message }}

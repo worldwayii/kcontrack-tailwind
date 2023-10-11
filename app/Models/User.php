@@ -54,4 +54,9 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->uuid = Str::uuid();
         });
     }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'user_id');
+    }
 }

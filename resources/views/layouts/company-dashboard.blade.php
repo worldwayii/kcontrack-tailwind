@@ -32,7 +32,7 @@
             <img src="/img/logo.png" />
 
         </div>
-        <span class="text-sm  hidden md:block text-gray-60 font-semibold me-12">Joy Consult Technologies</span>
+        <span class="text-sm  hidden md:block text-gray-60 font-semibold me-12">{{$company->name}}</span>
         <div
             class=" hidden md:flex items-center space-x-2 border-solid border border-grey-70 p-1 rounded-md bg-white-0 ">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

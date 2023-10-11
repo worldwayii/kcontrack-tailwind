@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\StepOneRequest;
 use App\Http\Requests\Auth\StepTwoRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\Company;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
@@ -18,24 +20,27 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
+
     public function login() : View
     {
         return view('auth.login');
     }
 
-    public function postLogin(Request $request): RedirectResponse
+    public function postLogin(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users',
             'password' => 'required',
         ]);
 
         $user = Auth::attempt($credentials);
 
-        if ($user->can('view', Company::class)) {
-            return redirect()->route('company.dashboard');
+        //check if they have verified account
+        if ($user) {
+            return redirect()->intended(route('company.dashboard'));
         } else {
-            return redirect()->route('login')->with('error', 'You do not have the necessary role.');
+            //Todo: Flash errors
+            return redirect()->route('login')->with('error', 'You do not have the necessary credentials.');
         }
     }
 
@@ -102,11 +107,13 @@ class AuthController extends Controller
         }
     }
 
-    public function verifyEmail(EmailVerificationRequest $request): View
+    public function verifyEmail(EmailVerificationRequest $request)
     {
         $request->fulfill();
 
-        return view('auth.email-verified');
+        //logout
+        return redirect(route('company.dashboard'));
+//        return view('auth.email-verified')->with('message', 'Account verified. Please login');
     }
 
     public function sendVerification(Request $request): RedirectResponse

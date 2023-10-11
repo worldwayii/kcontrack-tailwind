@@ -6,7 +6,7 @@
 @section('content')
 
     <div  class="flex h-[80vh] flex-col items-center justify-center w-full">
-        <form class="flex flex-col w-[80%] md:w-[60%]" action="{{ route('register.one.post') }}" method="POST" autocomplete="off" id="withdraw-letter-form">
+        <form class="flex flex-col w-[80%] md:w-[60%]" action="{{ route('register.one.post') }}" method="POST" autocomplete="off">
             @csrf
                 <span class="text-xs font-semibold text-black-10">Step 1</span>
             <div class="rounded-full h-2 bg-gray-40 mt-2 mb-4 w-[90px]"  >

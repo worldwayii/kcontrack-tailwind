@@ -5,7 +5,7 @@
 
 @section('content')
     <div  class="flex h-[80vh] flex-col items-center justify-center w-full">
-        <form class="flex flex-col w-[80%] md:w-[60%]" action="{{ route('register.two.post') }}" method="POST" autocomplete="off" id="withdraw-letter-form">
+        <form class="flex flex-col w-[80%] md:w-[60%]" action="{{ route('register.two.post') }}" method="POST" autocomplete="off">
             @csrf
             <a href="{{route('register.one')}}" class="bg-gray-50 border-none w-[40px] rounded py-2 mt-6 mb-2 cursor-pointer">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

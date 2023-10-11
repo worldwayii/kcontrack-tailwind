@@ -44,4 +44,9 @@ class Company extends Model
             $company->uuid = Str::uuid();
         });
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'user_id');
+    }
 }
