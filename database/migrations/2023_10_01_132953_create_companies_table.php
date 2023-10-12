@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('phone_number', 12)->unique()->nullable();
             $table->foreignId('user_id')->constrained();
             $table->string('zip_code', 7)->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

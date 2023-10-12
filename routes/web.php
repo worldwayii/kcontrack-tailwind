@@ -42,4 +42,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
     Route::get('/company/profile', [CompanyController::class, 'show'])->name('company.profile');
     Route::get('/company/edit', [CompanyController::class, 'edit'])->name('company.edit-profile');
+    Route::post('/company/edit', [CompanyController::class, 'update']);
 });

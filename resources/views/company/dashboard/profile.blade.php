@@ -13,12 +13,14 @@
             </a>
         </div>
     </div>
-
+    @if(session('success'))
+        @include('partials.alerts.success')
+    @endif
     <div class="flex md:mx-8 mx-2 justify-between  border md:px-4 px-2 md:py-8 py-4 rounded-xl ">
         <div class="flex md:space-x-4 space-x-2 items-center">
             <div
                 class="border-solid border  flex items-center justify-center rounded-full  h-[31px] w-[31px] ">
-                <img src="/img/logo.png" />
+                <img src="{{ asset('storage/' . Auth::user()->company->logo) }}" alt="Company Logo"/>
 
             </div>
             <div class="flex flex-col">

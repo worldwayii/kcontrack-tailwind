@@ -25,7 +25,8 @@ class Company extends Model
         'last_name',
         'phone_number',
         'zip_code',
-        'user_id'
+        'user_id',
+        'logo',
     ];
 
     /**
