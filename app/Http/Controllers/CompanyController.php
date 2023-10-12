@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
     public function index(): View
     {
-        $user = Auth::user()->load('company');
+        $this->authorize('index', Company::class);
 
-        $company = $user->company;
+        return view('company.dashboard.index');
+    }
 
-        return view('dashboard.index', compact('company'));
+    public function show(): View
+    {
+        $this->authorize('read', Company::class);
+
+        return view('company.dashboard.profile');
+    }
+
+    public function edit(): View
+    {
+        $this->authorize('update', Company::class);
+
+        return view('company.dashboard.edit-profile');
     }
 }
