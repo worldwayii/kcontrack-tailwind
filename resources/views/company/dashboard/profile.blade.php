@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-profile')
 
-@section('meta-title', 'Profile')
-@section('page-title', 'Profile')
+@section('meta-title', 'View Profile')
+@section('page-title', 'View Profile')
 
 @section('content')
 <div class=" bg-white-0 w-[100vw] md:w-[90vw] h-[90vh] md:me-[2vw] rounded-xl">
