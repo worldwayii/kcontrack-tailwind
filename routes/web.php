@@ -72,6 +72,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/edit', [CompanyController::class, 'update']);
 
 
-        Route::get('/employer/add', [CompanyController::class, 'addEmployer']);
+        Route::get('/employer/add', [CompanyController::class, 'addEmployer'])->name('employee.create');
     });
 });

@@ -8,9 +8,7 @@
 <div class=" bg-white-0 w-[100vw] md:w-[90vw] h-[90vh] md:me-[2vw] rounded-xl">
     <div class="flex md:flex-col md:mx-8 items-center md:items-start justify-between mx-2 my-4  md:my-8">
         <span class="text-base md:text-xl text-black-10 font-semibold">Dashboard</span>
-
-        <div
-            class=" md:hidden flex items-center space-x-2 border-solid border border-grey-70 p-1 rounded-md bg-white-0 ">
+        <div class=" md:hidden flex items-center space-x-2 border-solid border border-grey-70 p-1 rounded-md bg-white-0 ">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_2758_2583)">
                     <path
@@ -117,15 +115,17 @@
                 <div class="border-l-2 border-[#3984E6]">
                     <span class="text-black md:text-lg text-sm mx-2">Employee Overview</span>
                 </div>
-                <button class="flex items-center space-x-2 bg-[#3984E6] m-6 p-2 rounded text-white-0 md:text-sm text-xs font-medium">
-                    <svg width="13" height="12" viewBox="0 0 13 12" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12.3332 6.83317H7.33317V11.8332H5.6665V6.83317H0.666504V5.1665H5.6665V0.166504H7.33317V5.1665H12.3332V6.83317Z"
-                            fill="white" />
-                    </svg>
-                    <span> Add Employee</span>
-                </button>
+                <a href="{{route('company.employee.create')}}">
+                    <button class="flex items-center space-x-2 bg-[#3984E6] m-6 p-2 rounded text-white-0 md:text-sm text-xs font-medium">
+                        <svg width="13" height="12" viewBox="0 0 13 12" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12.3332 6.83317H7.33317V11.8332H5.6665V6.83317H0.666504V5.1665H5.6665V0.166504H7.33317V5.1665H12.3332V6.83317Z"
+                                fill="white" />
+                        </svg>
+                        <span> Add Employee</span>
+                    </button>
+                </a>
             </div>
             <div class="flex items-center justify-center md:h-[60%] ">
                 <span class="text-[#A7A7A7] text-sm md:text-lg font-medium">You have not added any employee</span>

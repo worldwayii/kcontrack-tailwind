@@ -67,6 +67,6 @@ class CompanyController extends Controller
     {
         $this->authorize('update', Company::class);
 
-        return view('company.dashboard.edit-profile');
+        return view('company.employee.add-csv');
     }
 }
