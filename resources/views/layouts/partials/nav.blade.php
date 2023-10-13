@@ -4,7 +4,7 @@
         @include('partials.auth-logo')
         <div
             class="border-solid border hidden md:flex items-center justify-center rounded-full p-2 h-[31px] w-[31px] ms-8 me-2">
-            <img src="/img/logo.png" />
+            <img src="{{ URL::asset('storage/' . Auth::user()->company->logo) }}" />
 
         </div>
         <span class="text-sm  hidden md:block text-gray-60 font-semibold me-12">{{Auth::user()->company->name}}</span>
@@ -50,7 +50,7 @@
         </svg>
         <div class="ms-8 h-[40px] w-[40px] hidden md:block">
             <a href="{{route('company.profile')}}">
-                <img class="rounded-md h-[40px] w-[40px]" src="/img/user.png" />
+                <img class="rounded-md h-[40px] w-[40px]" src="{{ URL::asset('storage/' . Auth::user()->company->logo) }}" />
             </a>
         </div>
         <svg class="cursor-pointer hidden md:block" width="24" height="24" viewBox="0 0 24 24" fill="none"

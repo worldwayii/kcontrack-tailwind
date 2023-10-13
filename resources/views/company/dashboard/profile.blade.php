@@ -20,7 +20,7 @@
         <div class="flex md:space-x-4 space-x-2 items-center">
             <div
                 class="border-solid border  flex items-center justify-center rounded-full  h-[31px] w-[31px] ">
-                <img src="{{ asset('storage/' . Auth::user()->company->logo) }}" alt="Company Logo"/>
+                <img src="{{ URL::asset('storage/' . Auth::user()->company->logo) }}" alt="Company Logo"/>
 
             </div>
             <div class="flex flex-col">
@@ -28,7 +28,7 @@
                 <span class="md:text-sm text-[10px] text-[#A7A7A7]">{{Auth::user()->email}}</span>
             </div>
         </div>
-        <a  href="{{route('company.edit-profile')}}">
+        <a  href="{{route('company.edit')}}">
             <button class="flex border items-center p-2 space-x-2 rounded-lg border-[#3984E6] bg-[#3984E620]" role="link">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.5 17.5H17.5" stroke="#3984E6" stroke-width="1.67" stroke-linecap="round"

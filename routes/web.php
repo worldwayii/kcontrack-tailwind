@@ -38,9 +38,40 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware(['auth', 'signed'])->name('verification.verify');
 Route::post('/email/verification-notification', [AuthController::class, 'sendVerification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+//Route::middleware(['auth', 'verified'])->group(function () {
+//    Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
+//    Route::get('/company/profile', [CompanyController::class, 'show'])->name('company.profile');
+//    Route::get('/company/edit', [CompanyController::class, 'edit'])->name('company.edit-profile');
+//    Route::post('/company/edit', [CompanyController::class, 'update']);
+//
+//
+//});
+//
+//
+//Route::middleware(['auth', 'verified'])->group(function () {
+//    Route::prefix('company')->name('company.')->group(function () {
+//        Route::resource('dashboard', CompanyController::class)
+//            ->only(['index'])
+//            ->names([
+//                'index' => 'company.dashboard',
+//            ]);
+//
+//        Route::get('profile', [CompanyController::class, 'show'])->name('company.profile');
+//        Route::get('edit-profile', [CompanyController::class, 'edit'])->name('company.edit-profile');
+//        Route::post('edit-profile', [CompanyController::class, 'update']);
+//    });
+//});
+
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
-    Route::get('/company/profile', [CompanyController::class, 'show'])->name('company.profile');
-    Route::get('/company/edit', [CompanyController::class, 'edit'])->name('company.edit-profile');
-    Route::post('/company/edit', [CompanyController::class, 'update']);
+    Route::prefix('/company')
+        ->name('company.')
+        ->group(function () {
+        Route::get('/dashboard', [CompanyController::class, 'index'])->name('dashboard');
+        Route::get('/profile', [CompanyController::class, 'show'])->name('profile');
+        Route::get('/edit', [CompanyController::class, 'edit'])->name('edit');
+        Route::post('/edit', [CompanyController::class, 'update']);
+
+
+        Route::get('/employer/add', [CompanyController::class, 'addEmployer']);
+    });
 });

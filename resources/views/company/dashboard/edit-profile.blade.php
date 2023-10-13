@@ -16,12 +16,12 @@
         </div>
 
         <div class="flex items-center justify-center">
-            <form class="flex flex-col w-[90%] md:w-[40%] mb-4" action="{{ route('company.edit-profile') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <form class="flex flex-col w-[90%] md:w-[40%] mb-4" action="{{ route('company.edit') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="flex space-x-4 mb-8 items-center">
                     <div
                         class="border-solid border relative flex items-center justify-center rounded-full  h-[103px] w-[103px] ">
-                        <img class=" h-[63px] w-[63px]" src="/img/logo.png" />
+                        <img class=" h-[63px] w-[63px]" src="{{ URL::asset('storage/' . Auth::user()->company->logo) }}" />
                         <div class="absolute right-0 top-1">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
