@@ -1161,6 +1161,9 @@ select {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.pb-4 {
+  padding-bottom: 1rem;
+}
 .pl-3 {
   padding-left: 0.75rem;
 }
