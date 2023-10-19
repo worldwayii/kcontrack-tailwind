@@ -58,8 +58,6 @@ export default {
             '9xl': '3.25rem',
             '10xl': '10rem',
         },
-
-
     },
   },
   plugins: [

@@ -8,8 +8,7 @@
 
         </div>
         <span class="text-sm  hidden md:block text-gray-60 font-semibold me-12">{{Auth::user()->company->name}}</span>
-        <div
-            class=" hidden md:flex items-center space-x-2 border-solid border border-grey-70 p-1 rounded-md bg-white-0 ">
+        <div class=" hidden md:flex items-center space-x-2 border-solid border border-grey-70 p-1 rounded-md bg-white-0 ">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_2758_2583)">
                     <path
@@ -25,7 +24,7 @@
                     </clipPath>
                 </defs>
             </svg>
-            <input placeholder="Search" />
+            <input placeholder="search" />
         </div>
     </div>
     <div class="flex items-center">
