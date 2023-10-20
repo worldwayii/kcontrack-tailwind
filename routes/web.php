@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Company\EmployeeController;
 use App\Http\Controllers\CompanyController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +72,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/edit', [CompanyController::class, 'edit'])->name('edit');
         Route::post('/edit', [CompanyController::class, 'update']);
 
-
-        Route::get('/employer/add', [CompanyController::class, 'addEmployer'])->name('employee.create');
+        Route::singleton('employee', EmployeeController::class)->creatable();
     });
 });

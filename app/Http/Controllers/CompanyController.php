@@ -62,11 +62,4 @@ class CompanyController extends Controller
 
         return redirect(route('company.profile'))->with('success', 'Profile updated!');
     }
-
-    public function addEmployer()
-    {
-        $this->authorize('update', Company::class);
-
-        return view('company.employee.add-csv');
-    }
 }
