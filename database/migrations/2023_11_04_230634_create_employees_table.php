@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->string('name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('staff_size')->nullable();
-            $table->text('description')->nullable();
-            $table->string('category')->nullable();
-            $table->string('phone_number', 12)->unique()->nullable();
+            $table->string('role')->nullable();
+            $table->string('staff_number')->nullable();
+            $table->string('pay_rate')->nullable();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('company_id')->constrained();
+            $table->string('phone_number', 12)->nullable();
             $table->text('address')->nullable();
             $table->string('zip_code', 7)->nullable();
-            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('table_employees');
     }
 };

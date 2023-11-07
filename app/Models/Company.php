@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class Company extends Model
@@ -24,7 +26,9 @@ class Company extends Model
         'first_name',
         'last_name',
         'phone_number',
+        'address',
         'zip_code',
+        'address',
         'user_id',
         'logo',
     ];
@@ -46,8 +50,13 @@ class Company extends Model
         });
     }
 
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'user_id');
+    }
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
     }
 }
