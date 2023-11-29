@@ -4,10 +4,13 @@
         @include('partials.auth-logo')
         <div
             class="border-solid border hidden md:flex items-center justify-center rounded-full p-2 h-[31px] w-[31px] ms-8 me-2">
-            <img src="{{ URL::asset('storage/' . Auth::user()->company->logo) }}" />
-
+            @if(auth()->user()->company->logo)
+                <img src="{{ asset('storage/' . auth()->user()->company->logo) }}" />
+            @else
+                <img src="{{ asset('img/icon_holder.png') }}" />
+            @endif
         </div>
-        <span class="text-sm  hidden md:block text-gray-60 font-semibold me-12">{{Auth::user()->company->name}}</span>
+        <span class="text-sm  hidden md:block text-gray-60 font-semibold me-12">{{auth()->user()->company->name}}</span>
         <div class=" hidden md:flex items-center space-x-2 border-solid border border-grey-70 p-1 rounded-md bg-white-0 ">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_2758_2583)">
@@ -49,7 +52,11 @@
         </svg>
         <div class="ms-8 h-[40px] w-[40px] hidden md:block">
             <a href="{{route('company.profile')}}">
-                <img class="rounded-md h-[40px] w-[40px]" src="{{ URL::asset('storage/' . Auth::user()->company->logo) }}" />
+                @if(auth()->user()->company->logo)
+                    <img class="rounded-md h-[40px] w-[40px]" src="{{ asset('storage/' . auth()->user()->company->logo) }}"/>
+                @else
+                    <img src="{{ asset('img/logo_place_holder.jpg') }}" />
+                @endif
             </a>
         </div>
         <svg class="cursor-pointer hidden md:block" width="24" height="24" viewBox="0 0 24 24" fill="none"

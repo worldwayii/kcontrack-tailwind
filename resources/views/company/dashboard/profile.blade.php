@@ -20,12 +20,16 @@
         <div class="flex md:space-x-4 space-x-2 items-center">
             <div
                 class="border-solid border  flex items-center justify-center rounded-full  h-[31px] w-[31px] ">
-                <img src="{{ URL::asset('storage/' . Auth::user()->company->logo) }}" alt="Company Logo"/>
+                @if(auth()->user()->company->logo)
+                    <img src="{{ asset('storage/' . auth()->user()->company->logo) }}" alt="Logo"/>
+                @else
+                    <img src="{{ asset('img/icon_holder.png') }}" />
+                @endif
 
             </div>
             <div class="flex flex-col">
-                <span class="md:text-xl text-sm font-semibold text-black-10">{{Auth::user()->company->name}}</span>
-                <span class="md:text-sm text-[10px] text-[#A7A7A7]">{{Auth::user()->email}}</span>
+                <span class="md:text-xl text-sm font-semibold text-black-10">{{auth()->user()->company->name}}</span>
+                <span class="md:text-sm text-[10px] text-[#A7A7A7]">{{auth()->user()->email}}</span>
             </div>
         </div>
         <a  href="{{route('company.edit')}}">
@@ -49,21 +53,21 @@
         <div class="flex flex-col md:flex-row">
             <div class="md:w-[40%] flex flex-col">
                 <span class="text-black-10 font-semibold text-sm">Lastname:</span>
-                <span class="text-[#B0AFAF] text-xs mb-4">{{Auth::user()->company->last_name}}</span>
+                <span class="text-[#B0AFAF] text-xs mb-4">{{auth()->user()->company->last_name}}</span>
                 <span class="text-black-10 font-semibold text-sm">Company name:</span>
-                <span class="text-[#B0AFAF] text-xs mb-4">{{Auth::user()->company->name}}</span>
+                <span class="text-[#B0AFAF] text-xs mb-4">{{auth()->user()->company->name}}</span>
                 <span class="text-black-10 font-semibold text-sm">Phone Number:</span>
-                <span class="text-[#B0AFAF] text-xs mb-4">{{Auth::user()->company->phone_number}}</span>
+                <span class="text-[#B0AFAF] text-xs mb-4">{{auth()->user()->company->phone_number}}</span>
                 <span class="text-black-10 font-semibold text-sm">Company Description</span>
-                <span class="text-[#B0AFAF] text-xs mb-4">{{Auth::user()->company->description}}</span>
+                <span class="text-[#B0AFAF] text-xs mb-4">{{auth()->user()->company->description}}</span>
             </div>
             <div class="md:w-[40%] flex flex-col">
                 <span class="text-black-10 font-semibold text-sm">Firstname:</span>
-                <span class="text-[#B0AFAF] text-xs mb-4">{{Auth::user()->company->first_name}}</span>
+                <span class="text-[#B0AFAF] text-xs mb-4">{{auth()->user()->company->first_name}}</span>
                 <span class="text-black-10 font-semibold text-sm">Company email:</span>
-                <span class="text-[#B0AFAF] text-xs mb-4">{{Auth::user()->email}}</span>
+                <span class="text-[#B0AFAF] text-xs mb-4">{{auth()->user()->email}}</span>
                 <span class="text-black-10 font-semibold text-sm">Zip Code:</span>
-                <span class="text-[#B0AFAF] text-xs mb-4">{{Auth::user()->company->zip_code}}</span>
+                <span class="text-[#B0AFAF] text-xs mb-4">{{auth()->user()->company->zip_code}}</span>
             </div>
         </div>
     </div>
@@ -73,7 +77,7 @@
         </div>
         <div class="flex space-x-2">
             <div class="py-1 px-2 border rounded-lg">
-                <span class="text-[#80868C] text-xs">{{Auth::user()->company->category->label()}}</span>
+                <span class="text-[#80868C] text-xs">{{auth()->user()->company->category->label()}}</span>
             </div>
         </div>
     </div>

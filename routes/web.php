@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Company\EmployeeController;
+use App\Http\Controllers\Company\SchedulerController;
 use App\Http\Controllers\CompanyController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
@@ -39,29 +40,6 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware(['auth', 'signed'])->name('verification.verify');
 Route::post('/email/verification-notification', [AuthController::class, 'sendVerification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-//Route::middleware(['auth', 'verified'])->group(function () {
-//    Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
-//    Route::get('/company/profile', [CompanyController::class, 'show'])->name('company.profile');
-//    Route::get('/company/edit', [CompanyController::class, 'edit'])->name('company.edit-profile');
-//    Route::post('/company/edit', [CompanyController::class, 'update']);
-//
-//
-//});
-//
-//
-//Route::middleware(['auth', 'verified'])->group(function () {
-//    Route::prefix('company')->name('company.')->group(function () {
-//        Route::resource('dashboard', CompanyController::class)
-//            ->only(['index'])
-//            ->names([
-//                'index' => 'company.dashboard',
-//            ]);
-//
-//        Route::get('profile', [CompanyController::class, 'show'])->name('company.profile');
-//        Route::get('edit-profile', [CompanyController::class, 'edit'])->name('company.edit-profile');
-//        Route::post('edit-profile', [CompanyController::class, 'update']);
-//    });
-//});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('/company')
@@ -73,5 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/edit', [CompanyController::class, 'update']);
 
         Route::singleton('employee', EmployeeController::class)->creatable();
+        Route::post('employee/store/manual', [EmployeeController::class, 'storeManual'])->name('employee.store.manual');
+
+        Route::singleton('scheduler', SchedulerController::class)->creatable();
     });
 });

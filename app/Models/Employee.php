@@ -20,8 +20,9 @@ class Employee extends Model
         'company_id',
         'user_id',
         'first_name',
+        'last_name',
         'staff_number',
-        'position_role',
+        'role',
         'pay_rate',
         'phone_number',
         'zip_code',
@@ -34,6 +35,11 @@ class Employee extends Model
         static::creating(function ($user) {
             $user->uuid = Str::uuid();
         });
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function company(): BelongsTo

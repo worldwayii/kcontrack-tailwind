@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
                         'last_name' => fake()->firstName(),
                         'staff_size' => 5,
                         'description' => fake()->text(),
-                        'category' => fake()->name(),
+                        'category' => 1,
                         'zip_code' => 'AX1 0TD',
                         'address' => fake()->address(),
                         'user_id' => $company->id,
