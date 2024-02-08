@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Company\EmployeeController;
-use App\Http\Controllers\Company\SchedulerController;
 use App\Http\Controllers\CompanyController;
+use App\Livewire\ShowScheduler;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::singleton('employee', EmployeeController::class)->creatable();
         Route::post('employee/store/manual', [EmployeeController::class, 'storeManual'])->name('employee.store.manual');
 
-        Route::singleton('scheduler', SchedulerController::class)->creatable();
+//            Route::singleton('scheduler', SchedulerController::class)->creatable();
+        Route::get('scheduler', ShowScheduler::class)->name('scheduler.show');
     });
 });
