@@ -22,17 +22,12 @@ class UploadEmployers extends Component
     #[Rule( 'required', new Exists('companies', 'id'))]
     public  $company_id;
 
-    public function mount()
-    {
-//        dd('mounted');
-    }
 
     public function saveFile()
     {
         $this->authorize('store',Company::class);
 
         $validated = $this->validate();
-        dd($validated);
 
         try {
             $csv = Reader::createFromPath($this->file->getRealPath())->setHeaderOffset(0);
