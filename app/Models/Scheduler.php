@@ -4,39 +4,74 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Scheduler extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'company_id',
-        'user_id',
-        'starts_at',
-        'ends_at',
-        'role',
-        'pay_rate',
-        'break',
-        'shift_notes'
+            'user_id',
+            'company_id',
+            'employee_id',
+            'start_at',
+            'end_at',
+            'role',
+            'pay_rate',
+            'break',
+            'shift_note',
+            'role_colour',
+            'frequency',
+            'accepted',
+            'published',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($user) {
-            $user->uuid = Str::uuid();
+    public static function booted() {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
         });
     }
 
-    public function company(): BelongsTo
-    {
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+    ];
+
+    public function employee(){
+        return $this->belongsTo(Employee::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function company(){
         return $this->belongsTo(Company::class);
+    }
+
+    public static function getTotalScheduledTime()
+    {
+        $schedules = self::all(); // Retrieve all records (consider pagination if there are many records)
+
+        $totalTime = 0; // Initialize total time counter
+
+        foreach ($schedules as $schedule) {
+            // Convert start_at and end_at to Carbon instances for easy date manipulation
+            $startAt = Carbon::parse($schedule->start_at);
+            $endAt = Carbon::parse($schedule->end_at);
+
+            // Calculate the difference in minutes between start_at and end_at
+            $duration = $endAt->diffInMinutes($startAt);
+
+            // Add the duration to total time
+            $totalTime += $duration;
+        }
+
+        // Convert total minutes to hours and minutes for better readability
+        $totalHours = floor($totalTime / 60);
+        $totalMinutes = $totalTime % 60;
+
+        return $totalTime;
     }
 }

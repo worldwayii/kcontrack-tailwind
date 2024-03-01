@@ -2,22 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Str;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
-    use HasApiTokens;
-    use HasFactory;
-    use Notifiable;
-    use HasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -25,8 +19,10 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
+        'name',
         'email',
         'password',
+        'uuid',
     ];
 
     /**
@@ -49,34 +45,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($employee) {
-            $employee->uuid = Str::uuid();
+    public static function booted() {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
         });
     }
 
-    public function company(): HasOne
-    {
-        return $this->hasOne(Company::class, 'user_id');
+    public function companies(){
+        return $this->hasMany(Company::class);
     }
 
-    public static function createStaff($email): User
-    {
-        $user = new User;
-        $role = Role::where('name', 'kcontracker')->first();
-        $user->assignRole($role);
-        $user->email = $email;
+    public function employees(){
+        return $this->hasMany(Employee::class);
+    }
 
-        // Generate a random password
-        $randomPassword = Str::random(12); // You can adjust the password length as needed
-        $user->password = bcrypt($randomPassword);
-
-        // Save the user to the database
-        $user->save();
-        session()->put('created_user_password', $randomPassword);
-
-        return $user;
+    public function schedulers(){
+        return $this->hasMany(Scheduler::class);
     }
 }

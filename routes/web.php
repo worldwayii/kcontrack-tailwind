@@ -1,13 +1,13 @@
 <?php
-
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Company\EmployeeController;
 use App\Http\Controllers\CompanyController;
-use App\Livewire\ShowScheduler;
+//use App\Livewire\ShowScheduler;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+//mine
+use App\Http\Controllers\SchedulerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,11 +18,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::controller(SchedulerController::class)->prefix('schedulers')->group(function () {
+    Route::get('/', 'index')->name('schedulers.index');
+    Route::get('/publish', 'publish')->name('schedulers.publish');
+});
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/company/register/step/1', [AuthController::class, 'registerStepOne'])->name('register.one');
@@ -54,6 +58,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('employee/store/manual', [EmployeeController::class, 'storeManual'])->name('employee.store.manual');
 
 //            Route::singleton('scheduler', SchedulerController::class)->creatable();
-        Route::get('scheduler', ShowScheduler::class)->name('scheduler.show');
+        //Route::get('scheduler', ShowScheduler::class)->name('scheduler.show');
     });
 });
