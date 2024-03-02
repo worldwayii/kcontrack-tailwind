@@ -1,6 +1,6 @@
 
 
-   <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create">
+   <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" wire:ignore>
     @error('conflict')
         <div class="text-sm text-red-600">{{ $message }}</div>
     @enderror
@@ -352,455 +352,298 @@
                </div>
              </div>
            </li>
-           <li
-             data-checkbox-subselection-target="weekly-selection"
-             class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
-           >
-             <div class="flex items-center ps-3">
-               <input
-                 id="weekly"
-                 type="radio"
-                 value=""
-                 name="schedule_list_options"
-                 class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
-               />
-               <label
-                 for="weekly"
-                 class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
-                 >Weekly
-               </label>
-             </div>
-             <div
-               id="weekly-selection"
-               class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col hidden relative"
-             >
-               <div
-                 class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center month-list z-10"
-               ></div>
 
-               <div class="flex flex-col gap-[8px] mx-auto relative">
-                 <div
-                   class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
-                 >
-                   <div
-                     id="pre-year"
-                     class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                   >
-                     <svg
-                       width="5"
-                       height="8"
-                       viewBox="0 0 5 8"
-                       fill="none"
-                       xmlns="http://www.w3.org/2000/svg"
-                     >
-                       <path
-                         d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
-                         fill="#80868C"
-                       />
-                     </svg>
-                   </div>
+                <li
+                  data-checkbox-subselection-target="biweekly-selection"
+                  class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+                >
+                  <div class="flex items-center ps-3">
+                    <input
+                      id="biweekly"
+                      type="radio"
+                      value="biweekly"
+                      wire:model='frequency'
+                      name="schedule_list_options"
+                      class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+                    />
+                    <label
+                      for="biweekly"
+                      class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+                      >Bi-Weekly
+                    </label>
+                  </div>
+                  <!-- calender form component -->
+                  <div
+                    id="biweekly-selection"
+                    data-calender-element="biweekly-calender"
+                    class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+                  >
+                    <!-- months list display -->
+                    <div
+                      data-calender-months="biweekly-calender"
+                      class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+                    ></div>
 
-                   <p>
-                     <span id="month-picker" class="cursor-pointer">
-                       January
-                     </span>
-                     <span id="year"> 2024 </span>
-                   </p>
+                    <div class="flex flex-col gap-[8px] mx-auto relative">
+                      <div
+                        class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+                      >
+                        <!-- previous year button -->
+                        <div
+                          data-calender-prev-year="biweekly-calender"
+                          class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                        >
+                          <svg
+                            width="5"
+                            height="8"
+                            viewBox="0 0 5 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                              fill="#80868C"
+                            />
+                          </svg>
+                        </div>
 
-                   <div
-                     id="next-year"
-                     class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                   >
-                     <svg
-                       width="5"
-                       height="8"
-                       viewBox="0 0 5 8"
-                       fill="none"
-                       xmlns="http://www.w3.org/2000/svg"
-                     >
-                       <path
-                         d="M5 4L-3.49691e-07 0L0 8L5 4Z"
-                         fill="#80868C"
-                       />
-                     </svg>
-                   </div>
-                 </div>
-               </div>
+                        <p>
+                          <!-- month display and picker -->
+                          <span
+                            data-calender-month-picker="biweekly-calender"
+                            class="cursor-pointer"
+                          >
+                            January
+                          </span>
 
-               <div
-                 class="grid grid-cols-7 text-[14px] text-[#222730] calendar-days"
-               ></div>
-             </div>
-           </li>
-           <li
-             data-checkbox-subselection-target="biweekly-selection"
-             class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
-           >
-             <div class="flex items-center ps-3">
-               <input
-                 id="biweekly"
-                 type="radio"
-                 value=""
-                 name="schedule_list_options"
-                 class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
-               />
-               <label
-                 for="biweekly"
-                 class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
-                 >Bi-Weekly
-               </label>
-             </div>
-             <div
-               id="biweekly-selection"
-               class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col hidden"
-             >
-               <div class="flex flex-col gap-[4px]">
-                 <p class="font-semibold text-[12px] text-[#4F4F4F]">
-                   Select Days:
-                 </p>
+                          <!-- year display -->
+                          <span data-calender-year="biweekly-calender">
+                            2024
+                          </span>
+                        </p>
 
-                 <ul class="h-fit flex-1 flex justify-between">
-                   <li class="">
-                     <label
-                       for="M"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       M
-                       <input
-                         type="checkbox"
-                         id="M"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="T"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="T"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="W"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       W
-                       <input
-                         type="checkbox"
-                         id="W"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Thu"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="Thu"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="F"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       F
-                       <input
-                         type="checkbox"
-                         id="F"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="S"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       S
-                       <input
-                         type="checkbox"
-                         id="S"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Sun"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       S
-                       <input
-                         type="checkbox"
-                         id="Sun"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                 </ul>
-               </div>
-             </div>
-           </li>
-           <li
-             data-checkbox-subselection-target="monthly-selection"
-             class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
-           >
-             <div class="flex items-center ps-3">
-               <input
-                 id="monthly"
-                 type="radio"
-                 value=""
-                 name="schedule_list_options"
-                 class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
-               />
-               <label
-                 for="monthly"
-                 class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
-                 >Monthly
-               </label>
-             </div>
-             <div
-               id="monthly-selection"
-               class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col hidden"
-             >
-               <div class="flex flex-col gap-[4px]">
-                 <p class="font-semibold text-[12px] text-[#4F4F4F]">
-                   Select Days:
-                 </p>
+                        <!-- next year button -->
+                        <div
+                          data-calender-next-year="biweekly-calender"
+                          class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                        >
+                          <svg
+                            width="5"
+                            height="8"
+                            viewBox="0 0 5 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                              fill="#80868C"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
 
-                 <ul class="h-fit flex-1 flex justify-between">
-                   <li class="">
-                     <label
-                       for="M"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       M
-                       <input
-                         type="checkbox"
-                         id="M"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="T"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="T"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="W"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       W
-                       <input
-                         type="checkbox"
-                         id="W"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Thu"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="Thu"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="F"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       F
-                       <input
-                         type="checkbox"
-                         id="F"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="S"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       S
-                       <input
-                         type="checkbox"
-                         id="S"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Sun"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       S
-                       <input
-                         type="checkbox"
-                         id="Sun"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                 </ul>
-               </div>
-             </div>
-           </li>
-           <li
-             data-checkbox-subselection-target="customise-selection"
-             class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
-           >
-             <div class="flex items-center ps-3">
-               <input
-                 id="customise"
-                 type="radio"
-                 value=""
-                 name="schedule_list_options"
-                 class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
-               />
-               <label
-                 for="customise"
-                 class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
-                 >Customise
-               </label>
-             </div>
-             <div
-               id="customise-selection"
-               class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col hidden"
-             >
-               <div class="flex flex-col gap-[4px]">
-                 <p class="font-semibold text-[12px] text-[#4F4F4F]">
-                   Select Days:
-                 </p>
+                    <!-- calender days -->
+                    <div
+                      data-calender-days="biweekly-calender"
+                      class="grid grid-cols-7 text-[14px] text-[#222730]"
+                    ></div>
+                  </div>
+                </li>
+                <li
+                  data-checkbox-subselection-target="monthly-selection"
+                  class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+                >
+                  <div class="flex items-center ps-3">
+                    <input
+                      id="monthly"
+                      type="radio"
+                      value="monthly"
+                      wire:model='frequency'
+                      name="schedule_list_options"
+                      class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+                    />
+                    <label
+                      for="monthly"
+                      class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+                      >Monthly
+                    </label>
+                  </div>
+                  <!-- calender form component -->
+                  <div
+                    id="monthly-selection"
+                    data-calender-element="monthly-calender"
+                    class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+                  >
+                    <!-- months list display -->
+                    <div
+                      data-calender-months="monthly-calender"
+                      class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+                    ></div>
 
-                 <ul class="h-fit flex-1 flex justify-between">
-                   <li class="">
-                     <label
-                       for="M"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       M
-                       <input
-                         type="checkbox"
-                         id="M"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="T"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="T"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="W"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       W
-                       <input
-                         type="checkbox"
-                         id="W"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Thu"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="Thu"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="F"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       F
-                       <input
-                         type="checkbox"
-                         id="F"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="S"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       S
-                       <input
-                         type="checkbox"
-                         id="S"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Sun"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       S
-                       <input
-                         type="checkbox"
-                         id="Sun"
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible"
-                       />
-                     </label>
-                   </li>
-                 </ul>
-               </div>
-             </div>
-           </li>
+                    <div class="flex flex-col gap-[8px] mx-auto relative">
+                      <div
+                        class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+                      >
+                        <!-- previous year button -->
+                        <div
+                          data-calender-prev-year="monthly-calender"
+                          class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                        >
+                          <svg
+                            width="5"
+                            height="8"
+                            viewBox="0 0 5 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                              fill="#80868C"
+                            />
+                          </svg>
+                        </div>
+
+                        <p>
+                          <!-- month display and picker -->
+                          <span
+                            data-calender-month-picker="monthly-calender"
+                            class="cursor-pointer"
+                          >
+                            January
+                          </span>
+
+                          <!-- year display -->
+                          <span data-calender-year="monthly-calender">
+                            2024
+                          </span>
+                        </p>
+
+                        <!-- next year button -->
+                        <div
+                          data-calender-next-year="monthly-calender"
+                          class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                        >
+                          <svg
+                            width="5"
+                            height="8"
+                            viewBox="0 0 5 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                              fill="#80868C"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- calender days -->
+                    <div
+                      data-calender-days="monthly-calender"
+                      class="grid grid-cols-7 text-[14px] text-[#222730]"
+                    ></div>
+                  </div>
+                </li>
+                <li
+                  data-checkbox-subselection-target="customise-selection"
+                  class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+                >
+                  <div class="flex items-center ps-3">
+                    <input
+                      id="customise"
+                      type="radio"
+                      value="customised"
+                      wire:model='frequency'
+                      name="schedule_list_options"
+                      class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+                    />
+                    <label
+                      for="customise"
+                      class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+                      >Customise
+                    </label>
+                  </div>
+                  <!-- calender form component -->
+                  <div
+                    id="customise-selection"
+                    data-calender-element="customise-calender"
+                    class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+                  >
+                    <!-- months list display -->
+                    <div
+                      data-calender-months="customise-calender"
+                      class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+                    ></div>
+
+                    <div class="flex flex-col gap-[8px] mx-auto relative">
+                      <div
+                        class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+                      >
+                        <!-- previous year button -->
+                        <div
+                          data-calender-prev-year="customise-calender"
+                          class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                        >
+                          <svg
+                            width="5"
+                            height="8"
+                            viewBox="0 0 5 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                              fill="#80868C"
+                            />
+                          </svg>
+                        </div>
+
+                        <p>
+                          <!-- month display and picker -->
+                          <span
+                            data-calender-month-picker="customise-calender"
+                            class="cursor-pointer"
+                          >
+                            January
+                          </span>
+
+                          <!-- year display -->
+                          <span data-calender-year="customise-calender">
+                            2024
+                          </span>
+                        </p>
+
+                        <!-- next year button -->
+                        <div
+                          data-calender-next-year="customise-calender"
+                          class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                        >
+                          <svg
+                            width="5"
+                            height="8"
+                            viewBox="0 0 5 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                              fill="#80868C"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- calender days -->
+                    <div
+                      data-calender-days="customise-calender"
+                      class="grid grid-cols-7 text-[14px] text-[#222730]"
+                    ></div>
+                  </div>
+                </li>
          </ul>
          @error('date')
             <div class="text-sm text-red-600">{{ $message }}</div>

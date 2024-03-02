@@ -1,152 +1,172 @@
+// constants
 const isLeapYear = (year) => {
-  return (
-    (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
-    (year % 100 === 0 && year % 400 === 0)
-  );
-};
-const getFebDays = (year) => {
-  return isLeapYear(year) ? 29 : 28;
-};
-let calendar = document.querySelector(".calendar");
-const month_names = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-let month_picker = document.querySelector("#month-picker");
-const dayTextFormate = document.querySelector(".day-text-formate");
-const timeFormate = document.querySelector(".time-formate");
-const dateFormate = document.querySelector(".date-formate");
+    return (
+      (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
+      (year % 100 === 0 && year % 400 === 0)
+    );
+  };
 
-month_picker.onclick = () => {
-  month_list.classList.replace("hidden", "grid");
-};
+  const getFebDays = (year) => {
+    return isLeapYear(year) ? 29 : 28;
+  };
 
-const generateCalendar = (month, year) => {
-  let calendar_days = document.querySelector(".calendar-days");
-  calendar_days.innerHTML = "";
-  let calendar_header_year = document.querySelector("#year");
-  let days_of_month = [
-    31,
-    getFebDays(year),
-    31,
-    30,
-    31,
-    30,
-    31,
-    31,
-    30,
-    31,
-    30,
-    31,
+  const month_names = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
-  let currentDate = new Date();
+  const calenders = document.querySelectorAll("[data-calender-element]");
 
-  month_picker.innerHTML = month_names[month];
+  calenders.forEach((calender) => {
+    const calenderID = calender.getAttribute("data-calender-element");
 
-  calendar_header_year.innerHTML = year;
-
-  let first_day = new Date(year, month);
-
-  for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
-    let day = document.createElement("div");
-
-    day.classList.add(
-      "w-[40px]",
-      "h-[27px]",
-      "flex",
-      "items-center",
-      "justify-center",
-      "cursor-pointer",
-      "hover:bg-[#0075FF]",
-      "hover:text-white-0"
+    let nextYearButton = calender.querySelector(
+      `[data-calender-next-year="${calenderID}"]`
     );
 
-    if (i >= first_day.getDay()) {
-      day.innerHTML = i - first_day.getDay() + 1;
+    let prevYearButton = calender.querySelector(
+      `[data-calender-prev-year="${calenderID}"]`
+    );
 
-      if (
-        i - first_day.getDay() + 1 === currentDate.getDate() &&
-        year === currentDate.getFullYear() &&
-        month === currentDate.getMonth()
-      ) {
-        day.classList.add("current-date");
-      }
+    let monthPicker = calender.querySelector(
+      `[data-calender-month-picker="${calenderID}"]`
+    );
+
+    let monthList = calender.querySelector(
+      `[data-calender-months="${calenderID}"]`
+    );
+
+    if (monthPicker) {
+      monthPicker.onclick = () => {
+        monthList.classList.replace("hidden", "grid");
+      };
     }
-    calendar_days.appendChild(day);
-  }
-};
 
-let month_list = document.querySelector(".month-list");
+    const generateCalendar = (month, year) => {
+      let calendar_days = calender.querySelector(
+        `[data-calender-days="${calenderID}"]`
+      );
+      calendar_days.innerHTML = "";
+      let calendar_header_year = calender.querySelector(
+        `[data-calender-year="${calenderID}"]`
+      );
+      let days_of_month = [
+        31,
+        getFebDays(year),
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31,
+      ];
 
-month_names.forEach((e, index) => {
-  let month = document.createElement("div");
-  month.innerHTML = `<div>${e}</div>`;
+      let currentDate = new Date();
 
-  month_list.append(month);
-  month.onclick = () => {
-    currentMonth.value = index;
+      monthPicker.innerHTML = month_names[month];
+
+      calendar_header_year.innerHTML = year;
+
+      let first_day = new Date(year, month);
+
+      for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+        let day = document.createElement("label");
+
+        day.classList.add(
+          "w-[40px]",
+          "h-[27px]",
+          "flex",
+          "items-center",
+          "justify-center",
+          "cursor-pointer",
+          "text-[#222730]",
+          "hover:bg-[#0075FF]",
+          "hover:text-white-0",
+          "has-[:checked]:bg-[#0075FF]",
+          "has-[:checked]:text-white-0",
+          "relative"
+        );
+
+        if (i >= first_day.getDay()) {
+          day.textContent = i - first_day.getDay() + 1;
+          const dateId = `${i - first_day.getDay() + 1}/${
+            currentMonth.value + 1
+          }/${currentYear.value}`;
+
+          day.setAttribute("for", dateId);
+          const inputElement = document.createElement("input");
+          inputElement.type = "checkbox";
+          inputElement.setAttribute("name", calenderID);
+          inputElement.classList.add(
+            "absolute",
+            "top-0",
+            "left-0",
+            "right-0",
+            "bottom-0",
+            "z-10",
+            "invisible"
+          );
+
+          day.appendChild(inputElement);
+          inputElement.id = dateId;
+          inputElement.value = dateId;
+
+          inputElement.addEventListener('click', () => {
+            const selectedDates = Array.from(document.querySelectorAll(`input[name="${calenderID}"]:checked`)).map(input => input.value);
+            Livewire.dispatch('updateDate', {selected_date: selectedDates});
+        });
+          if (
+            i - first_day.getDay() + 1 === currentDate.getDate() &&
+            year === currentDate.getFullYear() &&
+            month === currentDate.getMonth()
+          ) {
+            day.classList.add("current-date");
+          }
+        }
+
+        calendar_days.appendChild(day);
+      }
+    };
+
+    month_names.forEach((e, index) => {
+      let month = document.createElement("div");
+      month.classList.add("cursor-pointer");
+      month.innerHTML = `<div>${e}</div>`;
+
+      monthList.append(month);
+      month.onclick = () => {
+        currentMonth.value = index;
+        generateCalendar(currentMonth.value, currentYear.value);
+        monthList.classList.replace("grid", "hidden");
+      };
+    });
+
+    prevYearButton.onclick = () => {
+      --currentYear.value;
+      generateCalendar(currentMonth.value, currentYear.value);
+    };
+
+    nextYearButton.onclick = () => {
+      ++currentYear.value;
+      generateCalendar(currentMonth.value, currentYear.value);
+    };
+
+    let currentDate = new Date();
+    let currentMonth = { value: currentDate.getMonth() };
+    let currentYear = { value: currentDate.getFullYear() };
     generateCalendar(currentMonth.value, currentYear.value);
-    month_list.classList.replace("grid", "hidden");
-  };
-});
-
-(function () {
-  month_list.classList.add("hideonce");
-})();
-document.querySelector("#pre-year").onclick = () => {
-  --currentYear.value;
-  generateCalendar(currentMonth.value, currentYear.value);
-};
-document.querySelector("#next-year").onclick = () => {
-  ++currentYear.value;
-  generateCalendar(currentMonth.value, currentYear.value);
-};
-
-let currentDate = new Date();
-let currentMonth = { value: currentDate.getMonth() };
-let currentYear = { value: currentDate.getFullYear() };
-generateCalendar(currentMonth.value, currentYear.value);
-
-// const todayShowTime = document.querySelector(".time-formate");
-// const todayShowDate = document.querySelector(".date-formate");
-
-// const currshowDate = new Date();
-// const showCurrentDateOption = {
-//   year: "numeric",
-//   month: "long",
-//   day: "numeric",
-//   weekday: "long",
-// };
-// const currentDateFormate = new Intl.DateTimeFormat(
-//   "en-US",
-//   showCurrentDateOption
-// ).format(currshowDate);
-// todayShowDate.textContent = currentDateFormate;
-// setInterval(() => {
-//   const timer = new Date();
-//   const option = {
-//     hour: "numeric",
-//     minute: "numeric",
-//     second: "numeric",
-//   };
-//   const formateTimer = new Intl.DateTimeFormat("en-us", option).format(timer);
-//   let time = `${`${timer.getHours()}`.padStart(
-//     2,
-//     "0"
-//   )}:${`${timer.getMinutes()}`.padStart(
-//     2,
-//     "0"
-//   )}: ${`${timer.getSeconds()}`.padStart(2, "0")}`;
-//   todayShowTime.textContent = formateTimer;
-// }, 1000);
+  });

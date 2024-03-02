@@ -27,8 +27,14 @@ class CreateSchedule extends Component
     $role_colour,
     $frequency;
 
-    protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh'];
+    protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
     // protected $debug = true;
+
+
+
+    public function mount(){
+        $this->employees = Employee::all();
+    }
 
     public function roleColorChanged($role_colour)
     {
@@ -36,23 +42,11 @@ class CreateSchedule extends Component
         Log::info('role colour changed: '. $role_colour);
     }
 
-    public function mount(){
-        $this->employees = Employee::all();
+    public function updateDate($selected_date){
+        $this->date = $selected_date;
+
+        //Log::info('selected date updated', ['selectedDate' => $selected_date]);
     }
-
-
-    // protected $rules = [
-    //     'start_at' => 'required',
-    //     'end_at' => 'required',
-    //     'role' => 'required|string',
-    //     'role_colour' => 'nullable|string',
-    //     'frequency' => 'nullable',
-    //     'date' => ['required', new CheckScheduleConflictRule($employee->id)],
-    //     'pay_rate' => 'nullable',
-    //     'break' => 'required|string',
-    //     'shift_note' => 'required|string',
-    //     'employee' => 'required|string',
-    // ];
 
     protected function rules()
     {
