@@ -1,5 +1,3 @@
-
-
    <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create">
      <div class="flex flex-col gap-[12px]">
        <div class="w-full flex flex-col gap-[2px]">
