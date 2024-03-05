@@ -106,7 +106,11 @@
         >
           Confirm Publish
         </button>
+
       </div>
+      <div wire:loading.delay class="text-green-500">
+        Publishing Schedules...
+    </div>
       @endif
     </section>
   </div>

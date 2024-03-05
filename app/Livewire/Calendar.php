@@ -31,6 +31,7 @@ class Calendar extends Component
     public $dayClickEnabled;
     public $eventClickEnabled;
     public $showModifyEventButtons;
+    public $showCreateModal;
 
     protected $casts = [
         'startsAt' => 'date',
@@ -39,7 +40,7 @@ class Calendar extends Component
         'gridEndsAt' => 'date',
     ];
 
-    protected $listeners = ['livewireEvent' => '$refresh', 'alert' => '$refresh'];
+    protected $listeners = ['livewireEvent' => '$refresh', 'alert' => '$refresh', 'openDirectModal'];
 
     public function mount($initialYear = null,
                           $initialMonth = null,
@@ -70,6 +71,7 @@ class Calendar extends Component
         $this->dayClickEnabled = $dayClickEnabled;
         $this->eventClickEnabled = $eventClickEnabled;
         $this->showModifyEventButtons = false;
+        $this->showCreateModal = false;
         $this->afterMount($extras);
     }
 
@@ -172,11 +174,19 @@ class Calendar extends Component
             });
     }
 
-    public function onDayClick($user_id, $date)
+    public function onDayClick($employee, $date, $entity = 'create')
     {
-        $grab = [$user_id, $date];
-        Log::info($grab);
-        //dd('nothing');
+        if($entity == 'create'){
+            //Log::info(['employee:' => $employee]);
+            $this->dispatch('openCreateDirectModal', $employee, $date);
+            Log::info("opening modal");
+            //$this->showCreateModal = true;
+        }
+    }
+
+    public function openDirectModal(){
+        Log::info("about to show madal");
+        //$this->showCreateModal = true;
     }
 
     public function onEventClick($eventId)
@@ -188,6 +198,11 @@ class Calendar extends Component
     {
         //dd($day);
     }
+
+    // public function openEditModal($itemId)
+    // {
+    //     $this->dispatch('openEditModal', $itemId);
+    // }
 
     public function forceLoad(){
         $this->js('window.location.reload()');

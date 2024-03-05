@@ -62,4 +62,8 @@ class Employee extends Model
     public function schedulers(){
         return $this->hasMany(Scheduler::class);
     }
+
+    public function pushNotificationLogs(){
+        return $this->hasMany(PushNotificationLog::class);
+    }
 }

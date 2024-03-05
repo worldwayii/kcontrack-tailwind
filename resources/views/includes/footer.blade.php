@@ -81,18 +81,6 @@
         showColor.style.height = "0px";
       }
 
-      function keepd() {
-        showColord.style.visibility = "visible";
-        showColord.style.height = "57px";
-        console.log('keep direct');
-      }
-
-      function leaved() {
-        showColord.style.visibility = "hidden";
-        showColord.style.height = "0px";
-        console.log('leave direct');
-      }
-
       /*CHANGE ROLE COLOR*/
       function changeRole(x) {
         let change = document.getElementById("roleColor");
@@ -104,6 +92,18 @@
 
         Livewire.dispatch('roleColorChanged',{role_colour: change.style.background}); // Emitting the event with the correct parameter
 
+      }
+
+      function keepd() {
+        showColord.style.visibility = "visible";
+        showColord.style.height = "57px";
+        console.log('keep direct');
+      }
+
+      function leaved() {
+        showColord.style.visibility = "hidden";
+        showColord.style.height = "0px";
+        console.log('leave direct');
       }
 
       function changeRoled(x) {

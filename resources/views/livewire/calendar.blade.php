@@ -424,8 +424,10 @@
 
               >
                 <div
-                  data-modal-target="create_schedule_direct'{{$user->uuid.$day}}'"
-                  data-modal-toggle="create_schedule_direct'{{$user->uuid.$day}}'"
+                  {{-- data-modal-target="create_schedule_direct"
+                  data-modal-toggle="create_schedule_direct" --}}
+                  wire:click="onDayClick({{$user}}, '{{$day}}')"
+                  {{-- wire:click="$dispatch(openCreateDirectModal)" --}}
                   type="button"
                   class="cursor-pointer"
 
@@ -447,7 +449,7 @@
               </div>
             </div>
             {{-- create schedule from grid modal --}}
-            <div
+            {{-- <div
             wire:ignore
             id="create_schedule_direct'{{$user->uuid.$day}}'"
 
@@ -483,7 +485,7 @@
               </div>
                     @livewire('create-schedule-direct', ['employee' => $user, 'date' => $day], key('create_schedule_direct'.$user->uuid.$day))
                 </div>
-            </div>
+            </div> --}}
 
             {{-- end create schedule from grid modal --}}
             @endforelse
@@ -581,7 +583,67 @@
         </div>
       </div>
     </section>
+                {{-- create schedule from grid modal --}}
+                <div
+                wire:ignore
+                id="create_schedule_direct"
+
+                tabindex="-1"
+                aria-hidden="true"
+                class="hidden overflow-y-hidden overflow-x-hidden fixed top-0 right-0 left-0 bottom-0 z-50 flex justify-center items-center backdrop-blur-sm"
+               >
+                <div
+                  class="flex flex-col gap-[24px] relative w-[calc(100%-48px)] max-w-[372px] p-[24px] rounded-[16px] bg-[#F9F9F9] border-[1px] border-[#C7C7C7] h-fit max-h-[calc(100%-48px)] overflow-y-auto no-scrollbar"
+                >
+                  <div class="w-full flex items-center justify-between">
+                    <p class="font-semibold text-[20px] text-[#4F4F4F]">
+                      Create Schedule
+                    </p>
+
+                    <button data-modal-toggle="create_schedule_direct" wire:click="$dispatch('alert')">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1.33333 1.33301L14.6667 14.6663M1.33333 14.6663L14.6667 1.33301"
+                          stroke="#828282"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                        @livewire('create-schedule-direct')
+
+                    </div>
+                </div>
+
+                {{-- end create schedule from grid modal --}}
   </div>
+
+  @script
+  <script>
+
+       $wire.on('openDirectModal', () => {
+        // const modal = FlowbiteInstances.getInstance('Modal', 'create_schedule_direct');
+        // modal.show();
+        document.getElementById('create_schedule_direct').classList.remove('hidden');
+       });
+
+       $wire.on('alert', () => {
+           console.log('can you see me');
+               // Show the modal
+               document.getElementById('create_schedule_direct').classList.add('hidden');
+               document.querySelector("body > div[modal-backdrop]")?.remove()
+       });
+  </script>
+  @endscript
 
 
 

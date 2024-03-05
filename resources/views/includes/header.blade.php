@@ -6,7 +6,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     {{-- @vite(['resources/js/app.js']) --}}
+
     <script src="{{asset('alert.js')}}"></script>
+    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap"
@@ -16,6 +19,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"
       rel="stylesheet"
     />
+    @livewireStyles
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {

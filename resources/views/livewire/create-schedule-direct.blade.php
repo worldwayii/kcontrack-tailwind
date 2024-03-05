@@ -1,6 +1,6 @@
 
 
-   <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" key='{{'create_schedule_direct'.$employee->uuid.$day}}'>
+   <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create">
      <div class="flex flex-col gap-[12px]">
        <div class="w-full flex flex-col gap-[2px]">
          <label
@@ -13,9 +13,10 @@
          <select
            id="employee"
            class="w-full h-[40px] px-[24px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px]"
+           {{-- wire:model='employee' --}}
          >
 
-           <option selected value="{{$employee->uuid}}">{{$employee->getFullNameAttribute()}}</option>
+           <option selected value="{{$employee->uuid ?? ''}}">{{$employee ? $employee->getFullNameAttribute() : ''}}</option>
          </select>
 
        </div>
@@ -159,34 +160,36 @@
                style="visibility: hidden"
                class="overflow-hidden h-[0px] absolute bg-[#fff] rounded-[8px] border-[0.5px] border-[#EDEFF4] grid grid-cols-3 gap-[4px] px-[4px] py-[7px]"
              >
-               <div
-                 onclick="changeRoled(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#8C9FCE]"
-                 style="border-color: #8c9fce; background: #d9e3fc"
-               ></div>
-               <div
-                 onclick="changeRoled(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] bg-[#DAF5EE] border-[#7AB6A7]"
-               ></div>
-               <div
-                 onclick="changeRoled(this)"
-                 class="w-[20px] cursor-pointer h-[20px] bg-[#F8DAD7] rounded border-[1px] border-[#DEA59F]"
-               ></div>
-               <div
-                 onclick="changeRoled(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#E3C1AA]"
-                 style="border-color: #e3c1aa; background: #fbf0e9"
-               ></div>
-               <div
-                 onclick="changeRoled(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#B37BB3]"
-                 style="border-color: #b37bb3; background: #f8e4f8"
-               ></div>
-               <div
-                 onclick="changeRoled(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#B37BB3]"
-                 style="border-color: #b37bb3; background: #fbf0e9"
-               ></div>
+             <div
+             onclick="changeRoled(this)"
+             class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
+             style="border-color: #8c9fce; background: #d9e3fc"
+           ></div>
+           <div
+             onclick="changeRoled(this)"
+             class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
+             style="border-color: #7AB6A7; background: #DAF5EE"
+           ></div>
+           <div
+             onclick="changeRoled(this)"
+             class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
+             style="border-color: #DEA59F; background: #F8DAD7"
+           ></div>
+           <div
+             onclick="changeRoled(this)"
+             class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#E3C1AA]"
+             style="border-color: #e3c1aa; background: #fbf0e9"
+           ></div>
+           <div
+             onclick="changeRoled(this)"
+             class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
+             style="border-color: #b37bb3; background: #f8e4f8"
+           ></div>
+           <div
+             onclick="changeRoled(this)"
+             class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
+             style="border-color: #b37bb3; background: #fbf0e9"
+           ></div>
              </div>
            </div>
          </div>
@@ -234,104 +237,13 @@
                  <ul class="h-fit flex-1 flex justify-between">
                    <li class="">
                      <label
-                       for="M"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       M
-                       <input
-                         type="checkbox"
-                         id="Mon"
-                         value="{{date('d/m/Y', strtotime('monday this week'))}}"
-                         wire:model='date'
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="T"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="Tue"
-                         value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
-                         wire:model='date'
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="W"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       W
-                       <input
-                         type="checkbox"
-                         id="Wed"
-                         value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
-                         wire:model='date'
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Thur"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="Thur"
-                         value="{{date('d/m/Y', strtotime('thursday this week'))}}"
-                         wire:model='date'
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Fri"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       F
-                       <input
-                         type="checkbox"
-                         id="Fri"
-                         value="{{date('d/m/Y', strtotime('friday this week'))}}"
-                         wire:model='date'
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
-                       for="Sat"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       S
-                       <input
-                         type="checkbox"
-                         id="Sat"
-                         value="{{date('d/m/Y', strtotime('saturday this week'))}}"
-                         wire:model='date'
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                       />
-                     </label>
-                   </li>
-                   <li class="">
-                     <label
                        for="Su"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
-                       S
+                       {{!empty($day) ? $day->minDayName : ''}}
                        <input
                          type="checkbox"
                          id="Su"
-                         value="{{date('d/m/Y', strtotime('sunday'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
@@ -378,9 +290,10 @@
        $wire.on('alert', () => {
            console.log('can you see me');
                // Show the modal
-               //document.getElementById('create_schedule').classList.add('hidden');
+               //document.getElementById('create_schedule_direct').classList.add('hidden');
                document.querySelector("body > div[modal-backdrop]")?.remove()
        });
+
    </script>
    @endscript
 

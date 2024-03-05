@@ -143,7 +143,8 @@
                  <div
                    id="roleColor"
                    class="w-[27px] h-[27px] bg-[#F8DAD7] border-[#DEA59F] border-[1px] rounded-[4px] @error('role_colour') border-red-500 @enderror"
-                 ></div>
+                 >
+                </div>
                </div>
                <div
                  onmouseover="keep()"
@@ -172,16 +173,18 @@
              >
                <div
                  onclick="changeRole(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#8C9FCE]"
+                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
                  style="border-color: #8c9fce; background: #d9e3fc"
                ></div>
                <div
                  onclick="changeRole(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] bg-[#DAF5EE] border-[#7AB6A7]"
+                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
+                 style="border-color: #7AB6A7; background: #DAF5EE"
                ></div>
                <div
                  onclick="changeRole(this)"
-                 class="w-[20px] cursor-pointer h-[20px] bg-[#F8DAD7] rounded border-[1px] border-[#DEA59F]"
+                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
+                 style="border-color: #DEA59F; background: #F8DAD7"
                ></div>
                <div
                  onclick="changeRole(this)"
@@ -190,12 +193,12 @@
                ></div>
                <div
                  onclick="changeRole(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#B37BB3]"
+                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
                  style="border-color: #b37bb3; background: #f8e4f8"
                ></div>
                <div
                  onclick="changeRole(this)"
-                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px] border-[#B37BB3]"
+                 class="w-[20px] cursor-pointer h-[20px] rounded border-[1px]"
                  style="border-color: #b37bb3; background: #fbf0e9"
                ></div>
              </div>

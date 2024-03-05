@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Rules\CheckScheduleConflictRule;
+use Livewire\Attributes\On;
+use App\Models\Employee;
 
 class CreateScheduleDirect extends Component
 {
@@ -24,7 +27,7 @@ class CreateScheduleDirect extends Component
     $role_colour,
     $frequency = 'daily';
 
-    protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'gridEvent' => '$refresh'];
+    protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'gridEvent' => '$refresh', 'openCreateDirectModal'];
     protected $debug = true;
 
     public function roleColorChanged($role_colour)
@@ -33,25 +36,39 @@ class CreateScheduleDirect extends Component
         Log::info('role colour changed: '. $role_colour);
     }
 
-    public function mount($employee, $date){
-        $this->employees = $employee;
-        $this->day = $date;
-        $this->date = [$date->format('d/m/Y')];
+    public function openCreateDirectModal($employee, $date){
+        //dd($date);
+        $date = Carbon::parse($date);
+         $this->employee = Employee::findOrFail($employee['id']);
+         //dd($employee);
+         $this->day = $date;
+        Log::info("did this dispatch?");
+         $this->date = [$date->format('d/m/Y')];
+         $this->dispatch('openDirectModal');
+    }
+
+    public function mount(){
+        // $this->employees = $employee;
+        // $this->day = $date;
+        // $this->date = [$date->format('d/m/Y')];
         //dd($this->date);
     }
 
 
-    protected $rules = [
+    protected function rules()
+    {
+        return [
         'start_at' => 'required',
         'end_at' => 'required',
         'role' => 'required|string',
         'role_colour' => 'nullable|string',
         'frequency' => 'nullable',
-        'date' => 'required',
+        'date' => ['required', new CheckScheduleConflictRule($this->employee->id)],
         'pay_rate' => 'nullable',
         'break' => 'required|string',
         'shift_note' => 'required|string',
     ];
+}
 
     // protected function prepareForValidation($attributes){
     //     dd($attributes);

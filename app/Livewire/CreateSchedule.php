@@ -50,18 +50,20 @@ class CreateSchedule extends Component
 
     protected function rules()
     {
-        $employee = Employee::where('uuid', $this->employee)->first();
+        $employee =  Employee::where('uuid', $this->employee)->first();
+
         return [
+                'employee' => 'required|string',
                 'start_at' => 'required',
                 'end_at' => 'required',
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
                 'frequency' => 'nullable',
-                'date' => ['required', new CheckScheduleConflictRule($employee->id)],
+                'date' => ['required', $employee ? new CheckScheduleConflictRule($employee->id) : 'string'],
                 'pay_rate' => 'nullable',
                 'break' => 'required|string',
                 'shift_note' => 'required|string',
-                'employee' => 'required|string',
+
             ];
     }
 
@@ -72,7 +74,6 @@ class CreateSchedule extends Component
 
     public function updated($propertyName)
 {
-    // Perform validation
     $this->validateOnly($propertyName);
 }
 
@@ -86,9 +87,9 @@ class CreateSchedule extends Component
 
     public function create(){
         DB::beginTransaction();
-
-        try{
         $data = $this->validate();
+        try{
+
         $employee = Employee::where('uuid', $data['employee'])->first();
         //dd($data);
         foreach($data['date'] as $date){
