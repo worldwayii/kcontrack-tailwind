@@ -17,6 +17,7 @@
 
                     <button
                       type="button"
+                      wire:click="delete"
                       class="flex h-[50px] w-full items-center justify-center px-[20px] border-[0.5px] border-[#3984E6] rounded-[4px] font-medium text-[14px] text-[#fff] bg-[#ff0000] mt-[32px]"
                     >
                       Contimue
@@ -32,3 +33,4 @@
                   </div>
                 </div>
               </div>
+

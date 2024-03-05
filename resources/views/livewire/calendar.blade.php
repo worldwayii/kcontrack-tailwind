@@ -379,8 +379,7 @@
                   </div>
 
                   <div class="cursor-pointer" type='button'
-                  data-modal-target="delete_modal"
-                  data-modal-toggle="delete_modal"
+                  wire:click="$dispatch('openDeleteModal', { id: {{ $event['id'] }} })"
                   >
                     <svg
                       width="14"
@@ -583,8 +582,6 @@
   <script>
 
        $wire.on('openDirectModal', () => {
-        // const modal = FlowbiteInstances.getInstance('Modal', 'create_schedule_direct');
-        // modal.show();
         document.getElementById('create_schedule_direct').classList.remove('hidden');
        });
 
@@ -592,8 +589,16 @@
            console.log('can you see me');
                // Show the modal
                document.getElementById('create_schedule_direct').classList.add('hidden');
-               document.querySelector("body > div[modal-backdrop]")?.remove()
+               document.getElementById('delete_modal').classList.add('hidden');
+               document.querySelector("body > div[modal-backdrop]")?.remove();
        });
+
+       $wire.on('openDeleteModal', () => {
+            console.log('can you see me on open delete modal');
+            document.getElementById('delete_modal').classList.remove('hidden');
+            document.querySelector("body > div[modal-backdrop]")?.add();
+        });
+
   </script>
   @endscript
 

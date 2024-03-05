@@ -231,7 +231,7 @@
              >
                <div class="flex flex-col gap-[4px]">
                  <p class="font-semibold text-[12px] text-[#4F4F4F]">
-                   Select Days:
+                   Day:
                  </p>
 
                  <ul class="h-fit flex-1 flex justify-between">
