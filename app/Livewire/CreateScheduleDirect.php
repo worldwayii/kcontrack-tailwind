@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Rules\CheckScheduleConflictRule;
-use Livewire\Attributes\On;
 use App\Models\Employee;
 
 class CreateScheduleDirect extends Component
@@ -46,14 +45,6 @@ class CreateScheduleDirect extends Component
          $this->date = [$date->format('d/m/Y')];
          $this->dispatch('openDirectModal');
     }
-
-    public function mount(){
-        // $this->employees = $employee;
-        // $this->day = $date;
-        // $this->date = [$date->format('d/m/Y')];
-        //dd($this->date);
-    }
-
 
     protected function rules()
     {

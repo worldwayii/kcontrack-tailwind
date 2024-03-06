@@ -348,7 +348,11 @@
                   class="absolute top-0 bottom-0 right-0 left-0 bg-[#FBF0E9] hidden group-hover:flex items-center justify-center gap-[8px] transition-all"
                 >
 
-                  <div class="cursor-pointer" type='button'>
+                  <div
+                  class="cursor-pointer"
+                  type='button'
+                  wire:click="$dispatch('openEditModal', { id: {{ $event['id'] }}, date: '{{$day}}' })"
+                  >
                     <svg
                       width="16"
                       height="15"
@@ -531,50 +535,15 @@
       </div>
     </section>
                 {{-- create schedule from grid modal --}}
-                <div
-                wire:ignore
-                id="create_schedule_direct"
-
-                tabindex="-1"
-                aria-hidden="true"
-                class="hidden overflow-y-hidden overflow-x-hidden fixed top-0 right-0 left-0 bottom-0 z-50 flex justify-center items-center backdrop-blur-sm"
-               >
-                <div
-                  class="flex flex-col gap-[24px] relative w-[calc(100%-48px)] max-w-[372px] p-[24px] rounded-[16px] bg-[#F9F9F9] border-[1px] border-[#C7C7C7] h-fit max-h-[calc(100%-48px)] overflow-y-auto no-scrollbar"
-                >
-                  <div class="w-full flex items-center justify-between">
-                    <p class="font-semibold text-[20px] text-[#4F4F4F]">
-                      Create Schedule
-                    </p>
-
-                    <button data-modal-toggle="create_schedule_direct" wire:click="$dispatch('alert')">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1.33333 1.33301L14.6667 14.6663M1.33333 14.6663L14.6667 1.33301"
-                          stroke="#828282"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-
-                        @livewire('create-schedule-direct')
-
-                    </div>
-                </div>
-
+                    @include('includes.create-schedule-direct')
                 {{-- end create schedule from grid modal --}}
 
+                {{-- Edit schedule from grid modal --}}
+                    @include('includes.edit-schedule')
+                {{-- end Edit schedule from grid modal --}}
+
                 {{-- Delete Confirmation Modal --}}
-                @livewire('delete-schedule')
+                    @livewire('delete-schedule')
                 {{-- end Delete Confirmation --}}
   </div>
 
@@ -583,6 +552,7 @@
 
        $wire.on('openDirectModal', () => {
         document.getElementById('create_schedule_direct').classList.remove('hidden');
+        document.querySelector("body > div[modal-backdrop]")?.add();
        });
 
        $wire.on('alert', () => {
@@ -590,12 +560,19 @@
                // Show the modal
                document.getElementById('create_schedule_direct').classList.add('hidden');
                document.getElementById('delete_modal').classList.add('hidden');
+               document.getElementById('edit_modal').classList.add('hidden');
                document.querySelector("body > div[modal-backdrop]")?.remove();
        });
 
        $wire.on('openDeleteModal', () => {
             console.log('can you see me on open delete modal');
             document.getElementById('delete_modal').classList.remove('hidden');
+            document.querySelector("body > div[modal-backdrop]")?.add();
+        });
+
+        $wire.on('openEditModal', () => {
+            console.log('can you see me on open Edit modal');
+            document.getElementById('edit_modal').classList.remove('hidden');
             document.querySelector("body > div[modal-backdrop]")?.add();
         });
 

@@ -70,6 +70,9 @@
       let showColord = document.getElementById("showColord");
       showColord.style.transition = "0.2s";
 
+      let showColore = document.getElementById("showColore");
+      showColord.style.transition = "0.2s";
+
       function keep() {
         showColor.style.visibility = "visible";
         showColor.style.height = "57px";
@@ -120,6 +123,30 @@
       }
 
 
+      function keepe() {
+        showColore.style.visibility = "visible";
+        showColore.style.height = "57px";
+        console.log('keep direct');
+      }
+
+      function leavee() {
+        showColore.style.visibility = "hidden";
+        showColore.style.height = "0px";
+        console.log('leave direct');
+      }
+
+      function changeRolee(x) {
+        let changed = document.getElementById("roleColore");
+        let selectd = document.getElementById("role-color-elemente");
+        changed.style.background = x.style.background;
+        changed.style.borderColor = x.style.borderColor;
+
+        selectd.value = x.style.background;
+
+        Livewire.dispatch('roleColorChanged',{role_colour: changed.style.background}); // Emitting the event with the correct parameter
+        console.log('change role colour edit');
+
+      }
     </script>
 
     <script src="{{asset('calender.js')}}"></script>
