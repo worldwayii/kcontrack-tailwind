@@ -19,13 +19,7 @@
                  id="timee"
                  class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('start_at') border-red-500 @enderror" wire:model='start_at'
                >
-                 <option selected>Select</option>
-                 <option value="0:00">0:00AM</option>
-                 <option value="1:00">1:00AM</option>
-                 <option value="2:00">2:00AM</option>
-                 <option value="3:00">3:00AM</option>
-                 <option value="4:00">4:00AM</option>
-                 <option value="5:00">5:00AM</option>
+               @include('includes.time-options')
                </select>
 
              </div>
@@ -35,12 +29,7 @@
                  id="timee"
                  class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('end_at') border-red-500 @enderror" wire:model='end_at'
                >
-                 <option selected>Select</option>
-                 <option value="0:00">0:00AM</option>
-                 <option value="1:00">1:00AM</option>
-                 <option value="2:00">2:00AM</option>
-                 <option value="3:00">3:00AM</option>
-                 <option value="4:00">4:00AM</option>
+               @include('includes.time-options')
                </select>
              </div>
            </div>
