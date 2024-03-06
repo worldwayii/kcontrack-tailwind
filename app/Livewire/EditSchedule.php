@@ -101,6 +101,7 @@ class EditSchedule extends Component
                 'frequency' => $this->frequency,
                 'role_colour' => $this->rgbToHex($data['role_colour']),
                 'shift_note' => $data['shift_note'],
+                'published' => false,
             ]);
 
         DB::commit();

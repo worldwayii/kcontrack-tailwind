@@ -30,10 +30,16 @@
         <div
           class="bg-[#3984E61A] w-fit rounded-[4px] px-[9px] py-[10px] text-[#3984E6] text-[12px] font-semibold"
         >
+        @if($schedule_count)
           <p>
-            Scheduled By: Mark Anthony | Date Scheduled: 01/02/2024 | Time:
-            04:30:21 PM
+            Scheduled By: {{$employees->first()->user->name}} | Date Scheduled: {{$employees->first()->schedulers()->wherePublished(false)->first()->created_at->format('d/m/y')}} | Time: {{$employees->first()->schedulers()->wherePublished(false)->first()->created_at->format('h:i:s A')}}
+
           </p>
+          @else
+          <p>
+            Scheduled By: | Date Scheduled: | Time:
+          </p>
+          @endif
         </div>
       </div>
 
