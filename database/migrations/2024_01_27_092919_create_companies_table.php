@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid()->unique();
             $table->foreignId('user_id')->constrained();
-            $table->string('name');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('staff_size');
-            $table->text('description');
-            $table->string('category');
-            $table->string('phone_number', 12);
-            $table->text('address');
-            $table->string('zip_code', 7);
-            $table->string('logo');
+            $table->string('name')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('staff_size')->nullable();
+            $table->text('description')->nullable();
+            $table->string('category')->nullable();
+            $table->string('phone_number', 12)->unique()->nullable();
+            $table->text('address')->nullable();
+            $table->string('zip_code', 7)->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('push_notification_logs', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid()->unique();
             $table->string('employee_id');
             $table->string('title');
             $table->text('body')->nullable();

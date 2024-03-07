@@ -20,7 +20,7 @@ class UploadEmployers extends Component
     public $file;
 
     #[Rule( 'required', new Exists('companies', 'id'))]
-    public  $company_id;
+    public $company_id;
 
     public function mount()
     {
@@ -30,9 +30,10 @@ class UploadEmployers extends Component
     public function saveFile()
     {
         $this->authorize('store',Company::class);
+        dd($this->file);
 
-        $validated = $this->validate();
-        dd($validated);
+        $this->validate();
+        dd('$validated');
 
         try {
             $csv = Reader::createFromPath($this->file->getRealPath())->setHeaderOffset(0);
