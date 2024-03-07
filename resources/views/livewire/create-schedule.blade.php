@@ -258,7 +258,7 @@
                          type="checkbox"
                          id="T"
                          value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
-                         wire:model.live='date'
+                         wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
                      </label>
@@ -273,7 +273,7 @@
                          type="checkbox"
                          id="W"
                          value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
-                         wire:model.live='date'
+                         wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
                      </label>

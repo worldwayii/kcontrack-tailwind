@@ -17,7 +17,7 @@ class EditSchedule extends Component
     $scheduler,
     $employee,
     $day,
-    $date = [],
+    $date,
     $start_at,
     $end_at,
     $role,
@@ -72,6 +72,7 @@ class EditSchedule extends Component
         'start_at' => 'required',
         'end_at' => 'required',
         'role' => 'required|string',
+        'date' => 'required',
         'role_colour' => 'nullable|string',
         'pay_rate' => 'nullable',
         'break' => 'required|string',
@@ -84,7 +85,7 @@ class EditSchedule extends Component
         DB::beginTransaction();
 
         try{
-            $date = $this->date;
+            $date = $data['date'];
             $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
             $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
             $employee = $this->employee;

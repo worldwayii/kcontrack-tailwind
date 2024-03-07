@@ -169,6 +169,160 @@
          </div>
        </div>
 
+       <div class="w-full flex flex-col gap-[2px]" id="assignment">
+        <label
+          id="shiftd"
+          class="text-[12px] font-semibold text-[#4F4F4F]"
+        >
+          Assign Days
+        </label>
+
+        <ul
+          class="w-full text-[12px] font-semibold text-[#4F4F4F] bg-white-0 border-[0.5px] border-[#EDEFF4]"
+        >
+          <li
+            data-checkbox-subselection-target="daily-selection"
+            class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+          >
+            <div class="flex items-center ps-3">
+              <input
+                id="dailyd"
+                type="radio"
+                value="daily"
+                name="schedule_list_options"
+                wire:model='frequency'
+                class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2 @error('frequency') border-red-500 @enderror"
+              />
+              <label
+                for="daily"
+                class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+                >Daily
+              </label>
+            </div>
+            <div
+              id="daily-selectiond"
+              class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col"
+            >
+              <div class="flex flex-col gap-[4px]">
+                <p class="font-semibold text-[12px] text-[#4F4F4F]">
+                  Day:
+                </p>
+
+                <ul class="h-fit flex-1 flex justify-between">
+                   <li class="">
+                     <label
+                       for="M"
+                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                     >
+                       M
+                       <input
+                         type="radio"
+                         id="M"
+                         value="{{date('d/m/Y', strtotime('monday this week'))}}"
+                         wire:model='date'
+                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                       />
+                     </label>
+                   </li>
+                   <li class="">
+                     <label
+                       for="T"
+                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                     >
+                       T
+                       <input
+                         type="radio"
+                         id="T"
+                         value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
+                         wire:model='date'
+                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                       />
+                     </label>
+                   </li>
+                   <li class="">
+                     <label
+                       for="W"
+                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                     >
+                       W
+                       <input
+                         type="radio"
+                         id="W"
+                         value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
+                         wire:model='date'
+                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                       />
+                     </label>
+                   </li>
+                   <li class="">
+                     <label
+                       for="Thu"
+                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                     >
+                       T
+                       <input
+                         type="radio"
+                         id="Thu"
+                         value="{{date('d/m/Y', strtotime('thursday this week'))}}"
+                         wire:model='date'
+                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                       />
+                     </label>
+                   </li>
+                   <li class="">
+                     <label
+                       for="F"
+                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                     >
+                       F
+                       <input
+                         type="radio"
+                         id="F"
+                         value="{{date('d/m/Y', strtotime('friday this week'))}}"
+                         wire:model='date'
+                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                       />
+                     </label>
+                   </li>
+                   <li class="">
+                     <label
+                       for="S"
+                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                     >
+                       S
+                       <input
+                         type="radio"
+                         id="S"
+                         value="{{date('d/m/Y', strtotime('saturday this week'))}}"
+                         wire:model='date'
+                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                       />
+                     </label>
+                   </li>
+                   <li class="">
+                     <label
+                       for="Sun"
+                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                     >
+                       S
+                       <input
+                         type="radio"
+                         id="Sun"
+                         value="{{date('d/m/Y', strtotime('sunday'))}}"
+                         wire:model='date'
+                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                       />
+                     </label>
+                   </li>
+                 </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+        @error('date')
+           <div class="text-sm text-red-600">{{ $message }}</div>
+       @enderror
+      </div>
 
        <div class="w-full flex flex-col gap-[2px]">
          <label
