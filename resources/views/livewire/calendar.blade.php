@@ -328,20 +328,24 @@
 
             <div
               id="row-1-1"
-              ondrop="drop(event)"
-              ondragover="allowDrop(event)"
+              {{-- ondrop="drop(event)"
+              ondragover="allowDrop(event)" --}}
+                wire:drop="drop({{$user['id']}}, '{{ $day }}')"
+                wire:dragover.prevent
               class="flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
 
             >
               <button
                 id="user1-shift1"
+                {{-- draggable="true" --}}
+                {{-- ondragstart="drag(event)" --}}
+                wire:dragstart="drag('{{ $event['id'] }}')"
                 draggable="true"
-                ondragstart="drag(event)"
                 class="group w-full flex flex-col items-center justify-center py-[6px] text-[10px] text-[#4F4F4F] border-[1px] border-[{{$event['role_colour']}}] bg-[{{$event['role_colour']}}] relative"
               >
               <span class="font-bold">{{$event['start_at']->format('h a')}} -
                 {{$event['end_at']->format('h a')}}</span>
-            <span class="font-medium">{{$event['role']}}</span>
+                <span class="font-medium">{{$event['role']}}</span>
 
                 <!-- actions overlay -->
                 <div
@@ -404,8 +408,10 @@
             @empty
                 <div
                     id="row-1-2"
-                    ondrop="drop(event)"
-                    ondragover="allowDrop(event)"
+                    {{-- ondrop="drop(event)"
+                    ondragover="allowDrop(event)" --}}
+                    wire:drop="drop({{$user['id']}}, '{{ $day }}')"
+                    wire:dragover.prevent
                     class="group flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
             >
 
@@ -414,8 +420,7 @@
 
               >
                 <div
-                  {{-- data-modal-target="create_schedule_direct"
-                  data-modal-toggle="create_schedule_direct" --}}
+                  
                   wire:click="onDayClick({{$user}}, '{{$day}}')"
 
                   type="button"

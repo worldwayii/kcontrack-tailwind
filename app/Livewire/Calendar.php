@@ -32,7 +32,7 @@ class Calendar extends Component
     public $eventClickEnabled;
     public $showModifyEventButtons;
     public $showCreateModal;
-
+    public $draggedSchedulerId;
     protected $casts = [
         'startsAt' => 'date',
         'endsAt' => 'date',
@@ -142,29 +142,7 @@ class Calendar extends Component
     {
         return Employee::search($this->search)->with('schedulers')->get();
     }
-    public function goToPreviousMonth()
-    {
-        $this->startsAt->subMonthNoOverflow();
-        $this->endsAt->subMonthNoOverflow();
 
-        $this->calculateGridStartsEnds();
-    }
-
-    public function goToNextMonth()
-    {
-        $this->startsAt->addMonthNoOverflow();
-        $this->endsAt->addMonthNoOverflow();
-
-        $this->calculateGridStartsEnds();
-    }
-
-    public function goToCurrentMonth()
-    {
-        $this->startsAt = Carbon::today()->startOfMonth()->startOfDay();
-        $this->endsAt = $this->startsAt->clone()->endOfMonth()->startOfDay();
-
-        $this->calculateGridStartsEnds();
-    }
 
     public function getEventsForDay($day, Collection $events) : Collection
     {
@@ -184,25 +162,43 @@ class Calendar extends Component
         }
     }
 
+    public function drag($scheduler_id)
+    {
+        $this->draggedSchedulerId = $scheduler_id;
+        Log::info(['drag-scheduler-id' => $scheduler_id]);
+    }
+
+    public function drop($employee_id, $day)
+    {
+        // Handle drop event
+        $date = Carbon::parse($day)->format('d/m/Y');
+        $scheduler = Scheduler::findOrfail($this->draggedSchedulerId);
+        $alreadyHasSchedule = Scheduler::whereDate('start_at', $day)->where('employee_id', $employee_id)->count();
+        if(!$alreadyHasSchedule){
+        Log::info(['drop-employee-id' => $employee_id, 'date' => $day]);
+        $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->start_at->format('g:i'));
+        $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->end_at->format('g:i'));
+
+        $load = [
+            'start_at' => $start_at,
+            'end_at' => $end_at,
+            'employee_id' => $employee_id,
+            'published' => false,
+        ];
+
+        Scheduler::where('id', $scheduler->id)->update($load);
+
+        $this->dispatch('livewireEvent');
+    }else{
+        $this->dispatch('livewireEvent');
+    }
+    }
+
     public function openDirectModal(){
-        Log::info("about to show madal");
+        Log::info("about to show modal");
         //$this->showCreateModal = true;
     }
 
-    public function onEventClick($eventId)
-    {
-        //
-    }
-
-    public function onEventDropped($eventId, $year, $month, $day)
-    {
-        //dd($day);
-    }
-
-    // public function openEditModal($itemId)
-    // {
-    //     $this->dispatch('openEditModal', $itemId);
-    // }
 
     public function forceLoad(){
         $this->js('window.location.reload()');
