@@ -245,7 +245,8 @@
           </a>
 
           <a
-            href="#"
+
+            href="{{route('company.scheduler.index')}}"
             class="group flex flex-col items-center justify-center gap-[8px] px-[7.5px] py-[10px] font-semibold text-[14px] text-[#4F4F4F] text-center transition-all"
           >
             <div
@@ -269,7 +270,7 @@
           </a>
 
           <a
-              href="{{route('company.scheduler.index')}}"
+              href="#"
             class="group flex flex-col items-center justify-center gap-[8px] px-[7.5px] py-[10px] font-semibold text-[12px] text-[#80868C] hover:text-[#4F4F4F] text-center transition-all shrink-0"
           >
             <div

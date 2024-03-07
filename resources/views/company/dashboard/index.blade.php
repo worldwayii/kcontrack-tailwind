@@ -1,4 +1,4 @@
-@extends('layouts.company-dashboard')
+@extends('layouts.new.dashboard')
 
 @section('meta-title', 'Dashboard')
 @section('page-title', 'Dashboard')
