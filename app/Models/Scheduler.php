@@ -92,7 +92,7 @@ class Scheduler extends Model
 
         $daysOfWeek = array_values($daysOfWeek);
 
-        $order = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        $order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat','Sun'];
 
         usort($daysOfWeek, function ($a, $b) use ($order) {
         return array_search($a, $order) - array_search($b, $order);
