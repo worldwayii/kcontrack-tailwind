@@ -63,7 +63,7 @@
           </div>
 
           <a
-            href="{{route('schedulers.publish')}}"
+            href="{{route('company.scheduler.publish')}}"
             class="flex items-center justify-center h-[40px] gap-[4px] px-[17px] md:px-[15.5px] text-white-0 font-medium text-[12px] md:text-[14px] border-[0.5px] border-[#3984E6] rounded-[4px] bg-[#3984E6]"
           >
             Publish

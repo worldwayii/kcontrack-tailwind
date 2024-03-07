@@ -23,10 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::controller(SchedulerController::class)->prefix('schedulers')->group(function () {
-    Route::get('/', 'index')->name('schedulers.index');
-    Route::get('/publish', 'publish')->name('schedulers.publish');
-});
+
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/company/register/step/1', [AuthController::class, 'registerStepOne'])->name('register.one');
@@ -57,7 +54,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::singleton('employee', EmployeeController::class)->creatable();
         Route::post('employee/store/manual', [EmployeeController::class, 'storeManual'])->name('employee.store.manual');
 
-//            Route::singleton('scheduler', SchedulerController::class)->creatable();
+            Route::controller(SchedulerController::class)->prefix('scheduler')->group(function () {
+                Route::get('/', 'index')->name('scheduler.index');
+                Route::get('/publish', 'publish')->name('scheduler.publish');
+            });
         //Route::get('scheduler', ShowScheduler::class)->name('scheduler.show');
     });
 });
