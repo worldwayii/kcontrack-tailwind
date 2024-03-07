@@ -83,14 +83,11 @@ class Scheduler extends Model
 
         foreach ($unpublishedSchedulers as $scheduler) {
 
-        $startAt = Carbon::parse($scheduler->start_at);
-        $endAt = Carbon::parse($scheduler->end_at);
+            $startAt = Carbon::parse($scheduler->start_at);
 
-        while ($startAt->lessThanOrEqualTo($endAt)) {
             $dayIdentifier = $startAt->format('D') . $startAt->format('Ymd');
             $daysOfWeek[$dayIdentifier] = $startAt->format('D');
             $startAt->addDay();
-            }
         }
 
         $daysOfWeek = array_values($daysOfWeek);

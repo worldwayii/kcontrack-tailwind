@@ -75,6 +75,7 @@
             @else
             @php
                 $days_assigned = $schedule->getUnpublishedSchedulersForEmployee($employee);
+                //dd($days_assigned);
             @endphp
             @endif
             <div
