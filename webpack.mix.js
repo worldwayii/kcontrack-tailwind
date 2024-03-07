@@ -11,10 +11,12 @@ const spritemap = new SVGSpritemapPlugin('resources/svg/heroicons/*.svg', {
     }
 });
 
+mix.webpackConfig({
+    plugins:[spritemap]
+});
 
-mix.js('resources/js/app.js', 'public/js').vue().version();
-
-mix.postCss('resources/css/app.css', 'public/css', [
+mix.js('resources/js/app.js', 'public/js')
+    .postCss('resources/css/app.css', 'public/css', [
     require('tailwindcss'),
     require('autoprefixer'),
 ]).version();

@@ -5,29 +5,28 @@ export default {
         "./resources/*/*.blade.php",
         "./resources/blade/*.blade.php",
         "./resources/**/*.js",
-        "./resources/**/*.vue",
     ],
   theme: {
     extend: {
         backgroundImage: {
             'auth': "url('/img/authImage.png')",
         },
-        "colors": {
-            "black": {
+        colors: {
+            black: {
                 '0': '#2E2828',
                 "10": '#4F4F4F'
             },
-            "brand": {
+            brand: {
                 "0": '#092C86',
                 "10": '#D4DEF9',
                 "50": '#092C860D'
             },
-            "white": {
+            white: {
                 "0": '#FFFFFF',
                 "10": '#FFFFFF1A',
                 "20": "#FAFAFA"
             },
-            "gray": {
+            gray: {
                 "0": '#E6E6E6',
                 "10": '#C4C4C4',
                 "20": '#828282',
@@ -38,16 +37,16 @@ export default {
                 "70": '#EDEFF4',
                 "80": '#F3F5F7',
             },
-            "yellow": {
+            yellow: {
                 "0": '#FEFAF1',
             }
         },
-        'fontSize': {
-            'xs': '0.75rem',
-            'sm': '0.875rem',
-            'base': '1rem',
-            'lg': '1.125rem',
-            'xl': '1.25rem',
+        fontSize: {
+            xs: '0.75rem',
+            sm: '0.875rem',
+            base: '1rem',
+            lg: '1.125rem',
+            xl: '1.25rem',
             '2xl': '1.5rem',
             '3xl': '1.75rem',
             '4xl': '2rem',
@@ -59,6 +58,9 @@ export default {
             '10xl': '10rem',
         },
     },
+      fontFamily: {
+          montserrat: ["Montserrat", "sans-serif"],
+      },
   },
   plugins: [
       require('@tailwindcss/forms')
