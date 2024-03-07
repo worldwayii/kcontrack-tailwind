@@ -8,7 +8,7 @@
       >
         <div class="flex flex-col gap-[28px]">
           <a
-            href=""
+              href="{{route('company.dashboard')}}"
             class="w-full flex items-center px-[10px] py-[7px] gap-[8px] font-semibold text-[14px] text-[#4F4F4F]"
           >
             <div
@@ -32,7 +32,7 @@
           </a>
 
           <a
-            href=""
+              href="{{route('company.scheduler.index')}}"
             class="w-full flex items-center px-[10px] py-[7px] gap-[8px] font-semibold text-[12px] text-[#80868C] hover:text-[14px] hover:text-[#4F4F4F] transition-all group"
           >
             <div
@@ -221,7 +221,7 @@
           class="hidden md:flex flex-col h-full w-[85px] gap-[28px] overflow-y-auto overflow-x-hidden no-scrollbar"
         >
           <a
-            href="#"
+              href="{{route('company.dashboard')}}"
             class="group flex flex-col items-center justify-center gap-[8px] px-[7.5px] py-[10px] font-semibold text-[12px] text-[#80868C] hover:text-[#4F4F4F] text-center transition-all shrink-0"
           >
             <div
@@ -269,7 +269,7 @@
           </a>
 
           <a
-            href="#"
+              href="{{route('company.scheduler.index')}}"
             class="group flex flex-col items-center justify-center gap-[8px] px-[7.5px] py-[10px] font-semibold text-[12px] text-[#80868C] hover:text-[#4F4F4F] text-center transition-all shrink-0"
           >
             <div

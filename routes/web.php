@@ -54,10 +54,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::singleton('employee', EmployeeController::class)->creatable();
         Route::post('employee/store/manual', [EmployeeController::class, 'storeManual'])->name('employee.store.manual');
 
-            Route::controller(SchedulerController::class)->prefix('scheduler')->group(function () {
-                Route::get('/', 'index')->name('scheduler.index');
-                Route::get('/publish', 'publish')->name('scheduler.publish');
-            });
-        //Route::get('scheduler', ShowScheduler::class)->name('scheduler.show');
+        Route::controller(SchedulerController::class)->prefix('scheduler')->group(function () {
+            Route::get('/', 'index')->name('scheduler.index');
+            Route::get('/publish', 'publish')->name('scheduler.publish');
+        });
     });
 });
