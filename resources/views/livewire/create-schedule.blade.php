@@ -1,4 +1,4 @@
-   <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create">
+   <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" wire:ignore>
     @error('conflict')
         <div class="text-sm text-red-600">{{ $message }}</div>
     @enderror

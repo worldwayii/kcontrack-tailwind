@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\Employee;
 
 class Scheduler extends Model
 {
@@ -52,26 +53,62 @@ class Scheduler extends Model
 
     public static function getTotalScheduledTime()
     {
-        $schedules = self::all(); // Retrieve all records (consider pagination if there are many records)
+        $schedules = self::all();
 
-        $totalTime = 0; // Initialize total time counter
+        $totalTime = 0;
 
         foreach ($schedules as $schedule) {
-            // Convert start_at and end_at to Carbon instances for easy date manipulation
+
             $startAt = Carbon::parse($schedule->start_at);
             $endAt = Carbon::parse($schedule->end_at);
 
-            // Calculate the difference in minutes between start_at and end_at
             $duration = $endAt->diffInMinutes($startAt);
 
-            // Add the duration to total time
             $totalTime += $duration;
         }
 
-        // Convert total minutes to hours and minutes for better readability
         $totalHours = floor($totalTime / 60);
         $totalMinutes = $totalTime % 60;
 
         return $totalTime;
     }
+
+    public function getUnpublishedSchedulersForEmployee(Employee $employee){
+
+        $unpublishedSchedulers = $this->where('employee_id', $employee->id)
+            ->where('published', false)
+            ->get();
+
+        $daysOfWeek = [];
+
+        foreach ($unpublishedSchedulers as $scheduler) {
+
+        $startAt = Carbon::parse($scheduler->start_at);
+        $endAt = Carbon::parse($scheduler->end_at);
+
+        while ($startAt->lessThanOrEqualTo($endAt)) {
+            $dayIdentifier = $startAt->format('D') . $startAt->format('Ymd');
+            $daysOfWeek[$dayIdentifier] = $startAt->format('D');
+            $startAt->addDay();
+            }
+        }
+
+        $daysOfWeek = array_values($daysOfWeek);
+
+        $order = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        usort($daysOfWeek, function ($a, $b) use ($order) {
+        return array_search($a, $order) - array_search($b, $order);
+        });
+
+        $shortendDaysOfWeek = array_map(function($day) {
+        return substr($day, 0, 1);
+        }, $daysOfWeek);
+
+        $result = implode(' ', $shortendDaysOfWeek);
+
+        return $result;
+    }
+
+
 }

@@ -31,15 +31,23 @@
           class="bg-[#3984E61A] w-fit rounded-[4px] px-[9px] py-[10px] text-[#3984E6] text-[12px] font-semibold"
         >
         @if($schedule_count)
-          <p>
-            Scheduled By: {{$employees->first()->user->name}} | Date Scheduled: {{$employees->first()->schedulers()->wherePublished(false)->first()->created_at->format('d/m/y')}} | Time: {{$employees->first()->schedulers()->wherePublished(false)->first()->created_at->format('h:i:s A')}}
+            @php
+                $unscheduledEmployee = $employees->filter(function ($employee) {
+                return $employee->schedulers()->where('published', false)->exists();
+                })->first();
+            @endphp
 
-          </p>
-          @else
-          <p>
-            Scheduled By: | Date Scheduled: | Time:
-          </p>
-          @endif
+            @if ($unscheduledEmployee)
+                <p>
+                    Scheduled By: {{$unscheduledEmployee->user->name}} | Date Scheduled: {{$unscheduledEmployee->schedulers()->wherePublished(false)->first()->created_at->format('d/m/y')}} | Time: {{$unscheduledEmployee->schedulers()->wherePublished(false)->first()->created_at->format('h:i:s A')}}
+                </p>
+
+            @else
+                <p>
+                    Scheduled By: | Date Scheduled: | Time:
+                </p>
+            @endif
+            @endif
         </div>
       </div>
 
@@ -64,6 +72,10 @@
 
             @if($schedule == null)
                 @continue
+            @else
+            @php
+                $days_assigned = $schedule->getUnpublishedSchedulersForEmployee($employee);
+            @endphp
             @endif
             <div
             class="flex gap-[24px] items-center flex-1 min-w-fit border-[0.5px] border-[#EDEFF4] text-[13px] font-medium text-[#4F4F4F] py-[16px]"
@@ -85,7 +97,7 @@
             <p class="flex-1 min-w-[82px] text-center">{{$schedule->role}}</p>
             <p class="flex-1 min-w-[100px] text-center">{{$schedule->start_at->format('h a'). ' - '. $schedule->end_at->format('h a')}}</p>
             <p class="flex-1 min-w-[86px] text-center">{{$schedule->break}}</p>
-            <p class="flex-1 min-w-[120px] text-center">{{$schedule->frequency}}</p>
+            <p class="flex-1 min-w-[120px] text-center">{{$schedule->frequency != 'daily' ? $schedule->frequency : $days_assigned}}</p>
             <p class="flex-1 min-w-[160px]">
               {{$schedule->shift_note}}
             </p>
