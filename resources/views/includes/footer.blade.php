@@ -150,6 +150,7 @@
     </script>
 
     <script src="{{asset('calender.js')}}"></script>
+    <script src="{{asset('multiselectDropdown.js')}}"></script>
 </body>
 @yield('pageScript')
 {{-- @livewireScripts --}}

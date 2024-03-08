@@ -18,6 +18,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        PublishScheduler::class => [
+            PublishSchedulerToEmployer::class,
+            PublishSchedulerToEmployee::class,
+        ]
     ];
 
     /**

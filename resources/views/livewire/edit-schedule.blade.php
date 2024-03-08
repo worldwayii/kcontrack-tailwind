@@ -211,13 +211,13 @@
                 <ul class="h-fit flex-1 flex justify-between">
                    <li class="">
                      <label
-                       for="M"
+                       for="Me"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
                        M
                        <input
                          type="radio"
-                         id="M"
+                         id="Me"
                          value="{{date('d/m/Y', strtotime('monday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -226,13 +226,13 @@
                    </li>
                    <li class="">
                      <label
-                       for="T"
+                       for="Te"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
                        T
                        <input
                          type="radio"
-                         id="T"
+                         id="Te"
                          value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -241,13 +241,13 @@
                    </li>
                    <li class="">
                      <label
-                       for="W"
+                       for="We"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
                        W
                        <input
                          type="radio"
-                         id="W"
+                         id="We"
                          value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -256,13 +256,13 @@
                    </li>
                    <li class="">
                      <label
-                       for="Thu"
+                       for="Thue"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
                        T
                        <input
                          type="radio"
-                         id="Thu"
+                         id="Thue"
                          value="{{date('d/m/Y', strtotime('thursday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -271,13 +271,13 @@
                    </li>
                    <li class="">
                      <label
-                       for="F"
+                       for="Fe"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
                        F
                        <input
                          type="radio"
-                         id="F"
+                         id="Fe"
                          value="{{date('d/m/Y', strtotime('friday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -286,13 +286,13 @@
                    </li>
                    <li class="">
                      <label
-                       for="S"
+                       for="Se"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
                        S
                        <input
                          type="radio"
-                         id="S"
+                         id="Se"
                          value="{{date('d/m/Y', strtotime('saturday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -301,13 +301,13 @@
                    </li>
                    <li class="">
                      <label
-                       for="Sun"
+                       for="Sune"
                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                      >
                        S
                        <input
                          type="radio"
-                         id="Sun"
+                         id="Sune"
                          value="{{date('d/m/Y', strtotime('sunday'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"

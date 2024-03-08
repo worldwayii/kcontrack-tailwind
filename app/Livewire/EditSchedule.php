@@ -80,6 +80,11 @@ class EditSchedule extends Component
     ];
 }
 
+public function updatedDate($value) {
+    //dd($value);
+    $this->resetValidation();
+    $this->date = $value;
+}
     public function update(){
         $data = $this->validate();
         DB::beginTransaction();

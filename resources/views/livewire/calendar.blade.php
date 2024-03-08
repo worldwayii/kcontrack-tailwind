@@ -55,7 +55,12 @@
                 </button>
               </li>
               <li>
-                <button type="button" class="block px-4 py-2">
+                <button
+                    type="button"
+                    class="block px-4 py-2"
+                    data-modal-target="create_schedule_bulk"
+                    data-modal-toggle="create_schedule_bulk"
+                    >
                   Bulk Schedule
                 </button>
               </li>
@@ -420,7 +425,7 @@
 
               >
                 <div
-                  
+
                   wire:click="onDayClick({{$user}}, '{{$day}}')"
 
                   type="button"
