@@ -9,23 +9,37 @@ use Carbon\Carbon;
 
 class CheckScheduleConflictRule implements ValidationRule
 {
-    public function __construct(protected $employeeId)
+    public function __construct(protected $employeeId, protected $originalDate = null)
     {
     }
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
-        foreach ($value as $date) {
-            // Check if there's an existing schedule for the same employee on this date
-            $date = Carbon::createFromFormat('d/m/Y', $date);
+    {   if(!is_array($value)){
 
-            $conflictingSchedule = Scheduler::where('employee_id', $this->employeeId)
+        $date = Carbon::createFromFormat('d/m/Y', $value);
+        $originalDate = Carbon::createFromFormat('d/m/Y', $this->originalDate);
+
+        $conflictingSchedule = Scheduler::where('employee_id', $this->employeeId)
+            ->whereDate('start_at', $date->toDateString())->whereDate('start_at', '!=', $originalDate)
+            ->first();
+
+        if ($conflictingSchedule) {
+            // Conflict found
+            $fail('There is a schedule conflict for the date: ' . $date->format('l').' of '. $date->toDateString());
+        }
+        }else{
+            foreach ($value as $date) {
+            // Check if there's an existing schedule for the same employee on this date
+                $date = Carbon::createFromFormat('d/m/Y', $date);
+
+                $conflictingSchedule = Scheduler::where('employee_id', $this->employeeId)
                 ->whereDate('start_at', $date->toDateString())
                 ->first();
 
-            if ($conflictingSchedule) {
+                if ($conflictingSchedule) {
                 // Conflict found
-                $fail('There is a schedule conflict for the date: ' . $date);
+                $fail('There is a schedule conflict for the date: ' . $date->format('l').' of '. $date->toDateString());
+                }
             }
         }
     }

@@ -18,6 +18,7 @@ class EditSchedule extends Component
     $employee,
     $day,
     $date,
+    $originalDate,//used for validation
     $start_at,
     $end_at,
     $role,
@@ -45,6 +46,7 @@ class EditSchedule extends Component
         $date = Carbon::parse($date);
         $this->day = $date;
         $this->date = $date->format('d/m/Y');
+        $this->originalDate = $date->format('d/m/Y');
         $this->role = $scheduler->role;
         $this->break = $scheduler->break;
         $this->shift_note = $scheduler->shift_note;
@@ -72,7 +74,7 @@ class EditSchedule extends Component
         'start_at' => 'required',
         'end_at' => 'required',
         'role' => 'required|string',
-        'date' => 'required',
+        'date' => ['required', new CheckScheduleConflictRule($this->employee->id, $this->originalDate)],
         'role_colour' => 'nullable|string',
         'pay_rate' => 'nullable',
         'break' => 'required|string',
