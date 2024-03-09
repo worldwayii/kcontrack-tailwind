@@ -183,13 +183,13 @@
             A copy of this schedule will be sent to your email.
           </p>
 
-          <button
+          <a href="{{route('schedulers.index')}}"
             id="close_modal"
             type="button"
             class="flex h-[50px] w-full items-center justify-center px-[20px] border-[0.5px] border-[#3984E6] rounded-[4px] font-medium text-[14px] text-[#fff] bg-[#3984E6] mt-[32px]"
           >
             Ok
-          </button>
+        </a>
         </div>
       </div>
     </div>

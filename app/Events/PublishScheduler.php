@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class PublishScheduler
 {
@@ -17,9 +18,9 @@ class PublishScheduler
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public $employees, public array $messages)
     {
-        //
+        Log::info("about to fire publish event");
     }
 
     /**
