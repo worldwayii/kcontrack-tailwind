@@ -213,9 +213,10 @@
     </aside>
 
         <!-- main body -->
-        <main
-        class="w-full overflow-hidden flex-1 px-[14px] md:px-[16px] pt-[26px] md:pt-[20px] flex gap-[16px]"
-      >
+
+            <main
+                class="w-full overflow-hidden flex-1 px-[14px] md:px-[16px] pt-[26px] md:pt-[20px] flex gap-[16px] bg-white-0 md:bg-transparent"
+            >
         <!-- side menu -->
         <aside
           class="hidden md:flex flex-col h-full w-[85px] gap-[28px] overflow-y-auto overflow-x-hidden no-scrollbar"

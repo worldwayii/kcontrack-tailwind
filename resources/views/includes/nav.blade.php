@@ -16,15 +16,15 @@
             <div
               class="flex items-center justify-center w-[31px] h-[31px] rounded-full bg-white-0 border-[0.5px] border-[#B4BCB3]"
             >
-              <img
-                src="{{asset('logo.png')}}"
-                class="w-[17px] h-[17px] object-cover rounded-full"
-                alt=""
-              />
+                @if(auth()->user()->company->logo)
+                    <img src="{{ asset('storage/' . auth()->user()->company->logo) }}" class="w-[17px] h-[17px] object-cover rounded-full"/>
+                @else
+                    <img src="{{ asset('img/icon_holder.png') }}" class="w-[17px] h-[17px] object-cover rounded-full"/>
+                @endif
             </div>
 
             <p class="text-[14px] font-semibold text-[#80868C] hidden lg:block">
-              Joy Consult Technologies
+                {{auth()->user()->company->name}}
             </p>
           </button>
 
@@ -133,11 +133,12 @@
             class="hidden md:flex items-center gap-[4px]"
             type="button"
           >
-            <img
-              src="{{asset('user.jpg')}}"
-              class="w-[40px] h-[40px] object-cover rounded-[8px]"
-              alt=""
-            />
+
+              @if(auth()->user()->company->logo)
+                  <img src="{{ asset('storage/' . auth()->user()->company->logo) }}" class="w-[40px] h-[40px] object-cover rounded-[8px]"/>
+              @else
+                  <img src="{{ asset('img/logo_place_holder.jpg') }}" class="w-[40px] h-[40px] object-cover rounded-[8px]"/>
+              @endif
 
             <svg
               width="14"
