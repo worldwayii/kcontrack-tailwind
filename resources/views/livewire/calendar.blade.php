@@ -194,16 +194,14 @@
         class="flex-1 py-[16px] lg:py-[10px] flex flex-col items-center justify-center text-[14px] lg:text-[12px] font-medium lg:font-semibold text-[#80868C] lg:text-[#A7A7A7] hover:bg-[#3984E61A]"
       >
         <p class="w-fit flex flex-col lg:items-start">
-          <span
-            >{{ $day->format('l') }}
-
-              </span
-          >
+              <span>{{substr($day->format('l'), 0, 3)}}<span class="hidden lg:inline-block lg:leading-none">{{substr($day->format('l'), 3)}}</span></span>
           <span
             class="lg:font-medium lg:text-[24px] lg:text-[#A7A7A7] lg:leading-none lg:justify-self-start"
             >{{ $day->format('j') }}</span
           >
         </p>
+
+
       </button>
         @endforeach
 
