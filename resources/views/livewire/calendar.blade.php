@@ -227,6 +227,7 @@
 
 
             $totalScheduledTime = $hours.':'.$minutes;
+            $schedule_count = \App\Models\Scheduler::wherePublished(false)->where('employee_id', $user['id'])->count();
             @endphp
           <div id="data-row"
             class="flex-1 h-fit flex lg:border-b-[0.5px] lg:border-b-[#EDEFF4]"
@@ -250,20 +251,24 @@
                   <p
                     class="flex items-center gap-[4px] text-[8px] text-[#80868C] whitespace-nowrap"
                   >
-                    <svg
-                      width="12"
-                      height="8"
-                      viewBox="0 0 12 8"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0.205078 4.70504L3.00008 7.50004L3.70508 6.79004L0.915078 4.00004M11.1201 0.790039L5.83008 6.08504L3.75008 4.00004L3.03508 4.70504L5.83008 7.50004L11.8301 1.50004M9.00008 1.50004L8.29508 0.790039L5.12008 3.96504L5.83008 4.67004L9.00008 1.50004Z"
-                        fill="#40AD93"
-                      />
-                    </svg>
 
-                    Delivered via Email
+                    @if(!$schedule_count)
+                    <svg
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0.205078 4.70504L3.00008 7.50004L3.70508 6.79004L0.915078 4.00004M11.1201 0.790039L5.83008 6.08504L3.75008 4.00004L3.03508 4.70504L5.83008 7.50004L11.8301 1.50004M9.00008 1.50004L8.29508 0.790039L5.12008 3.96504L5.83008 4.67004L9.00008 1.50004Z"
+                      fill="#40AD93"
+                    />
+                  </svg>
+                        Delivered via Email
+                    @else
+                        You Have </br> Unpublished Schedule
+                    @endif
                   </p>
                 </div>
               </div>
