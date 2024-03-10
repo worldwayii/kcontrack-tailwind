@@ -10,14 +10,14 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Attachment;
 
-class PublishSchedulerEmail extends Mailable
+class PublishSchedulerToEmployerMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(public $employee, public $detail, public $pdf, public $data = [])
+    public function __construct(public $user, public $detail, public $pdf, public $data = [])
     {
         //
     }
@@ -28,7 +28,7 @@ class PublishSchedulerEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Published Schedules',
+            subject: 'Publish Scheduler To Employer',
         );
     }
 
@@ -38,7 +38,7 @@ class PublishSchedulerEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.schedulers.publish',
+            view: 'emails.schedulers.publish-to-employer',
         );
     }
 
@@ -50,7 +50,7 @@ class PublishSchedulerEmail extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromData(fn () => $this->pdf->output(), 'new-schedule.pdf')
+            Attachment::fromData(fn () => $this->pdf->output(), 'published-schedule.pdf')
                 ->withMime('application/pdf'),
         ];
     }

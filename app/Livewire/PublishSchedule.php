@@ -17,8 +17,8 @@ class PublishSchedule extends Component
         $employeeIds = Scheduler::wherePublished(false)->pluck('employee_id')->toArray();
         $employees = Employee::whereIn('id', $employeeIds)->get();
 
-        Scheduler::wherePublished(false)->update(['published' => true]);
-        
+        //Scheduler::wherePublished(false)->update(['published' => true]);
+
         $messages['employee'] = 'You Have New Job Schedules Please Check Your App For Details';
         $messages['employer'] = 'Here A Summary Of Your Schedule Pusblished on '. now()->toDateString();
             //Mail::to($employee)->send(new PublishSchedulerEmail($employee, $message));

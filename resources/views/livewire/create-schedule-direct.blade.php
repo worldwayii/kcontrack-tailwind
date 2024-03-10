@@ -231,7 +231,7 @@
                         <input
                           type="checkbox"
                           id="Md"
-                          value="{{date('d/m/Y', strtotime('monday this week'))}}"
+                          value="{{$weekDates['Monday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                         />
@@ -246,7 +246,7 @@
                         <input
                           type="checkbox"
                           id="Td"
-                          value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
+                          value="{{$weekDates['Tuesday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                         />
@@ -261,7 +261,7 @@
                         <input
                           type="checkbox"
                           id="Wd"
-                          value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
+                          value="{{$weekDates['Wednesday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                         />
@@ -276,7 +276,7 @@
                         <input
                           type="checkbox"
                           id="Thud"
-                          value="{{date('d/m/Y', strtotime('thursday this week'))}}"
+                          value="{{$weekDates['Thursday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                         />
@@ -291,7 +291,7 @@
                         <input
                           type="checkbox"
                           id="Fd"
-                          value="{{date('d/m/Y', strtotime('friday this week'))}}"
+                          value="{{$weekDates['Friday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                         />
@@ -306,7 +306,7 @@
                         <input
                           type="checkbox"
                           id="Sd"
-                          value="{{date('d/m/Y', strtotime('saturday this week'))}}"
+                          value="{{$weekDates['Saturday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                         />
@@ -321,7 +321,7 @@
                         <input
                           type="checkbox"
                           id="Sund"
-                          value="{{date('d/m/Y', strtotime('sunday'))}}"
+                          value="{{$weekDates['Sunday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                         />

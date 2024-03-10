@@ -16,6 +16,8 @@ class CreateScheduleDirect extends Component
     public
     $employee,
     $day,
+    $originalDate,
+    $weekDates = ['Monday' => '', 'Tuesday' => '', 'Wednesday' => '', 'Thursday' => '', 'Friday' => '', 'Saturday' => '', 'Sunday' => ''],
     $date = [],
     $start_at,
     $end_at,
@@ -36,15 +38,36 @@ class CreateScheduleDirect extends Component
     }
 
     public function openCreateDirectModal($employee, $date){
-        //dd($date);
+
         $date = Carbon::parse($date);
-         $this->employee = Employee::findOrFail($employee['id']);
-         //dd($employee);
-         $this->day = $date;
+        $this->employee = Employee::findOrFail($employee['id']);
+
+        $this->day = $date;
         Log::info("did this dispatch?");
-         $this->date = [$date->format('d/m/Y')];
-         $this->dispatch('openDirectModal');
+        $this->date = [$date->clone()->format('d/m/Y')];
+        $this->originalDate = $date;
+        $this->weekDates = $this->calculateWeekDates($date->clone());
+        $this->dispatch('$refresh');
+        $this->dispatch('openDirectModal');
+
     }
+
+    public function calculateWeekDates($originalDate)
+    {
+        $startOfWeek = $originalDate->startOfWeek();
+
+        $weekDates = [];
+
+        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for ($i = 0; $i < 7; $i++){
+            $weekDates[$daysOfWeek[$i]] = $startOfWeek->copy()->addDays($i)->format('d/m/Y');
+        }
+        //dd($weekDates);
+        return $weekDates;
+
+    }
+
+
 
     protected function rules()
     {
