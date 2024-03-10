@@ -64,7 +64,6 @@ class CreateScheduleDirect extends Component
         }
         //dd($weekDates);
         return $weekDates;
-
     }
 
 

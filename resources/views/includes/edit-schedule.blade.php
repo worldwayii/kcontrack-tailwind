@@ -1,5 +1,4 @@
 <div
-                wire:ignore
                 id="edit_modal"
 
                 tabindex="-1"
