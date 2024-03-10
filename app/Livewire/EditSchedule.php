@@ -56,6 +56,7 @@ class EditSchedule extends Component
         $this->start_at = $scheduler->start_at->format('g:i');
         $this->end_at = $scheduler->end_at->format('g:i');
         $this->frequency = $scheduler->frequency;
+        //$this->dispatch('$refresh');
         Log::info(['open-edit-modal-id' => $id]);
     }
 

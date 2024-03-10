@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 class Calendar extends Component
 {
     public $search = null;
+    public $filter = '';
     public $month;
     public $year;
     public $employees = [];
@@ -140,7 +141,15 @@ class Calendar extends Component
 
     public function employees() : Collection
     {
-        return Employee::search($this->search)->with('schedulers')->get();
+        //return Employee::search($this->search)->with('schedulers')->get();
+        $filter = $this->filter;
+
+      return  Employee::search($this->search)
+                ->when($filter !== '', function ($query) use ($filter) {
+                    return $query->whereHas('schedulers', function ($subQuery) use ($filter) {
+                        $subQuery->where('frequency', $filter);
+                });
+        })->with('schedulers')->get();
     }
 
 
