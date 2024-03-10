@@ -122,7 +122,7 @@
               <option class="block px-4 py-2" value="monthly">Monthly</option>
             </select>
 
-          {{-- end new foilter --}}
+          {{-- end new filter --}}
         </div>
 
         <div class="flex md:flex-1 justify-between items-center">
@@ -191,7 +191,7 @@
         @foreach($monthGrid->first() as $day)
 
         <button
-        class="flex-1 py-[16px] lg:py-[10px] flex flex-col items-center justify-center text-[14px] lg:text-[12px] font-medium lg:font-semibold text-[#80868C] lg:text-[#A7A7A7] hover:bg-[#3984E61A]"
+        class="flex-1 py-[16px] lg:py-[10px] flex flex-col items-center justify-center text-[14px] lg:text-[12px] font-medium lg:font-semibold text-[#80868C] lg:text-[#A7A7A7] hover:bg-[#3984E61A]" onclick="toggleScheduleGrid('{{ $day->format('Y-m-d') }}'"
       >
         <p class="w-fit flex flex-col lg:items-start">
               <span>{{substr($day->format('l'), 0, 3)}}<span class="hidden lg:inline-block lg:leading-none">{{substr($day->format('l'), 3)}}</span></span>
@@ -268,11 +268,33 @@
                 </p>
               </div>
             </div>
+            <script>
+              function toggleScheduleGrid(date) {
+                const scheduleGridId = `scheduleGrid-${date}`;
+                const scheduleGrid = document.getElementById(scheduleGridId);
+                if (scheduleGrid) {
+                  scheduleGrid.classList.toggle('hidden');
+                }
+              }
+            </script>
+            {{-- schedule grid --}}
+            @foreach($monthGrid->first() as $day)
+            @php
+            $todayEvents = collect($user['schedulers'])
+            ->filter(function ($event) use ($day) {
+            return $event['start_at']->isSameDay($day);
+            });
 
-            <div class="flex-1 flex items-center justify-between">
+            $scheduleGridId = 'scheduleGrid-' . $day->format('Y-m-d');
+
+            @endphp
+            @forelse ($todayEvents as $event)
+
+            <div class="flex-1 flex items-center justify-between hidden" id="{{ $scheduleGridId }}">
               <div class="text-[12px] text-[#4F4F4F]">
-                <p class="font-bold">7AM - 12PM</p>
-                <p class="font-medium">CASHIER</p>
+                <p class="font-bold">{{$event['start_at']->format('h a')}} -
+                  {{$event['end_at']->format('h a')}}</p>
+                <p class="font-medium">{{$event['role']}}</p>
               </div>
 
               <button
@@ -393,6 +415,67 @@
                 </ul>
               </div>
             </div>
+            @empty
+
+
+            <div class="flex-1 flex items-center justify-between hidden">
+
+              <button
+                id="tableDropdown"
+                data-dropdown-toggle="tableDropdownMenu"
+                class=""
+                type="button"
+              >
+                <svg
+                  width="18"
+                  height="4"
+                  viewBox="0 0 18 4"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM16 0C14.9 0 14 0.9 14 2C14 3.1 14.9 4 16 4C17.1 4 18 3.1 18 2C18 0.9 17.1 0 16 0ZM9 0C7.9 0 7 0.9 7 2C7 3.1 7.9 4 9 4C10.1 4 11 3.1 11 2C11 0.9 10.1 0 9 0Z"
+                    fill="#80868C"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="tableDropdownMenu"
+                class="z-10 hidden shadow w-[97px]"
+              >
+                <ul
+                  class="py-2 text-[14px] text-[#4F4F4F] font-medium bg-white-0 rounded-[8px] flex flex-col gap-[16px]"
+                  aria-labelledby="tableDropdown"
+                >
+                  <li>
+                    <a
+                      href="#"
+                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
+                    >
+                      <svg
+                        width="10"
+                        height="11"
+                        viewBox="0 0 10 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                          fill="#80868C"
+                        />
+                      </svg>
+
+                      Add</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            @endforelse
+            @endforeach
+            {{-- end schedule grid --}}
           </div>
             {{-- end Mobile Cell --}}
             <div id="desktop-cells"
