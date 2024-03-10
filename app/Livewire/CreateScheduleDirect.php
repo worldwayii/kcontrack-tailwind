@@ -47,6 +47,7 @@ class CreateScheduleDirect extends Component
         $this->date = [$date->clone()->format('d/m/Y')];
         $this->originalDate = $date;
         $this->weekDates = $this->calculateWeekDates($date->clone());
+        //dd($this->weekDates);
         $this->dispatch('$refresh');
         $this->dispatch('openDirectModal');
 
@@ -106,7 +107,7 @@ class CreateScheduleDirect extends Component
         DB::beginTransaction();
 
         try{
-        foreach($data['date'] as $date){
+        foreach(array_unique($data['date']) as $date){
             $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
             $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
             $employee = $this->employee;
@@ -137,6 +138,7 @@ class CreateScheduleDirect extends Component
 
     public function render()
     {
-        return view('livewire.create-schedule-direct');
+        $weekDates = $this->weekDates;
+        return view('livewire.create-schedule-direct', compact('weekDates'));
     }
 }

@@ -219,7 +219,7 @@
                        <input
                          type="radio"
                          id="Me"
-                         value="{{date('d/m/Y', strtotime('monday this week'))}}"
+                         value="{{$weekDates['Monday']}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
@@ -234,7 +234,7 @@
                        <input
                          type="radio"
                          id="Te"
-                         value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
+                         value="{{$weekDates['Tuesday']}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
@@ -249,7 +249,7 @@
                        <input
                          type="radio"
                          id="We"
-                         value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
+                         value="{{$weekDates['Wednesday']}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
@@ -264,7 +264,7 @@
                        <input
                          type="radio"
                          id="Thue"
-                         value="{{date('d/m/Y', strtotime('thursday this week'))}}"
+                         value="{{$weekDates['Thursday']}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
@@ -279,7 +279,7 @@
                        <input
                          type="radio"
                          id="Fe"
-                         value="{{date('d/m/Y', strtotime('friday this week'))}}"
+                         value="{{$weekDates['Friday']}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
@@ -294,7 +294,7 @@
                        <input
                          type="radio"
                          id="Se"
-                         value="{{date('d/m/Y', strtotime('saturday this week'))}}"
+                         value="{{$weekDates['Saturday']}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />
@@ -309,7 +309,7 @@
                        <input
                          type="radio"
                          id="Sune"
-                         value="{{date('d/m/Y', strtotime('sunday'))}}"
+                         value="{{$weekDates['Sunday']}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
                        />

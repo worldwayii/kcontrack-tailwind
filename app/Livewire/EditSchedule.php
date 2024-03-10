@@ -18,6 +18,7 @@ class EditSchedule extends Component
     $employee,
     $day,
     $date,
+    $weekDates = ['Monday' => '', 'Tuesday' => '', 'Wednesday' => '', 'Thursday' => '', 'Friday' => '', 'Saturday' => '', 'Sunday' => ''],
     $originalDate,//used for validation
     $start_at,
     $end_at,
@@ -45,6 +46,7 @@ class EditSchedule extends Component
         //dd($this->employee);
         $date = Carbon::parse($date);
         $this->day = $date;
+        $this->weekDates = $this->calculateWeekDates($date->clone());
         $this->date = $date->format('d/m/Y');
         $this->originalDate = $date->format('d/m/Y');
         $this->role = $scheduler->role;
@@ -55,6 +57,20 @@ class EditSchedule extends Component
         $this->end_at = $scheduler->end_at->format('g:i');
         $this->frequency = $scheduler->frequency;
         Log::info(['open-edit-modal-id' => $id]);
+    }
+
+    public function calculateWeekDates($originalDate)
+    {
+        $startOfWeek = $originalDate->startOfWeek();
+
+        $weekDates = [];
+
+        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for ($i = 0; $i < 7; $i++){
+            $weekDates[$daysOfWeek[$i]] = $startOfWeek->copy()->addDays($i)->format('d/m/Y');
+        }
+        //dd($weekDates);
+        return $weekDates;
     }
 
     public function rgbToHex($rgb) {
@@ -123,6 +139,7 @@ public function updatedDate($value) {
 
     public function render()
     {
-        return view('livewire.edit-schedule');
+        $weekDates = $this->weekDates;
+        return view('livewire.edit-schedule', compact('weekDates'));
     }
 }
