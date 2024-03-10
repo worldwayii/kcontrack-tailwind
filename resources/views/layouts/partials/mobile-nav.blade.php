@@ -23,7 +23,7 @@
                     class="group-hover:text-sm text-center group-hover:text-black-10 text-xs text-gray-60 font-semibold mt-1 ">Dashboard</span>
             </div>
         </a>
-        <a href="{{route('company.scheduler.show')}}" class="group cursor-pointer">
+        <a href="{{route('company.scheduler.index')}}" class="group cursor-pointer">
             <div class="my-4 group flex md:flex-col  space-x-2 md:space-x-0 items-center">
                 <div class="group-hover:bg-brand-0 bg-gray-80 p-2 rounded-md">
                     <svg class="block group-hover:hidden" width="21" height="17" viewBox="0 0 21 17" fill="none"

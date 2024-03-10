@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid()->unique();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('company_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('role');
-            $table->string('staff_number');
-            $table->string('pay_rate');
-            $table->string('phone_number', 12);
-            $table->text('address');
-            $table->string('zip_code', 7);
+            $table->foreignId('company_id')->constrained();
+
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('role')->nullable();
+            $table->string('staff_number')->nullable();
+            $table->string('pay_rate')->nullable();
+            $table->string('phone_number', 12)->nullable();
+            $table->text('address')->nullable();
+            $table->string('zip_code', 7)->nullable();
             $table->timestamps();
         });
     }

@@ -4,14 +4,14 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExponentPushNotificationInterestsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create(config('exponent-push-notifications.interests.database.table_name'), function (Blueprint $table) {
+        Schema::create('create_exponent_push_notification_interests', function (Blueprint $table) {
             $table->string('key')->index();
             $table->string('value');
 
@@ -24,6 +24,6 @@ class CreateExponentPushNotificationInterestsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('exponent-push-notifications.interests.database.table_name'));
+        Schema::drop('create_exponent_push_notification_interests');
     }
-}
+};

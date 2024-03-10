@@ -16,7 +16,6 @@ class Employee extends Model
             'company_id',
             'first_name',
             'last_name',
-            'email',
             'role',
             'staff_number',
             'pay_rate',

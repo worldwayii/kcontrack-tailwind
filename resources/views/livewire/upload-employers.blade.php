@@ -279,7 +279,7 @@
         //
         //     // if (csvFile.type === "text/csv" ||
         //     //     csvFile.type === "application/vnd.ms-excel") {
-        //     //     // this is where you handle the draggable part
+        //     //     // this is where you handleCreatedUpdated the draggable part
         //     //     // handleCsvFile(csvFile);
         //     // } else {
         //     //     alert("Please drop a CSV file.");
