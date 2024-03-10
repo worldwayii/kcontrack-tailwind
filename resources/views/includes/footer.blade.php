@@ -66,11 +66,14 @@
       /*TOGGLE ROLE COVER*/
       let showColor = document.getElementById("showColor");
       showColor.style.transition = "0.2s";
-
+      //create from grid form
       let showColord = document.getElementById("showColord");
       showColord.style.transition = "0.2s";
-
+      //edit form
       let showColore = document.getElementById("showColore");
+      showColord.style.transition = "0.2s";
+      //bulk form
+      let showColorb = document.getElementById("showColorb");
       showColord.style.transition = "0.2s";
 
       function keep() {
@@ -145,6 +148,30 @@
 
         Livewire.dispatch('roleColorChanged',{role_colour: changed.style.background}); // Emitting the event with the correct parameter
         console.log('change role colour edit');
+
+      }
+
+      function keepb() {
+        showColorb.style.visibility = "visible";
+        showColorb.style.height = "57px";
+
+      }
+
+      function leaveb() {
+        showColorb.style.visibility = "hidden";
+        showColorb.style.height = "0px";
+      }
+
+      /*CHANGE ROLE COLOR*/
+      function changeRoleb(x) {
+        let change = document.getElementById("roleColorb");
+        let select = document.getElementById("role-color-elementb");
+        change.style.background = x.style.background;
+        change.style.borderColor = x.style.borderColor;
+
+        select.value = x.style.background;
+
+        Livewire.dispatch('roleColorChanged',{role_colour: change.style.background}); // Emitting the event with the correct parameter
 
       }
     </script>

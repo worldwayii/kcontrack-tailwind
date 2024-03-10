@@ -5,7 +5,7 @@
     >
       <div class="flex flex-col lg:flex-row gap-[4px] justify-between">
         <div class="flex items-center gap-[4px]">
-          <a href="{{route('schedulers.index')}}"
+          <a href="{{route('company.scheduler.index')}}"
             class="flex items-center justify-center w-[38px] h-[38px] rounded-[8px] bg-[#F2F2F2] shrink-0"
           >
             <svg
@@ -183,7 +183,7 @@
             A copy of this schedule will be sent to your email.
           </p>
 
-          <a href="{{route('schedulers.index')}}"
+          <a href="{{route('company.scheduler.index')}}"
             id="close_modal"
             type="button"
             class="flex h-[50px] w-full items-center justify-center px-[20px] border-[0.5px] border-[#3984E6] rounded-[4px] font-medium text-[14px] text-[#fff] bg-[#3984E6] mt-[32px]"

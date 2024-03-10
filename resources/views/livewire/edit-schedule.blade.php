@@ -106,6 +106,7 @@
                  <div
                    id="roleColore"
                    class="w-[27px] h-[27px] bg-[#F8DAD7] border-[#DEA59F] border-[1px] rounded-[4px] @error('role_colour') border-red-500 @enderror"
+                   style="background: {{$role_colour}}";
                  >
                 </div>
                </div>
