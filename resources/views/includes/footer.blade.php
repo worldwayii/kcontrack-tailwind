@@ -171,7 +171,7 @@
 
         select.value = x.style.background;
 
-        Livewire.dispatch('roleColorChanged',{role_colour: change.style.background}); // Emitting the event with the correct parameter
+        Livewire.dispatch('roleColorChanged',{role_colour: change.style.background});
 
       }
     </script>

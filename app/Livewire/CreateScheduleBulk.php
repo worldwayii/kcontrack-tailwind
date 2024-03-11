@@ -31,8 +31,6 @@ class CreateScheduleBulk extends Component
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
     // protected $debug = true;
 
-
-
     public function mount(){
         $this->employees = Employee::all();
     }
@@ -45,13 +43,11 @@ class CreateScheduleBulk extends Component
 
     public function updateDate($selected_date){
         $this->date = $selected_date;
-
-        //Log::info('selected date updated', ['selectedDate' => $selected_date]);
     }
 
     protected function rules()
     {
-        $employee =  Employee::where('uuid', $this->employee)->first();
+        //$employee =  Employee::where('uuid', $this->employee)->first();
 
         return [
                 'employeeArr' => 'required',
@@ -59,8 +55,8 @@ class CreateScheduleBulk extends Component
                 'end_at' => 'required',
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
-                'frequency' => 'nullable',
-                'date' => ['required', $employee ? new CheckScheduleConflictRule($employee->id) : 'string'],
+                'frequency' => 'required',
+                'date' => 'required',
                 'pay_rate' => 'nullable',
                 'break' => 'required|string',
                 'shift_note' => 'required|string',
@@ -69,9 +65,9 @@ class CreateScheduleBulk extends Component
     }
 
 
-    protected function prepareForValidation($attributes){
-        dd($attributes);
-    }
+    // protected function prepareForValidation($attributes){
+    //     dd($attributes);
+    // }
 
     public function updated($propertyName)
 {
@@ -90,30 +86,36 @@ class CreateScheduleBulk extends Component
         DB::beginTransaction();
         $data = $this->validate();
         try{
+        $employees = Employee::whereIn('uuid', $data['employeeArr'])->get();
 
-        $employee = Employee::where('uuid', $data['employee'])->first();
-        //dd($data);
-        foreach($data['date'] as $date){
-            $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
-            $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
+        $schedules = [];
 
+        foreach ($data['date'] as $date) {
+            foreach ($employees as $employee) {
+                $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
+                $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
 
-            Scheduler::create([
-                'user_id' => $employee->user_id,
-                'company_id' => $employee->company_id,
-                'employee_id' => $employee->id,
-                'start_at' => $start_at,
-                'end_at' => $end_at,
-                'role' => $data['role'],
-                'pay_rate' => 'Monthly',
-                'break' => $data['break'],
-                'frequency' => $data['frequency'],
-                'role_colour' => $this->rgbToHex($data['role_colour']),
-                'shift_note' => $data['shift_note'],
-            ]);
+                $schedules[] = [
+                    'uuid' => Str::uuid(),
+                    'user_id' => $employee->user_id,
+                    'company_id' => $employee->company_id,
+                    'employee_id' => $employee->id,
+                    'start_at' => $start_at,
+                    'end_at' => $end_at,
+                    'role' => $data['role'],
+                    'pay_rate' => 'Monthly',
+                    'break' => $data['break'],
+                    'frequency' => $data['frequency'],
+                    'role_colour' => $this->role_colour ? $this->rgbToHex($data['role_colour']) :'#b37bb3',
+                    'shift_note' => $data['shift_note'],
+                ];
+            }
         }
+
+        // Bulk insert schedules
+        Scheduler::insert($schedules);
         DB::commit();
-        $this->dispatch('alert', type: 'success', title: 'New Schedule created Successfully', position: 'center', timer: '2500');
+        $this->dispatch('alert', type: 'success', title: 'New Schedules created Successfully', position: 'center', timer: '2500');
     }catch(\Exception $e){
         Log::critical("create-schedule-error: ". $e->getMessage());
         DB::rollback();

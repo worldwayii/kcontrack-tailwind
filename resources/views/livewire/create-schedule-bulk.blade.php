@@ -8,6 +8,7 @@
         <div
           class="w-full bg-white-0 rounded-[8px] border-[0.7px] border-[#E6E6E6]"
         >
+
           <div
             data-multiselect-target="employee-select"
             class="w-full h-[40px] flex cursor-pointer"
@@ -50,7 +51,8 @@
               <input
                 type="checkbox"
                 id="{{$employee->uuid}}"
-                name="employee"
+                name="employee{{$employee->uuid}}"
+                value="{{$employee->uuid}}"
                 wire:model='employeeArr'
                 class="w-[15px] h-[15px] rounded-[2px] border-[#D9D9D9]"
               />
@@ -74,9 +76,7 @@
               </div>
             </label>
             @empty
-
-           @endforelse
-
+        @endforelse
           </div>
         </div>
 
@@ -168,7 +168,7 @@
           @error('role')
            <div class="text-sm text-red-600">{{ $message }}</div>
            @enderror
-          <div onmouseover="keepb()" onmouseout="leaveb()" class="relative">
+          <div onmouseover="keepb()" onmouseout="leaveb()" class="relative" wire:ignore>
            <select
            class="absolute hidden"
            wire:model='role_colour'
@@ -283,7 +283,7 @@
             </div>
             <div
               id="daily-selectionb"
-              class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col hidden"
+              class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col"
             >
               <div class="flex flex-col gap-[4px]">
                 <p class="font-semibold text-[12px] text-[#4F4F4F]">
@@ -401,7 +401,7 @@
             </div>
           </li>
 
-               <li
+               {{-- <li
                  data-checkbox-subselection-target="biweekly-selection"
                  class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
                >
@@ -691,7 +691,7 @@
                      class="grid grid-cols-7 text-[14px] text-[#222730]"
                    ></div>
                  </div>
-               </li>
+               </li> --}}
         </ul>
         @error('date')
            <div class="text-sm text-red-600">{{ $message }}</div>
