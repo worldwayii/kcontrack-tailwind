@@ -245,24 +245,21 @@
                          value="{{date('d/m/Y', strtotime('monday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                         @if(strtotime('today') > strtotime('monday this week')) disabled @endif
                        />
                      </label>
                    </li>
                    <li class="">
-                     <label
-                       for="T"
-                       class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                     >
-                       T
-                       <input
-                         type="checkbox"
-                         id="T"
-                         value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
-                         wire:model='date'
-                         class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                       />
-                     </label>
-                   </li>
+                    <label for="T" class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]">
+                        T
+                        <input type="checkbox" id="T"
+                               value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
+                               wire:model='date'
+                               class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                               @if(strtotime('today') > strtotime('tuesday this week')) disabled @endif
+                    </label>
+                </li>
+
                    <li class="">
                      <label
                        for="W"
@@ -275,6 +272,7 @@
                          value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                         @if(strtotime('today') > strtotime('wednesday this week')) disabled @endif
                        />
                      </label>
                    </li>
@@ -290,6 +288,7 @@
                          value="{{date('d/m/Y', strtotime('thursday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                         @if(strtotime('today') > strtotime('thursday this week')) disabled @endif
                        />
                      </label>
                    </li>
@@ -305,6 +304,7 @@
                          value="{{date('d/m/Y', strtotime('friday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                         @if(strtotime('today') > strtotime('friday this week')) disabled @endif
                        />
                      </label>
                    </li>
@@ -320,6 +320,7 @@
                          value="{{date('d/m/Y', strtotime('saturday this week'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                         @if(strtotime('today') > strtotime('saturday this week')) disabled @endif
                        />
                      </label>
                    </li>
@@ -335,6 +336,7 @@
                          value="{{date('d/m/Y', strtotime('sunday'))}}"
                          wire:model='date'
                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                         @if(strtotime('today') > strtotime('sunday')) disabled @endif
                        />
                      </label>
                    </li>

@@ -609,13 +609,15 @@
               >
                 <div
 
-                  wire:click="onDayClick({{$user}}, '{{$day}}')"
+                 @if(!$day->isPast()) wire:click="onDayClick({{$user}}, '{{$day}}')" @else data-tooltip-target='past-date-tooltip' data-tooltip-trigger="click" @endif
 
                   type="button"
                   class="cursor-pointer"
-
-
                 >
+                <div id="past-date-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    This Date Is Past
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
                   <svg
                     width="10"
                     height="11"
