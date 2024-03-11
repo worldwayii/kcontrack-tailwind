@@ -191,8 +191,8 @@
         @foreach($monthGrid->first() as $day)
 
         <button
-        class="flex-1 py-[16px] lg:py-[10px] flex flex-col items-center justify-center text-[14px] lg:text-[12px] font-medium lg:font-semibold text-[#80868C] lg:text-[#A7A7A7] hover:bg-[#3984E61A]" onclick="toggleScheduleGrid('{{ $day->format('Y-m-d') }}'"
-      >
+        class="flex-1 py-[16px] lg:py-[10px] flex flex-col items-center justify-center text-[14px] lg:text-[12px] font-medium lg:font-semibold text-[#80868C] lg:text-[#A7A7A7] hover:bg-[#3984E61A]"
+        onclick="toggleScheduleGrids('{{ $loop->index }}')">
         <p class="w-fit flex flex-col lg:items-start">
               <span>{{substr($day->format('l'), 0, 3)}}<span class="hidden lg:inline-block lg:leading-none">{{substr($day->format('l'), 3)}}</span></span>
           <span
@@ -208,7 +208,8 @@
         <!-- data cells -->
         <div class="flex flex-col gap-[8px] lg:gap-0" id="data-cells">
           <!-- data row -->
-          @forelse ($employees as $user)
+
+          @forelse ($employees as $userIndex => $user)
           @php
                 $schedules = $user['schedulers'];
                 $totalTime = $schedules->sum(function ($schedule) {
@@ -268,17 +269,9 @@
                 </p>
               </div>
             </div>
-            <script>
-              function toggleScheduleGrid(date) {
-                const scheduleGridId = `scheduleGrid-${date}`;
-                const scheduleGrid = document.getElementById(scheduleGridId);
-                if (scheduleGrid) {
-                  scheduleGrid.classList.toggle('hidden');
-                }
-              }
-            </script>
+
             {{-- schedule grid --}}
-            @foreach($monthGrid->first() as $day)
+            @foreach($monthGrid->first() as $dayIndex => $day)
             @php
             $todayEvents = collect($user['schedulers'])
             ->filter(function ($event) use ($day) {
@@ -290,7 +283,8 @@
             @endphp
             @forelse ($todayEvents as $event)
 
-            <div class="flex-1 flex items-center justify-between hidden" id="{{ $scheduleGridId }}">
+            <div class="flex-1 flex items-center justify-between schedule-grid hidden"
+            id="user{{ $userIndex }}ScheduleGrid{{ $dayIndex }}" style="background: {{$event['role_colour']}}";>
               <div class="text-[12px] text-[#4F4F4F]">
                 <p class="font-bold">{{$event['start_at']->format('h a')}} -
                   {{$event['end_at']->format('h a')}}</p>
@@ -298,8 +292,8 @@
               </div>
 
               <button
-                id="tableDropdown"
-                data-dropdown-toggle="tableDropdownMenu"
+                id="tableDropdown{{$event['uuid']}}"
+                data-dropdown-toggle="tableDropdownMenu{{$event['uuid']}}"
                 class=""
                 type="button"
               >
@@ -318,38 +312,20 @@
               </button>
 
               <div
-                id="tableDropdownMenu"
+                id="tableDropdownMenu{{$event['uuid']}}"
                 class="z-10 hidden shadow w-[97px]"
               >
                 <ul
                   class="py-2 text-[14px] text-[#4F4F4F] font-medium bg-white-0 rounded-[8px] flex flex-col gap-[16px]"
                   aria-labelledby="tableDropdown"
                 >
-                  <li>
-                    <a
-                      href="#"
-                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
-                    >
-                      <svg
-                        width="10"
-                        height="11"
-                        viewBox="0 0 10 11"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
-                          fill="#80868C"
-                        />
-                      </svg>
 
-                      Add</a
-                    >
-                  </li>
 
                   <li>
                     <a
                       href="#"
+
+                      wire:click.prevent="$dispatch('openEditModal', { id: {{ $event['id'] }}, date: '{{$day}}' })"
                       class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
                     >
                       <svg
@@ -394,6 +370,7 @@
                   <li>
                     <a
                       href="#"
+                      wire:click.prevent="$dispatch('openDeleteModal', { id: {{ $event['id'] }} })"
                       class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#E1473D]"
                     >
                       <svg
@@ -474,7 +451,9 @@
             </div>
 
             @endforelse
+            @php $userIndex++; @endphp
             @endforeach
+
             {{-- end schedule grid --}}
           </div>
             {{-- end Mobile Cell --}}
@@ -791,7 +770,25 @@
         });
 
   </script>
+
   @endscript
 
+  @section('pageScript')
+
+  <script>
+    function toggleScheduleGrids(dayIndex) {
+        // Hide all schedule grids for all users
+        document.querySelectorAll('.schedule-grid').forEach(function(grid) {
+            grid.classList.add('hidden');
+        });
+
+        // Show the schedule grids associated with the clicked date for each user
+        document.querySelectorAll('[id^=user][id$=ScheduleGrid' + dayIndex + ']').forEach(function(grid) {
+            grid.classList.remove('hidden');
+        });
+    }
+</script>
+
+  @endsection
 
 
