@@ -34,6 +34,8 @@ class Calendar extends Component
     public $showModifyEventButtons;
     public $showCreateModal;
     public $draggedSchedulerId;
+    public $copiedEventId;
+
     protected $casts = [
         'startsAt' => 'date',
         'endsAt' => 'date',
@@ -184,24 +186,56 @@ class Calendar extends Component
         $scheduler = Scheduler::findOrfail($this->draggedSchedulerId);
         $alreadyHasSchedule = Scheduler::whereDate('start_at', $day)->where('employee_id', $employee_id)->count();
         if(!$alreadyHasSchedule){
-        Log::info(['drop-employee-id' => $employee_id, 'date' => $day]);
-        $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->start_at->format('g:i'));
-        $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->end_at->format('g:i'));
+                Log::info(['drop-employee-id' => $employee_id, 'date' => $day]);
+                $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->start_at->format('g:i'));
+                $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->end_at->format('g:i'));
 
-        $load = [
-            'start_at' => $start_at,
-            'end_at' => $end_at,
-            'employee_id' => $employee_id,
-            'published' => false,
-        ];
+                $load = [
+                    'start_at' => $start_at,
+                    'end_at' => $end_at,
+                    'employee_id' => $employee_id,
+                    'published' => false,
+                ];
 
-        Scheduler::where('id', $scheduler->id)->update($load);
+                Scheduler::where('id', $scheduler->id)->update($load);
 
-        $this->dispatch('livewireEvent');
-    }else{
-        $this->dispatch('livewireEvent');
+                $this->dispatch('livewireEvent');
+        }else{
+                $this->dispatch('livewireEvent');
     }
     }
+
+
+
+    public function copy($eventId)
+    {
+        $this->copiedEventId = $eventId;
+    }
+
+    public function paste($userId, $day)
+    {
+        if($this->copiedEventId != null){
+
+            $date = Carbon::parse($day)->format('d/m/Y');
+
+            $eventToCopy = Scheduler::findOrFail($this->copiedEventId);
+            $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->start_at->format('g:i'));
+            $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->end_at->format('g:i'));
+        if ($eventToCopy) {
+            $event = $eventToCopy->replicate();
+            $event->start_at = $start_at;
+            $event->end_at = $end_at;
+            $event->employee_id = $userId;
+            $event->save();
+        }
+
+        // Reset copied event ID
+        $this->copiedEventId = null;
+        }
+
+        $this->dispatch('$refresh');
+    }
+
 
     public function openDirectModal(){
         Log::info("about to show modal");

@@ -559,7 +559,11 @@
                     </svg>
                   </div>
 
-                  <div class="cursor-pointer" type='button'>
+                  <div
+                    class="cursor-pointer"
+                    type='button'
+                    wire:click="copy('{{ $event['id'] }}')"
+                    >
                     <svg
                       width="14"
                       height="17"
@@ -594,45 +598,58 @@
               </button>
             </div>
             @empty
-                <div
-                    id="row-1-2"
-                    {{-- ondrop="drop(event)"
-                    ondragover="allowDrop(event)" --}}
-                    wire:drop="drop({{$user['id']}}, '{{ $day }}')"
-                    wire:dragover.prevent
-                    class="group flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
-            >
+            <div
+            id="row-1-2"
+            {{-- ondrop="drop(event)"
+            ondragover="allowDrop(event)" --}}
+            wire:drop="drop({{$user['id']}}, '{{ $day }}')"
+            wire:dragover.prevent
+            class="group flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
+        >
 
-              <div
+            <div
                 class="absolute top-0 bottom-0 right-0 left-0 bg-[#FBF0E9] hidden group-hover:flex items-center justify-center gap-[8px] transition-all"
-
-              >
+            >
                 <div
-
-                 @if(!$day->isPast()) wire:click="onDayClick({{$user}}, '{{$day}}')" @else data-tooltip-target='past-date-tooltip' data-tooltip-trigger="click" @endif
-
-                  type="button"
-                  class="cursor-pointer"
+                    @if(!$day->isPast()) wire:click="onDayClick({{$user}}, '{{$day}}')" @endif
+                    type="button"
+                    class="cursor-pointer"
                 >
-                <div id="past-date-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    This Date Is Past
-                    <div class="tooltip-arrow" data-popper-arrow></div>
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 10 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                            fill="#4F4F4F"
+                        />
+                    </svg>
                 </div>
-                  <svg
-                    width="10"
-                    height="11"
-                    viewBox="0 0 10 11"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
-                      fill="#4F4F4F"
-                    />
-                  </svg>
+
+                <!-- Paste Button -->
+                <div
+                    @if(!$day->isPast()) wire:click="paste({{$user['id']}}, '{{ $day }}')" @endif
+                    type="button"
+                    class="cursor-pointer"
+                >
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M15 0H5C3.9 0 3 0.9 3 2V16C3 17.1 3.9 18 5 18H15C16.1 18 17 17.1 17 16V2C17 0.9 16.1 0 15 0ZM6 2H14V8H6V2ZM6 9H14V10H6V9ZM6 11H14V14H6V11ZM15 16H5V2H5L5 16H15Z" fill="#4F4F4F"/>
+                    </svg>
                 </div>
-              </div>
             </div>
+        </div>
+
+
+
 
             @endforelse
             @endforeach
