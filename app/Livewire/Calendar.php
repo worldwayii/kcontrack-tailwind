@@ -226,6 +226,7 @@ class Calendar extends Component
             $event->start_at = $start_at;
             $event->end_at = $end_at;
             $event->employee_id = $userId;
+            $event->published = false;
             $event->save();
         }
 
