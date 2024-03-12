@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Mail\PublishSchedulerEmail;
 use Illuminate\Support\Facades\Mail;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Spatie\LaravelPdf\Facades\Pdf;
 use App\Models\Scheduler;
 
 
@@ -29,10 +29,11 @@ class PublishSchedulerToEmployee implements ShouldQueue
         $employees = $event->employees;
         $message = $event->messages['employee'];
 
-        $pdf = PDF::setOption(['isRemoteEnabled' => true])->loadView('livewire.publish-schedule-pdf', compact('employees'));
+        // Pdf::view('livewire.publish-schedule-pdf', ['employees' => $employees])
+        // ->save('published-scheduler.pdf');
         foreach($employees as $employee){
-            Mail::to($employee)->send(new PublishSchedulerEmail($employee, $message, $pdf));
-
+            //Mail::to($employee)->send(new PublishSchedulerEmail($employee, $message, $pdf));
+            break;
 
         }
     }

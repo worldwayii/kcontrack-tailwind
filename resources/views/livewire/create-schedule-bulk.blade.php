@@ -1,4 +1,4 @@
-<form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" wire:ignore>
+<form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" wire:ignore.self>
     <div class="flex flex-col gap-[12px]">
       <div class="flex flex-col gap-[4px]">
         <p class="font-semibold text-[12px] text-[#4F4F4F]">
@@ -723,3 +723,13 @@
       Save
     </button>
   </form>
+  @script
+  <script>
+      $wire.on('alert', () => {
+          console.log('can you see me');
+              // Show the modal
+              document.getElementById('create_schedule_bulk').classList.add('hidden');
+              document.querySelector("body > div[modal-backdrop]")?.remove()
+      });
+  </script>
+  @endscript
