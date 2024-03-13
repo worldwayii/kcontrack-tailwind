@@ -133,7 +133,6 @@
             class="hidden md:flex items-center gap-[4px]"
             type="button"
           >
-
               @if(auth()->user()->company->logo)
                   <img src="{{ asset('storage/' . auth()->user()->company->logo) }}" class="w-[40px] h-[40px] object-cover rounded-[8px]"/>
               @else

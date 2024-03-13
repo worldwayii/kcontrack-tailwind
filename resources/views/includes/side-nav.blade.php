@@ -56,7 +56,7 @@
           </a>
 
           <a
-            href=""
+            href="{{route('company.employee.show')}}"
             class="w-full flex items-center px-[10px] py-[7px] gap-[8px] font-semibold text-[12px] text-[#80868C] hover:text-[14px] hover:text-[#4F4F4F] transition-all group"
           >
             <div
@@ -271,7 +271,7 @@
           </a>
 
           <a
-              href="#"
+            href="{{route('company.employee.show')}}"
             class="group flex flex-col items-center justify-center gap-[8px] px-[7.5px] py-[10px] font-semibold text-[12px] text-[#80868C] hover:text-[#4F4F4F] text-center transition-all shrink-0"
           >
             <div

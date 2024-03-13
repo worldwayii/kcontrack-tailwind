@@ -674,7 +674,7 @@
                             <p
                                 class="font-semibold text-[12px] md:text-[13px] lg:text-[14px] text-[#4F4F4F] leading-none break-words"
                             >
-                             {{$scheduler->first_name}} {{$scheduler->lastst_name}}
+                             {{$scheduler->employee->first_name}} {{$scheduler->employee->last_name}}
                             </p>
                         </div>
                     </div>
