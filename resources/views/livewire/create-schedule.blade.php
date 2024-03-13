@@ -641,9 +641,13 @@
             <div class="text-sm text-red-600">{{ $message }}</div>
         @enderror
        </div>
+
+       
        @error('date')
             <div class="text-sm text-red-600">{{ $message }}</div>
         @enderror
+
+
        <div class="w-full flex flex-col gap-[2px]">
          <label
            id="shift"

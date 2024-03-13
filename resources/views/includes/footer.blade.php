@@ -29,8 +29,9 @@
         ev.target.appendChild(document.getElementById(data));
       }
 
-      // toggling of radio submenu selection
-      function handleAllRadioSubmenuSelection() {
+      
+       // toggling of radio submenu selection
+       function handleAllRadioSubmenuSelection() {
         const allSubmenuSelections = document.querySelectorAll(
           "[data-checkbox-subselection-target]"
         );
