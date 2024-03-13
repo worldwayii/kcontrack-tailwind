@@ -199,9 +199,9 @@ class Calendar extends Component
 
                 Scheduler::where('id', $scheduler->id)->update($load);
 
-                $this->dispatch('livewireEvent');
+                $this->dispatch('$refresh');
         }else{
-                $this->dispatch('livewireEvent');
+                $this->dispatch('$refresh');
     }
     }
 
@@ -221,6 +221,12 @@ class Calendar extends Component
             $eventToCopy = Scheduler::findOrFail($this->copiedEventId);
             $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->start_at->format('g:i'));
             $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->end_at->format('g:i'));
+            $alreadyExists = Scheduler::where('employee_id', $userId)->whereDate('start_at', $start_at)->count();
+            if($alreadyExists){
+                $this->copiedEventId = null;
+                $this->dispatch('$refresh');
+                return;
+            }
         if ($eventToCopy) {
             $event = $eventToCopy->replicate();
             $event->start_at = $start_at;

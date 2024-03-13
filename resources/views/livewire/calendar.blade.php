@@ -347,7 +347,7 @@
 
                   <li>
                     <a
-                      href="#"
+                      wire:click.prevent="copy('{{ $event['id'] }}')"
                       class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
                     >
                       <svg
@@ -395,11 +395,13 @@
             @empty
 
 
-            <div class="flex-1 flex items-center justify-between hidden">
+            <div class="flex-1 flex items-center justify-between hidden schedule-grid hidden"
+                {{-- id="user{{ $userIndex }}ScheduleGrid{{ $dayIndex }}" --}}
+            >
 
               <button
-                id="tableDropdown"
-                data-dropdown-toggle="tableDropdownMenu"
+                id="tableDropdown{{ $userIndex }}ScheduleGrid{{ $dayIndex }}"
+                data-dropdown-toggle="tableDropdownMenu{{ $userIndex }}ScheduleGrid{{ $dayIndex }}"
                 class=""
                 type="button"
               >
@@ -418,7 +420,7 @@
               </button>
 
               <div
-                id="tableDropdownMenu"
+                id="tableDropdownMenu{{ $userIndex }}ScheduleGrid{{ $dayIndex }}"
                 class="z-10 hidden shadow w-[97px]"
               >
                 <ul
@@ -427,7 +429,8 @@
                 >
                   <li>
                     <a
-                      href="#"
+                    @if($day->isFuture() || $day->isToday()) wire:click.prevent="onDayClick({{$user}}, '{{$day}}')"
+                    @endif
                       class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
                     >
                       <svg
@@ -444,6 +447,28 @@
                       </svg>
 
                       Add</a
+                    >
+                  </li>
+
+                  <li>
+                    <a
+                    @if($day->isFuture() || $day->isToday()) wire:click.prevent="paste({{$user['id']}}, '{{ $day }}')" @endif
+                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
+                    >
+                      <svg
+                        width="10"
+                        height="11"
+                        viewBox="0 0 10 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                          fill="#80868C"
+                        />
+                      </svg>
+
+                      Paste</a
                     >
                   </li>
                 </ul>
@@ -514,9 +539,7 @@
         @forelse ($todayEvents as $event)
 
             <div
-              id="row-1-1"
-              {{-- ondrop="drop(event)"
-              ondragover="allowDrop(event)" --}}
+                id="row-1-1"
                 wire:drop="drop({{$user['id']}}, '{{ $day }}')"
                 wire:dragover.prevent
               class="flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
