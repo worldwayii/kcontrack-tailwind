@@ -36,9 +36,10 @@ class PublishSchedulerToEmployer implements ShouldQueue
         ->landscape()->save($tmpt_path);
 
         //Log::info(['pdf-obj' => $pdf]);
-        Scheduler::wherePublished(false)->update(['published' => true]);
+
         foreach($employees as $employee){
             Mail::to($employee->user)->send(new PublishSchedulerToEmployerMail($employee->user, $message, $tmpt_path));
+            
             break;
         }
         unlink($tmpt_path);

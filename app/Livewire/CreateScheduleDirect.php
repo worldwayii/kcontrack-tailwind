@@ -108,23 +108,34 @@ class CreateScheduleDirect extends Component
 
         try{
         foreach(array_unique($data['date']) as $date){
-            $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
-            $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
-            $employee = $this->employee;
+            $day = $date;
+            $currentDate = Carbon::now();
 
-            Scheduler::create([
-                'user_id' => $employee->user_id,
-                'company_id' => $employee->company_id,
-                'employee_id' => $employee->id,
-                'start_at' => $start_at,
-                'end_at' => $end_at,
-                'role' => $data['role'],
-                'pay_rate' => 'Monthly',
-                'break' => $data['break'],
-                //'frequency' => $data['frequency'],
-                'role_colour' => $this->rgbToHex($data['role_colour']),
-                'shift_note' => $data['shift_note'],
-            ]);
+
+            $dayCarbon = Carbon::createFromFormat('d/m/Y', $day);
+
+            if ($dayCarbon->isSameDay($currentDate) || $dayCarbon->isFuture()) {
+                $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
+                $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
+                $employee = $this->employee;
+
+                Scheduler::create([
+                    'user_id' => $employee->user_id,
+                    'company_id' => $employee->company_id,
+                    'employee_id' => $employee->id,
+                    'start_at' => $start_at,
+                    'end_at' => $end_at,
+                    'role' => $data['role'],
+                    'pay_rate' => 'Monthly',
+                    'break' => $data['break'],
+                    //'frequency' => $data['frequency'],
+                    'role_colour' => $this->rgbToHex($data['role_colour']),
+                    'shift_note' => $data['shift_note'],
+                ]);
+            } else {
+                continue;
+            }
+
         }
         DB::commit();
         $this->dispatch('alert', type: 'success', title: 'New Schedule created Successfully', position: 'center', timer: '2500');

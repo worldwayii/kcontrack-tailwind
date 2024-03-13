@@ -524,8 +524,6 @@
             >
               <button
                 id="user1-shift1"
-                {{-- draggable="true" --}}
-                {{-- ondragstart="drag(event)" --}}
                 wire:dragstart="drag('{{ $event['id'] }}')"
                 draggable="true"
                 class="group w-full flex flex-col items-center justify-center py-[6px] text-[10px] text-[#4F4F4F] border-[1px] border-[{{strtoupper($event['role_colour'])}}]  relative"
@@ -600,10 +598,10 @@
             @empty
             <div
             id="row-1-2"
-            {{-- ondrop="drop(event)"
-            ondragover="allowDrop(event)" --}}
-            wire:drop="drop({{$user['id']}}, '{{ $day }}')"
-            wire:dragover.prevent
+            @if($day->isFuture() || $day->isToday())
+                wire:drop="drop({{$user['id']}}, '{{ $day }}')"
+                wire:dragover.prevent
+            @endif
             class="group flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
         >
 
@@ -611,7 +609,7 @@
                 class="absolute top-0 bottom-0 right-0 left-0 bg-[#FBF0E9] hidden group-hover:flex items-center justify-center gap-[8px] transition-all"
             >
                 <div
-                    @if(!$day->isPast()) wire:click="onDayClick({{$user}}, '{{$day}}')" @endif
+                    @if($day->isFuture() || $day->isToday()) wire:click="onDayClick({{$user}}, '{{$day}}')" @endif
                     type="button"
                     class="cursor-pointer"
                 >
@@ -629,9 +627,8 @@
                     </svg>
                 </div>
 
-                <!-- Paste Button -->
                 <div
-                    @if(!$day->isPast()) wire:click="paste({{$user['id']}}, '{{ $day }}')" @endif
+                    @if($day->isFuture() || $day->isToday()) wire:click="paste({{$user['id']}}, '{{ $day }}')" @endif
                     type="button"
                     class="cursor-pointer"
                 >

@@ -234,6 +234,9 @@
                           value="{{$weekDates['Monday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime($weekDates['Monday']) < strtotime('today'))
+                                disabled
+                          @endif
                         />
                       </label>
                     </li>
