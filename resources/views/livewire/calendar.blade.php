@@ -609,9 +609,11 @@
                 class="absolute top-0 bottom-0 right-0 left-0 bg-[#FBF0E9] hidden group-hover:flex items-center justify-center gap-[8px] transition-all"
             >
                 <div
-                    @if($day->isFuture() || $day->isToday()) wire:click="onDayClick({{$user}}, '{{$day}}')" @endif
+                    @if($day->isFuture() || $day->isToday()) wire:click="onDayClick({{$user}}, '{{$day}}')"
+                    @endif
                     type="button"
                     class="cursor-pointer"
+
                 >
                     <svg
                         width="14"

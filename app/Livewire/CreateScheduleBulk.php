@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Scheduler;
 use App\Models\Employee;
-use App\Rules\CheckScheduleConflictRule;
+use App\Rules\CheckScheduleConflictBulkRule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -56,7 +56,7 @@ class CreateScheduleBulk extends Component
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
                 'frequency' => 'required',
-                'date' => 'required',
+                'date' => ['required', new CheckScheduleConflictBulkRule($this->employeeArr)],
                 'pay_rate' => 'nullable',
                 'break' => 'required|string',
                 'shift_note' => 'required|string',
