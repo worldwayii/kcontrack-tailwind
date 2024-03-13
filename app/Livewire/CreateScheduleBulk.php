@@ -91,6 +91,11 @@ class CreateScheduleBulk extends Component
         $schedules = [];
 
         foreach ($data['date'] as $date) {
+            $day = $date;
+            $currentDate = Carbon::now();
+            $dayCarbon = Carbon::createFromFormat('d/m/Y', $day);
+
+            if ($dayCarbon->isSameDay($currentDate) || $dayCarbon->isFuture()) {
             foreach ($employees as $employee) {
                 $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
                 $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
@@ -110,6 +115,9 @@ class CreateScheduleBulk extends Component
                     'shift_note' => $data['shift_note'],
                 ];
             }
+        }else{
+            continue;
+        }
         }
 
         // Bulk insert schedules

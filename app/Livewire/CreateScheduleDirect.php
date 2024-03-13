@@ -108,10 +108,9 @@ class CreateScheduleDirect extends Component
 
         try{
         foreach(array_unique($data['date']) as $date){
+
             $day = $date;
             $currentDate = Carbon::now();
-
-
             $dayCarbon = Carbon::createFromFormat('d/m/Y', $day);
 
             if ($dayCarbon->isSameDay($currentDate) || $dayCarbon->isFuture()) {

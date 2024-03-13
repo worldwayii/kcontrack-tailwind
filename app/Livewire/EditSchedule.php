@@ -110,6 +110,12 @@ public function updatedDate($value) {
 
         try{
             $date = $data['date'];
+            $day = $date;
+            $currentDate = Carbon::now();
+            $dayCarbon = Carbon::createFromFormat('d/m/Y', $day);
+
+            if ($dayCarbon->isSameDay($currentDate) || $dayCarbon->isFuture()) {
+
             $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
             $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
             $employee = $this->employee;
@@ -128,7 +134,7 @@ public function updatedDate($value) {
                 'shift_note' => $data['shift_note'],
                 'published' => false,
             ]);
-
+        }
         DB::commit();
 
         $this->dispatch('alert', type: 'success', title: 'Schedule Updated Successfully', position: 'center', timer: '2000');
