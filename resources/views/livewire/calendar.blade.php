@@ -396,7 +396,7 @@
 
 
             <div class="flex-1 flex items-center justify-between hidden schedule-grid hidden"
-                {{-- id="user{{ $userIndex }}ScheduleGrid{{ $dayIndex }}" --}}
+                id="user{{ $userIndex }}ScheduleGrid{{ $dayIndex }}" wire:ignore.self
             >
 
               <button
