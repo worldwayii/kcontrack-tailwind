@@ -233,6 +233,8 @@
 
                 <!-- table body -->
                 <div class="w-full flex flex-col border-[0.5px] border-transparent md:border-[#EDEFF4] border-y-transparent">
+
+                        @foreach(auth()->user()->company->employees as $employee)
                     <!-- data row -->
                     <label for="mary" class="w-full flex flex-col relative">
                         <div class="w-full flex gap-[16px] md:gap-[24px] items-center py-[16px] border-b-[0.5px] border-b-[#EDEFF4]">
@@ -250,7 +252,7 @@
                                     class="flex items-center justify-center flex-shrink-0 w-[28px] h-[28px] relative"
                                 >
                                     <img
-                                        src="../assets/user.jpg"
+                                        src="{{ asset('img/icon_holder.png') }}"
                                         class="w-full h-full rounded-full object-cover"
                                         alt=""
                                     />
@@ -260,12 +262,12 @@
                                     <p
                                         class="font-semibold text-[12px] md:text-[13px] lg:text-[14px] text-[#4F4F4F] leading-none break-all"
                                     >
-                                        Mary Ann
+                                        {{$employee->first_name}} {{$employee->last_name}}
                                     </p>
                                     <p
                                         class="font-medium text-[8px] md:text-[9px] lg:text-[10px] text-[#80868C] leading-none break-all lg:hidden"
                                     >
-                                        mary.ann@email.com
+                                        {{$employee->user->email}}
                                     </p>
                                 </div>
                             </div>
@@ -273,25 +275,25 @@
                             <div
                                 class="flex-1 max-w-[30%] lg:max-w-[16%] font-semibold text-[12px] text-[#80868C] hidden lg:block gap-[4px]"
                             >
-                                <p class="break-all">203-344-8797</p>
+                                <p class="break-all"> {{$employee->phone_number}}</p>
                             </div>
 
                             <div
                                 class="flex-1 max-w-[30%] lg:max-w-[16%] font-semibold text-[12px] text-[#80868C] hidden lg:block gap-[4px]"
                             >
-                                <p class="break-all">mary.ann@email.com</p>
+                                <p class="break-all">{{$employee->user->email}}</p>
                             </div>
 
                             <div
                                 class="flex-1 max-w-[30%] lg:max-w-[15%] font-semibold text-[12px] text-[#80868C] flex items-center justify-center gap-[4px]"
                             >
-                                <p class="break-all">Manager</p>
+                                <p class="break-all">{{$employee->role}}</p>
                             </div>
 
                             <div
                                 class="flex-1 max-w-[30%] lg:max-w-[16%] font-semibold text-[12px] text-[#80868C] hidden lg:flex items-center justify-center gap-[4px]"
                             >
-                                <p class="break-all">Enginnering</p>
+                                <p class="break-all">Engineering</p>
                             </div>
 
                             <div
@@ -350,21 +352,21 @@
                                 class="flex items-center gap-[24px] font-semibold text-[12px]"
                             >
                                 <p class="w-[50%] text-[#4F4F4F]">Phone Number</p>
-                                <p class="text-[#80868C] flex-1">203-344-8797</p>
+                                <p class="text-[#80868C] flex-1">{{$employee->phone_number}}</p>
                             </div>
 
                             <div
                                 class="flex items-center gap-[24px] font-semibold text-[12px] break-all"
                             >
                                 <p class="w-[50%] text-[#4F4F4F]">Email Address</p>
-                                <p class="text-[#80868C] flex-1">mary.ann@email.com</p>
+                                <p class="text-[#80868C] flex-1">{{$employee->user->email}}</p>
                             </div>
 
                             <div
                                 class="flex items-center gap-[24px] font-semibold text-[12px]"
                             >
                                 <p class="w-[50%] text-[#4F4F4F]">Job Role</p>
-                                <p class="text-[#80868C] flex-1">Manager</p>
+                                <p class="text-[#80868C] flex-1">{{$employee->role}}</p>
                             </div>
 
                             <div
@@ -378,6 +380,8 @@
                             <input type="checkbox" id="mary" class="absolute hidden" />
                         </div>
                     </label>
+                        @endforeach
+
 
                 </div>
 
