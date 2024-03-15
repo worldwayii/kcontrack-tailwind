@@ -565,7 +565,9 @@
                   class="cursor-pointer"
                   type='button'
                   wire:click="$dispatch('openEditModal', { id: {{ $event['id'] }}, date: '{{$day}}' })"
+                  data-tooltip-target="edit{{$event['uuid']}}"
                   >
+
                     <svg
                       width="16"
                       height="15"
@@ -579,11 +581,21 @@
                       />
                     </svg>
                   </div>
+                  {{-- edit tooltip --}}
+                  <div
+                        id="edit{{$event['uuid']}}"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                      >
+                        Edit Schedule
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                      </div>
 
                   <div
                     class="cursor-pointer"
                     type='button'
                     wire:click="copy('{{ $event['id'] }}')"
+                    data-tooltip-target="copy{{$event['uuid']}}"
                     >
                     <svg
                       width="14"
@@ -598,9 +610,19 @@
                       />
                     </svg>
                   </div>
+                  {{-- copy tooltip --}}
+                  <div
+                        id="copy{{$event['uuid']}}"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                      >
+                        Copy Schedule
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                  </div>
 
                   <div class="cursor-pointer" type='button'
-                  wire:click="$dispatch('openDeleteModal', { id: {{ $event['id'] }} })"
+                    wire:click="$dispatch('openDeleteModal', { id: {{ $event['id'] }} })"
+                    data-tooltip-target="delete{{$event['uuid']}}"
                   >
                     <svg
                       width="14"
@@ -615,6 +637,15 @@
                       />
                     </svg>
                   </div>
+                  {{-- delete tooltip --}}
+                  <div
+                        id="delete{{$event['uuid']}}"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                      >
+                        Delete Schedule
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                      </div>
                 </div>
               </button>
             </div>
@@ -625,6 +656,7 @@
                 wire:drop="drop({{$user['id']}}, '{{ $day }}')"
                 wire:dragover.prevent
             @endif
+
             class="group flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
         >
 
@@ -636,7 +668,7 @@
                     @endif
                     type="button"
                     class="cursor-pointer"
-
+                    data-tooltip-target="add{{$user['uuid'].$day->toDateString()}}"
                 >
                     <svg
                         width="14"
@@ -652,10 +684,21 @@
                     </svg>
                 </div>
 
+                {{-- Add tooltip --}}
+                <div
+                id="add{{$user['uuid'].$day->toDateString()}}"
+                role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+              >
+              @if($day->isFuture() || $day->isToday()) Add Schedule @else Invalid Date @endif
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
+
                 <div
                     @if($day->isFuture() || $day->isToday()) wire:click="paste({{$user['id']}}, '{{ $day }}')" @endif
                     type="button"
                     class="cursor-pointer"
+                    data-tooltip-target="paste{{$user['uuid'].$day->toDateString()}}"
                 >
                     <svg
                         width="14"
@@ -667,12 +710,18 @@
                         <path d="M15 0H5C3.9 0 3 0.9 3 2V16C3 17.1 3.9 18 5 18H15C16.1 18 17 17.1 17 16V2C17 0.9 16.1 0 15 0ZM6 2H14V8H6V2ZM6 9H14V10H6V9ZM6 11H14V14H6V11ZM15 16H5V2H5L5 16H15Z" fill="#4F4F4F"/>
                     </svg>
                 </div>
+
+                {{-- Add tooltip --}}
+                <div
+                id="paste{{$user['uuid'].$day->toDateString()}}"
+                role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+              >
+                @if($day->isFuture() || $day->isToday()) Paste Schedule @else Invalid Date @endif
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
             </div>
         </div>
-
-
-
-
             @endforelse
             @endforeach
 

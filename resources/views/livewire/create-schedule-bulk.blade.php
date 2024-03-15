@@ -1,6 +1,6 @@
 <form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" wire:ignore.self>
     <div class="flex flex-col gap-[12px]">
-      <div class="flex flex-col gap-[4px]">
+      <div class="flex flex-col gap-[4px]" wire:ignore>
         <p class="font-semibold text-[12px] text-[#4F4F4F]">
           Select Employee
         </p>
@@ -148,7 +148,7 @@
         </div>
       </div>
 
-      <div class="w-full flex flex-col gap-[2px]">
+      <div class="w-full flex flex-col gap-[2px]" wire:ignore>
         <label id="roleb" class="text-[12px] font-semibold text-[#4F4F4F]">
           Role Selection
         </label>
@@ -292,13 +292,13 @@
                 <ul class="h-fit flex-1 flex justify-between">
                     <li class="">
                       <label
-                        for="M"
+                        for="Mb"
                         class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                       >
                         M
                         <input
                           type="checkbox"
-                          id="M"
+                          id="Mb"
                           value="{{date('d/m/Y', strtotime('monday this week'))}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -307,9 +307,9 @@
                       </label>
                     </li>
                     <li class="">
-                     <label for="T" class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]">
+                     <label for="Tb" class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]">
                          T
-                         <input type="checkbox" id="T"
+                         <input type="checkbox" id="Tb"
                                 value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
                                 wire:model='date'
                                 class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -319,13 +319,13 @@
 
                     <li class="">
                       <label
-                        for="W"
+                        for="Wb"
                         class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                       >
                         W
                         <input
                           type="checkbox"
-                          id="W"
+                          id="Wb"
                           value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -335,13 +335,13 @@
                     </li>
                     <li class="">
                       <label
-                        for="Thu"
+                        for="Thub"
                         class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                       >
                         T
                         <input
                           type="checkbox"
-                          id="Thu"
+                          id="Thub"
                           value="{{date('d/m/Y', strtotime('thursday this week'))}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -351,13 +351,13 @@
                     </li>
                     <li class="">
                       <label
-                        for="F"
+                        for="Fb"
                         class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                       >
                         F
                         <input
                           type="checkbox"
-                          id="F"
+                          id="Fb"
                           value="{{date('d/m/Y', strtotime('friday this week'))}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -367,13 +367,13 @@
                     </li>
                     <li class="">
                       <label
-                        for="S"
+                        for="Sb"
                         class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                       >
                         S
                         <input
                           type="checkbox"
-                          id="S"
+                          id="Sb"
                           value="{{date('d/m/Y', strtotime('saturday this week'))}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
@@ -383,13 +383,13 @@
                     </li>
                     <li class="">
                       <label
-                        for="Sun"
+                        for="Sunb"
                         class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
                       >
                         S
                         <input
                           type="checkbox"
-                          id="Sun"
+                          id="Sunb"
                           value="{{date('d/m/Y', strtotime('sunday'))}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"

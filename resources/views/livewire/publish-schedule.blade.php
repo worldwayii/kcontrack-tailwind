@@ -39,7 +39,7 @@
 
             @if ($unscheduledEmployee)
                 <p>
-                    Scheduled By: {{$unscheduledEmployee->user->name}} | Date Scheduled: {{$unscheduledEmployee->schedulers()->wherePublished(false)->first()->created_at->format('d/m/y')}} | Time: {{$unscheduledEmployee->schedulers()->wherePublished(false)->first()->created_at->format('h:i:s A')}}
+                    Scheduled By: {{auth()->user()->name}} | Date Scheduled: {{now()->format('d/m/y')}} | Time: {{now()->format('h:i:s A')}}
                 </p>
 
             @else

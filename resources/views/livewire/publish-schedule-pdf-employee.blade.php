@@ -200,7 +200,7 @@
             </div>
 
             <div class="flex flex-col gap-[4px]">
-                @forelse ($employee->schedulers->where('published', false) as $schedule)
+                @forelse ($employee->schedulers->where('published', false) as $index => $schedule)
 
                 <div
                 class="flex gap-[24px] items-center flex-1 min-w-fit border-[0.5px] border-[#EDEFF4] text-[13px] font-medium text-[#4F4F4F] py-[16px]"
@@ -208,7 +208,7 @@
                 <div
                   class="flex-1 min-w-[124px] flex items-center gap-[8px] pl-[8px]"
                 >
-                  
+
                   <p class="font-bold text-[14px] text-[#4F4F4F]">{{$employee->getFullNameAttribute()}}</p>
                 </div>
                 <p class="flex-1 min-w-[148px] text-center">
@@ -222,6 +222,7 @@
                   {{$schedule->shift_note}}
                 </p>
               </div>
+              @if(($index + 1) % 7 == 0) @pageBreak @endif
                 @empty
 
                 @endforelse
