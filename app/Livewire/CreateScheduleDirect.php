@@ -26,15 +26,17 @@ class CreateScheduleDirect extends Component
     $break,
     $shift_note,
     $role_colour,
+    $border_colour,
     $frequency = 'daily';
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'gridEvent' => '$refresh', 'openCreateDirectModal'];
     protected $debug = true;
 
-    public function roleColorChanged($role_colour)
+    public function roleColorChanged($role_colour, $border_colour)
     {
         $this->role_colour = $role_colour;
-        Log::info('role colour changed: '. $role_colour);
+        $this->border_colour = $border_colour;
+        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
     public function openCreateDirectModal($employee, $date){
@@ -76,6 +78,7 @@ class CreateScheduleDirect extends Component
         'end_at' => 'required',
         'role' => 'required|string',
         'role_colour' => 'nullable|string',
+        'border_colour' => 'nullable|string',
         'frequency' => 'nullable',
         'date' => ['required', new CheckScheduleConflictRule($this->employee->id)],
         'pay_rate' => 'nullable',
@@ -129,6 +132,7 @@ class CreateScheduleDirect extends Component
                     'break' => $data['break'],
                     //'frequency' => $data['frequency'],
                     'role_colour' => $this->rgbToHex($data['role_colour']),
+                    'border_colour' => $this->rgbToHex($data['border_colour']),
                     'shift_note' => $data['shift_note'],
                 ]);
             } else {

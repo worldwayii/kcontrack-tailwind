@@ -25,6 +25,7 @@ class CreateSchedule extends Component
     $break,
     $shift_note,
     $role_colour,
+    $border_colour,
     $frequency;
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
@@ -36,10 +37,11 @@ class CreateSchedule extends Component
         $this->employees = Employee::all();
     }
 
-    public function roleColorChanged($role_colour)
+    public function roleColorChanged($role_colour, $border_colour)
     {
         $this->role_colour = $role_colour;
-        Log::info('role colour changed: '. $role_colour);
+        $this->border_colour = $border_colour;
+        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
     public function updateDate($selected_date){
@@ -58,6 +60,7 @@ class CreateSchedule extends Component
                 'end_at' => 'required',
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
+                'border_colour' => 'nullable|string',
                 'frequency' => 'nullable',
                 'date' => ['required', $employee ? new CheckScheduleConflictRule($employee->id) : 'string'],
                 'pay_rate' => 'nullable',
@@ -91,13 +94,36 @@ class CreateSchedule extends Component
         try{
 
         $employee = Employee::where('uuid', $data['employee'])->first();
-        //dd($data);
-        foreach($data['date'] as $date){
+        // //dd($data);
+        // foreach($data['date'] as $date){
+        //     $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
+        //     $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
+
+
+        //     Scheduler::create([
+        //         'user_id' => $employee->user_id,
+        //         'company_id' => $employee->company_id,
+        //         'employee_id' => $employee->id,
+        //         'start_at' => $start_at,
+        //         'end_at' => $end_at,
+        //         'role' => $data['role'],
+        //         'pay_rate' => 'Monthly',
+        //         'break' => $data['break'],
+        //         'frequency' => $data['frequency'],
+        //         'role_colour' => $this->rgbToHex($data['role_colour']),
+        //         'border_colour' => $this->border_colour ? $this->rgbToHex($data['border_colour']) : '#b37bb3',
+        //         'shift_note' => $data['shift_note'],
+        //     ]);
+        // }
+        // DB::commit();
+
+        $schedules = [];
+        foreach ($data['date'] as $date) {
             $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
             $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
 
-
-            Scheduler::create([
+            $schedules[] = [
+                'uuid' => Str::uuid(),
                 'user_id' => $employee->user_id,
                 'company_id' => $employee->company_id,
                 'employee_id' => $employee->id,
@@ -108,9 +134,13 @@ class CreateSchedule extends Component
                 'break' => $data['break'],
                 'frequency' => $data['frequency'],
                 'role_colour' => $this->rgbToHex($data['role_colour']),
+                'border_colour' => $data['border_colour'] ? $this->rgbToHex($data['border_colour']) : '#b37bb3',
                 'shift_note' => $data['shift_note'],
-            ]);
+            ];
         }
+
+        Scheduler::insert($schedules);
+
         DB::commit();
         $this->dispatch('alert', type: 'success', title: 'New Schedule created Successfully', position: 'center', timer: '2500');
     }catch(\Exception $e){

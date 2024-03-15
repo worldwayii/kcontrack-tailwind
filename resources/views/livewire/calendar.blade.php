@@ -550,7 +550,7 @@
                 wire:dragstart="drag('{{ $event['id'] }}')"
                 draggable="true"
                 class="group w-full flex flex-col items-center justify-center py-[6px] text-[10px] text-[#4F4F4F] border-[1px] border-[{{strtoupper($event['role_colour'])}}]  relative"
-                style="background: {{$event['role_colour']}}";
+                style="background: {{$event['role_colour']}}; border-color: {{$event['border_colour']}}"
               >
               <span class="font-bold">{{$event['start_at']->format('h a')}} -
                 {{$event['end_at']->format('h a')}}</span>

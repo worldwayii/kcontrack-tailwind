@@ -26,6 +26,7 @@ class CreateScheduleBulk extends Component
     $break,
     $shift_note,
     $role_colour,
+    $border_colour,
     $frequency;
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
@@ -35,10 +36,11 @@ class CreateScheduleBulk extends Component
         $this->employees = Employee::all();
     }
 
-    public function roleColorChanged($role_colour)
+    public function roleColorChanged($role_colour, $border_colour)
     {
         $this->role_colour = $role_colour;
-        Log::info('role colour changed: '. $role_colour);
+        $this->border_colour = $border_colour;
+        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
     public function updateDate($selected_date){
@@ -55,6 +57,7 @@ class CreateScheduleBulk extends Component
                 'end_at' => 'required',
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
+                'border_colour' => 'nullable|string',
                 'frequency' => 'required',
                 'date' => ['required', new CheckScheduleConflictBulkRule($this->employeeArr)],
                 'pay_rate' => 'nullable',
@@ -112,6 +115,7 @@ class CreateScheduleBulk extends Component
                     'break' => $data['break'],
                     'frequency' => $data['frequency'],
                     'role_colour' => $this->role_colour ? $this->rgbToHex($data['role_colour']) :'#b37bb3',
+                    'border_colour' => $this->border_colour ? $this->rgbToHex($data['border_colour']) : '#b37bb3',
                     'shift_note' => $data['shift_note'],
                 ];
             }
