@@ -91,31 +91,10 @@ class CreateSchedule extends Component
     public function create(){
         DB::beginTransaction();
         $data = $this->validate();
+        
         try{
 
         $employee = Employee::where('uuid', $data['employee'])->first();
-        // //dd($data);
-        // foreach($data['date'] as $date){
-        //     $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
-        //     $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
-
-
-        //     Scheduler::create([
-        //         'user_id' => $employee->user_id,
-        //         'company_id' => $employee->company_id,
-        //         'employee_id' => $employee->id,
-        //         'start_at' => $start_at,
-        //         'end_at' => $end_at,
-        //         'role' => $data['role'],
-        //         'pay_rate' => 'Monthly',
-        //         'break' => $data['break'],
-        //         'frequency' => $data['frequency'],
-        //         'role_colour' => $this->rgbToHex($data['role_colour']),
-        //         'border_colour' => $this->border_colour ? $this->rgbToHex($data['border_colour']) : '#b37bb3',
-        //         'shift_note' => $data['shift_note'],
-        //     ]);
-        // }
-        // DB::commit();
 
         $schedules = [];
         foreach ($data['date'] as $date) {
