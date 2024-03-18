@@ -36,5 +36,44 @@ class EmployeeSeeder extends Seeder
             'address' => 'just another address street',
             'zip_code' => '509877',
         ]);
+
+        Employee::create([
+            'user_id' => 1,
+            'company_id' => 1,
+            'first_name' => 'Alex',
+            'last_name' => 'Chidi',
+            'role' => 'Cashier',
+            'staff_number' => '#123477',
+            'pay_rate' => 'weekly',
+            'phone_number' => '+278998790',
+            'address' => 'just another address street',
+            'zip_code' => '509877',
+        ]);
+
+        Employee::create([
+            'user_id' => 1,
+            'company_id' => 1,
+            'first_name' => 'Brown',
+            'last_name' => 'Kane',
+            'role' => 'Cashier',
+            'staff_number' => '#123477',
+            'pay_rate' => 'weekly',
+            'phone_number' => '+278998790',
+            'address' => 'just another address street',
+            'zip_code' => '509877',
+        ]);
+
+        Employee::create([
+            'user_id' => 1,
+            'company_id' => 1,
+            'first_name' => 'David',
+            'last_name' => 'Umeh',
+            'role' => 'Cashier',
+            'staff_number' => '#123477',
+            'pay_rate' => 'weekly',
+            'phone_number' => '+278998791',
+            'address' => 'just another address street',
+            'zip_code' => '509877',
+        ]);
     }
 }

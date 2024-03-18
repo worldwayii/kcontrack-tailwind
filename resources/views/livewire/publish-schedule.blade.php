@@ -68,6 +68,7 @@
             @forelse ($employees as $employee)
             @php
                 $schedule = $employee->schedulers->first();
+
             @endphp
 
             @if($schedule == null)
@@ -75,7 +76,7 @@
             @else
             @php
                 $days_assigned = $schedule->getUnpublishedSchedulersForEmployee($employee);
-                //dd($days_assigned);
+                $total_days = $employee->schedulers()->where('published', false)->count();
             @endphp
             @endif
             <div
@@ -98,7 +99,7 @@
             <p class="flex-1 min-w-[82px] text-center">{{$schedule->role}}</p>
             <p class="flex-1 min-w-[100px] text-center">{{$schedule->start_at->format('h a'). ' - '. $schedule->end_at->format('h a')}}</p>
             <p class="flex-1 min-w-[86px] text-center">{{$schedule->break}}</p>
-            <p class="flex-1 min-w-[120px] text-center">{{$schedule->frequency != 'daily' ? $schedule->frequency : $days_assigned}}</p>
+            <p class="flex-1 min-w-[120px] text-center">{{$schedule->frequency != 'daily' ? $schedule->frequency.'('.$total_days. ' days)' : $days_assigned}}</p>
             <p class="flex-1 min-w-[160px]">
               {{$schedule->shift_note}}
             </p>

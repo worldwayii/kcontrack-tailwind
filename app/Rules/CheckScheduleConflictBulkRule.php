@@ -24,7 +24,7 @@ class CheckScheduleConflictBulkRule implements ValidationRule
                 ->first();
 
             if ($conflictingSchedule) {
-                $fail('There is a schedule conflict for the date: ' . $date->format('l') . ' of ' . $date->toDateString());
+                $fail('There is a schedule conflict for the date: ' . $date->format('l') . ' of ' . $date->toDateString(). ' for '. $conflictingSchedule->employee->getFullNameAttribute());
             }
         }
     }
