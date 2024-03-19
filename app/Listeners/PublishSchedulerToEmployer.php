@@ -29,19 +29,15 @@ class PublishSchedulerToEmployer implements ShouldQueue
     {
         $employees = $event->employees;
         $message = $event->messages['employer'];
-
+        $user = $event->user;
         $tmpt_path = 'published-scheduler.pdf';
 
         $pdf = Pdf::view('livewire.publish-schedule-pdf', ['employees' => $employees])
         ->landscape()->save($tmpt_path);
 
-        //Log::info(['pdf-obj' => $pdf]);
+        Log::info(['user' => $user]);
+        Mail::to($user->email)->send(new PublishSchedulerToEmployerMail($user, $message, $tmpt_path));
 
-        foreach($employees as $employee){
-            Mail::to($employee->user)->send(new PublishSchedulerToEmployerMail($employee->user, $message, $tmpt_path));
-            
-            break;
-        }
         unlink($tmpt_path);
     }
 }
