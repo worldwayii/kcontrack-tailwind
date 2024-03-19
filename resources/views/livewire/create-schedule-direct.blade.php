@@ -100,7 +100,7 @@
            @error('role')
             <div class="text-sm text-red-600">{{ $message }}</div>
             @enderror
-           <div onmouseover="keepd()" onmouseout="leaved()" class="relative">
+           <div onmouseover="keepd()" onmouseout="leaved()" class="relative" wire:ignore>
             <select
             class="absolute hidden"
             wire:model='role_colour'

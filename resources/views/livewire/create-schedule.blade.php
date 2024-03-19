@@ -110,7 +110,7 @@
            @error('role')
             <div class="text-sm text-red-600">{{ $message }}</div>
             @enderror
-           <div onmouseover="keep()" onmouseout="leave()" class="relative">
+           <div onmouseover="keep()" onmouseout="leave()" class="relative" wire:ignore>
             <select
             class="absolute hidden"
             wire:model='role_colour'
@@ -642,7 +642,7 @@
         @enderror
        </div>
 
-       
+
        @error('date')
             <div class="text-sm text-red-600">{{ $message }}</div>
         @enderror
