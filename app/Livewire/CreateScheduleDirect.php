@@ -27,9 +27,10 @@ class CreateScheduleDirect extends Component
     $shift_note,
     $role_colour,
     $border_colour,
-    $frequency = 'daily';
+    $frequency;
 
-    protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'gridEvent' => '$refresh', 'openCreateDirectModal'];
+    protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'gridEvent' => '$refresh', 'openCreateDirectModal', 'updateDate'];
+
     protected $debug = true;
 
     public function roleColorChanged($role_colour, $border_colour)
@@ -39,17 +40,19 @@ class CreateScheduleDirect extends Component
         Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
+    public function updateDate($selected_date){
+        $this->date = $selected_date;
+    }
+
     public function openCreateDirectModal($employee, $date){
 
         $date = Carbon::parse($date);
         $this->employee = Employee::findOrFail($employee['id']);
 
         $this->day = $date;
-        Log::info("did this dispatch?");
         $this->date = [$date->clone()->format('d/m/Y')];
         $this->originalDate = $date;
         $this->weekDates = $this->calculateWeekDates($date->clone());
-        //dd($this->weekDates);
         $this->dispatch('$refresh');
         $this->dispatch('openDirectModal');
 
@@ -65,11 +68,9 @@ class CreateScheduleDirect extends Component
         for ($i = 0; $i < 7; $i++){
             $weekDates[$daysOfWeek[$i]] = $startOfWeek->copy()->addDays($i)->format('d/m/Y');
         }
-        //dd($weekDates);
+
         return $weekDates;
     }
-
-
 
     protected function rules()
     {
@@ -79,7 +80,7 @@ class CreateScheduleDirect extends Component
         'role' => 'required|string',
         'role_colour' => 'nullable|string',
         'border_colour' => 'nullable|string',
-        'frequency' => 'nullable',
+        'frequency' => 'required',
         'date' => ['required', new CheckScheduleConflictRule($this->employee->id)],
         'pay_rate' => 'nullable',
         'break' => 'required|string',
@@ -87,15 +88,10 @@ class CreateScheduleDirect extends Component
     ];
 }
 
-    // protected function prepareForValidation($attributes){
-    //     dd($attributes);
-    // }
-
-    // public function updated($propertyName)
-    // {
-    //     $this->validateOnly($propertyName);
-    // }
-
+public function updated($propertyName)
+{
+    $this->validateOnly($propertyName);
+}
     public function rgbToHex($rgb) {
         $rgb = $rgb != null ? $rgb : 'rgb(217, 227, 252)';
         return '#'.Str::of($rgb)->replace(['rgb(', ')', ' '], '')->explode(',')
@@ -130,7 +126,7 @@ class CreateScheduleDirect extends Component
                     'role' => $data['role'],
                     'pay_rate' => 'Monthly',
                     'break' => $data['break'],
-                    //'frequency' => $data['frequency'],
+                    'frequency' => $data['frequency'],
                     'role_colour' => $this->rgbToHex($data['role_colour']),
                     'border_colour' => $this->rgbToHex($data['border_colour']),
                     'shift_note' => $data['shift_note'],

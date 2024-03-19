@@ -29,7 +29,8 @@ class CreateSchedule extends Component
     $frequency;
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
-    // protected $debug = true;
+    
+    protected $debug = true;
 
 
 
@@ -46,8 +47,6 @@ class CreateSchedule extends Component
 
     public function updateDate($selected_date){
         $this->date = $selected_date;
-
-        //Log::info('selected date updated', ['selectedDate' => $selected_date]);
     }
 
     protected function rules()
@@ -71,10 +70,6 @@ class CreateSchedule extends Component
     }
 
 
-    // protected function prepareForValidation($attributes){
-    //     dd($attributes);
-    // }
-
     public function updated($propertyName)
 {
     $this->validateOnly($propertyName);
@@ -91,7 +86,7 @@ class CreateSchedule extends Component
     public function create(){
         DB::beginTransaction();
         $data = $this->validate();
-        
+
         try{
 
         $employee = Employee::where('uuid', $data['employee'])->first();

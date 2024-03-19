@@ -65,7 +65,7 @@ class Calendar extends Component
 
         $this->startsAt = Carbon::createFromDate($initialYear, $initialMonth, today()->day)->startOfWeek();
         $this->endsAt = $this->startsAt->clone()->endOfMonth()->startOfDay();
-        //dd($this->startsAt);
+
         $this->calculateGridStartsEnds();
 
         $this->dragAndDropEnabled = $dragAndDropEnabled;
@@ -143,7 +143,6 @@ class Calendar extends Component
 
     public function employees() : Collection
     {
-        //return Employee::search($this->search)->with('schedulers')->get();
         $filter = $this->filter;
 
       return  Employee::search($this->search)
@@ -166,10 +165,8 @@ class Calendar extends Component
     public function onDayClick($employee, $date, $entity = 'create')
     {
         if($entity == 'create'){
-            //Log::info(['employee:' => $employee]);
             $this->dispatch('openCreateDirectModal', $employee, $date);
             Log::info("opening modal");
-            //$this->showCreateModal = true;
         }
     }
 
@@ -246,7 +243,6 @@ class Calendar extends Component
 
     public function openDirectModal(){
         Log::info("about to show modal");
-        //$this->showCreateModal = true;
     }
 
 
