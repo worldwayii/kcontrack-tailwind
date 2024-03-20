@@ -14,6 +14,7 @@ class CheckScheduleConflictBulkRule implements ValidationRule
     public function __construct(protected array $employeeIds, protected $originalDate = null)
     {
     }
+    
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {   $employees = Employee::whereIn('uuid', $this->employeeIds)->pluck('id')->toArray();
         foreach ($value as $date) {

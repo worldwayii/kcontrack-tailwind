@@ -770,7 +770,7 @@
                 style="background: {{$event['role_colour']}}; border-color: {{$event['border_colour']}}"
               >
               <span class="font-bold">{{$event['start_at']->format('h a')}} -
-                {{$event['end_at']->format('h a')}} {{$eventCount}}</span>
+                {{$event['end_at']->format('h a')}}</span>
                 <span class="font-medium">{{$event['role']}}</span>
 
                 <!-- actions overlay -->

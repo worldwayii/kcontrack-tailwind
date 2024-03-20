@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Rules\CheckScheduleConflictRule;
+use App\Rules\ScheduleTimeConflictRule;
 use App\Models\Employee;
 
 class CreateScheduleDirect extends Component
@@ -75,23 +76,24 @@ class CreateScheduleDirect extends Component
     protected function rules()
     {
         return [
-        'start_at' => 'required',
-        'end_at' => 'required',
-        'role' => 'required|string',
-        'role_colour' => 'nullable|string',
-        'border_colour' => 'nullable|string',
-        'frequency' => 'required',
-        'date' => ['required', new CheckScheduleConflictRule($this->employee->id)],
-        'pay_rate' => 'nullable',
-        'break' => 'required|string',
-        'shift_note' => 'required|string',
-    ];
-}
+            'start_at' => 'required',
+            'end_at' => ['required', new ScheduleTimeConflictRule($this->employee->id, $this->date, $this->start_at)],
+            'role' => 'required|string',
+            'role_colour' => 'nullable|string',
+            'border_colour' => 'nullable|string',
+            'frequency' => 'required',
+            'date' => ['required'],
+            'pay_rate' => 'nullable',
+            'break' => 'required|string',
+            'shift_note' => 'required|string',
+        ];
+    }
 
-public function updated($propertyName)
-{
-    $this->validateOnly($propertyName);
-}
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     public function rgbToHex($rgb) {
         $rgb = $rgb != null ? $rgb : 'rgb(217, 227, 252)';
         return '#'.Str::of($rgb)->replace(['rgb(', ')', ' '], '')->explode(',')
@@ -136,13 +138,13 @@ public function updated($propertyName)
             }
 
         }
-        DB::commit();
-        $this->dispatch('alert', type: 'success', title: 'New Schedule created Successfully', position: 'center', timer: '2500');
-    }catch(\Exception $e){
-        Log::critical("create-schedule-error: ". $e->getMessage());
-        DB::rollback();
-        $this->dispatch('alert', type: 'error', title: 'Schedule Could not be Created Please Try Again', position: 'center', timer: '2500');
-    }
+            DB::commit();
+            $this->dispatch('alert', type: 'success', title: 'New Schedule created Successfully', position: 'center', timer: '2500');
+            }catch(\Exception $e){
+            Log::critical("create-schedule-error: ". $e->getMessage());
+            DB::rollback();
+            $this->dispatch('alert', type: 'error', title: 'Schedule Could not be Created Please Try Again', position: 'center', timer: '2500');
+        }
 
     }
 

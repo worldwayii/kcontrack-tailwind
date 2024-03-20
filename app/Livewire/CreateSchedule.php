@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Scheduler;
 use App\Models\Employee;
 use App\Rules\CheckScheduleConflictRule;
+use App\Rules\ScheduleTimeConflictRule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +30,7 @@ class CreateSchedule extends Component
     $frequency;
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
-    
+
     protected $debug = true;
 
 
@@ -55,17 +56,16 @@ class CreateSchedule extends Component
 
         return [
                 'employee' => 'required|string',
-                'start_at' => 'required',
+                'start_at' => ['required', new ScheduleTimeConflictRule($employee->id)],
                 'end_at' => 'required',
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
                 'border_colour' => 'nullable|string',
                 'frequency' => 'nullable',
-                'date' => ['required', $employee ? new CheckScheduleConflictRule($employee->id) : 'string'],
+                'date' => ['required', 'string'],
                 'pay_rate' => 'nullable',
                 'break' => 'required|string',
                 'shift_note' => 'required|string',
-
             ];
     }
 
