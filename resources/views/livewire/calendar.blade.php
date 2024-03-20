@@ -559,7 +559,35 @@
             <div
               class="absolute top-0 bottom-0 right-0 left-0 bg-[#FBF0E9] hidden group-hover:flex items-center justify-center gap-[8px] transition-all"
             >
+            <div
+            data-tooltip-target="add{{$event['uuid']}}"
+            class="cursor-pointer"
+            @if($day->isFuture() || $day->isToday()) wire:click="onDayClick({{$user}}, '{{$day}}')"
+                @endif
+          >
+            <svg
+              width="10"
+              height="11"
+              viewBox="0 0 10 11"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                fill="#4F4F4F"
+              />
+            </svg>
+          </div>
 
+          <!-- tooltip -->
+          <div
+            id="add{{$event['uuid']}}"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Add Schedule
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
               <div
               class="cursor-pointer"
               type='button'
@@ -749,6 +777,36 @@
                 <div
                   class="absolute top-0 bottom-0 right-0 left-0 bg-[#FBF0E9] hidden group-hover:flex items-center justify-center gap-[8px] transition-all"
                 >
+
+                <div
+                data-tooltip-target="add{{$event['uuid']}}"
+                class="cursor-pointer"
+                @if($day->isFuture() || $day->isToday()) wire:click="onDayClick({{$user}}, '{{$day}}')"
+                    @endif
+              >
+                <svg
+                  width="10"
+                  height="11"
+                  viewBox="0 0 10 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                    fill="#4F4F4F"
+                  />
+                </svg>
+              </div>
+
+              <!--add tooltip -->
+              <div
+                id="add{{$event['uuid']}}"
+                role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+              >
+                Add Schedule
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
 
                   <div
                   class="cursor-pointer"
