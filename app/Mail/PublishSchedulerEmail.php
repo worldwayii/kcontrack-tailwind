@@ -50,8 +50,7 @@ class PublishSchedulerEmail extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromData(fn () => $this->pdf->output(), 'new-schedule.pdf')
-                ->withMime('application/pdf'),
+            Attachment::fromPath($this->pdf),
         ];
     }
 }

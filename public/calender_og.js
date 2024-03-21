@@ -102,13 +102,12 @@ const isLeapYear = (year) => {
         );
 
         if (i >= first_day.getDay()) {
-          let dayOfMonth = i - first_day.getDay() + 1;
           day.textContent = i - first_day.getDay() + 1;
           const dateId = `${i - first_day.getDay() + 1}/${
             currentMonth.value + 1
           }/${currentYear.value}`;
 
-          day.setAttribute("for", dateId + calenderID);
+          day.setAttribute("for", dateId);
           const inputElement = document.createElement("input");
           inputElement.type = "checkbox";
           inputElement.setAttribute("name", calenderID);
@@ -123,24 +122,13 @@ const isLeapYear = (year) => {
           );
 
           day.appendChild(inputElement);
-          inputElement.id = dateId + calenderID;
+          inputElement.id = dateId;
           inputElement.value = dateId;
 
-
-          inputElement.addEventListener("click", () => {
-            const selectedDates = Array.from(
-              document.querySelectorAll(`input[name="${calenderID}"]:checked`)
-            ).map((input) => input.value);
-            Livewire.dispatch("updateDate", { selected_date: selectedDates });
-          });
-
-          // Disable past dates
-          const compareDate = new Date(year, month, dayOfMonth);
-          if (compareDate < currentDate.setHours(0, 0, 0, 0)) {
-            inputElement.disabled = true;
-            day.classList.add("disabled");
-          }
-
+          inputElement.addEventListener('click', () => {
+            const selectedDates = Array.from(document.querySelectorAll(`input[name="${calenderID}"]:checked`)).map(input => input.value);
+            Livewire.dispatch('updateDate', {selected_date: selectedDates});
+        });
           if (
             i - first_day.getDay() + 1 === currentDate.getDate() &&
             year === currentDate.getFullYear() &&

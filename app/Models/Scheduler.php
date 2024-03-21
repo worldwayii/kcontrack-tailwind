@@ -23,6 +23,7 @@ class Scheduler extends Model
             'break',
             'shift_note',
             'role_colour',
+            'border_colour',
             'frequency',
             'accepted',
             'published',

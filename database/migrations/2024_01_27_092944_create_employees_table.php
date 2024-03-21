@@ -16,7 +16,6 @@ return new class extends Migration
             $table->uuid()->unique();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('company_id')->constrained();
-
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('role')->nullable();

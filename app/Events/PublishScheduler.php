@@ -10,6 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class PublishScheduler
 {
@@ -18,7 +19,7 @@ class PublishScheduler
     /**
      * Create a new event instance.
      */
-    public function __construct(public $employees, public array $messages)
+    public function __construct(public $employees, public array $messages,  public User $user)
     {
         Log::info("about to fire publish event");
     }

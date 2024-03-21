@@ -29,8 +29,9 @@
         ev.target.appendChild(document.getElementById(data));
       }
 
-      // toggling of radio submenu selection
-      function handleAllRadioSubmenuSelection() {
+
+       // toggling of radio submenu selection
+       function handleAllRadioSubmenuSelection() {
         const allSubmenuSelections = document.querySelectorAll(
           "[data-checkbox-subselection-target]"
         );
@@ -96,7 +97,7 @@
 
         select.value = x.style.background;
 
-        Livewire.dispatch('roleColorChanged',{role_colour: change.style.background}); // Emitting the event with the correct parameter
+        Livewire.dispatch('roleColorChanged',{role_colour: change.style.background, border_colour: change.style.borderColor}); // Emitting the event with the correct parameter
 
       }
 
@@ -120,7 +121,7 @@
 
         selectd.value = x.style.background;
 
-        Livewire.dispatch('roleColorChanged',{role_colour: changed.style.background}); // Emitting the event with the correct parameter
+        Livewire.dispatch('roleColorChanged',{role_colour: changed.style.background, border_colour: changed.style.borderColor}); // Emitting the event with the correct parameter
         console.log('change role direct');
 
       }
@@ -146,8 +147,8 @@
 
         selectd.value = x.style.background;
 
-        Livewire.dispatch('roleColorChanged',{role_colour: changed.style.background}); // Emitting the event with the correct parameter
-        console.log('change role colour edit');
+        Livewire.dispatch('roleColorChanged',{role_colour: changed.style.background, border_colour: changed.style.borderColor}); // Emitting the event with the correct parameter
+        //console.log(['role_colour' :  changed.style.background, 'border_colour': changed.style.borderColor]);
 
       }
 
@@ -171,7 +172,7 @@
 
         select.value = x.style.background;
 
-        Livewire.dispatch('roleColorChanged',{role_colour: change.style.background}); // Emitting the event with the correct parameter
+        Livewire.dispatch('roleColorChanged',{role_colour: change.style.background, border_colour: change.style.borderColor});
 
       }
     </script>

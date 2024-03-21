@@ -27,16 +27,18 @@ class EditSchedule extends Component
     $break,
     $shift_note,
     $role_colour,
+    $border_colour,
     $frequency;
 
     protected $listeners = ['openEditModal', 'roleColorChanged',];
 
     protected $debug = true;
 
-    public function roleColorChanged($role_colour)
+    public function roleColorChanged($role_colour, $border_colour)
     {
         $this->role_colour = $role_colour;
-        Log::info('role colour changed: '. $role_colour);
+        $this->border_colour = $border_colour;
+        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
     public function openEditModal($id, $date){
         $this->id = $id;
@@ -93,6 +95,7 @@ class EditSchedule extends Component
         'role' => 'required|string',
         'date' => ['required', new CheckScheduleConflictRule($this->employee->id, $this->originalDate)],
         'role_colour' => 'nullable|string',
+        'border_colour' => 'nullable|string',
         'pay_rate' => 'nullable',
         'break' => 'required|string',
         'shift_note' => 'required|string',
@@ -110,6 +113,12 @@ public function updatedDate($value) {
 
         try{
             $date = $data['date'];
+            $day = $date;
+            $currentDate = Carbon::now();
+            $dayCarbon = Carbon::createFromFormat('d/m/Y', $day);
+
+            if ($dayCarbon->isSameDay($currentDate) || $dayCarbon->isFuture()) {
+
             $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
             $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
             $employee = $this->employee;
@@ -125,10 +134,11 @@ public function updatedDate($value) {
                 'break' => $data['break'],
                 'frequency' => $this->frequency,
                 'role_colour' => $this->rgbToHex($data['role_colour']),
+                'border_colour' => $this->rgbToHex($data['border_colour']),
                 'shift_note' => $data['shift_note'],
                 'published' => false,
             ]);
-
+        }
         DB::commit();
 
         $this->dispatch('alert', type: 'success', title: 'Schedule Updated Successfully', position: 'center', timer: '2000');

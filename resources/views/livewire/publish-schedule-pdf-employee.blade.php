@@ -180,7 +180,7 @@
             >
 
                     <p>
-                        Date Scheduled: {{now()->format('d/m/y')}} | Time: {{now()->format('h:i:s A')}}
+                        Scheduled By: {{$employee->user->name}} | Date Scheduled: {{now()->format('d/m/y')}} | Time: {{now()->format('h:i:s A')}}
                     </p>
 
             </div>
@@ -190,7 +190,8 @@
             <div
               class="flex gap-[24px] items-center flex-1 min-w-fit py-[16px] bg-[#EDF0F6] border-[0.5px] border-[#EDF0F6] font-semibold text-[14px] text-[#4F4F4F]"
             >
-              
+              <p class="flex-1 min-w-[124px] text-center">Employee</p>
+              <p class="flex-1 min-w-[148px] text-center">Email Address</p>
               <p class="flex-1 min-w-[82px] text-center">Job Role</p>
               <p class="flex-1 min-w-[100px] text-center">Time Frame</p>
               <p class="flex-1 min-w-[86px] text-center">Breaks</p>
@@ -199,42 +200,36 @@
             </div>
 
             <div class="flex flex-col gap-[4px]">
-                @forelse ($employees as $employee)
-                @php
-                    $schedule = $employee->schedulers->first();
-                @endphp
+                @forelse ($employee->schedulers->where('published', false) as $index => $schedule)
 
-                @if($schedule == null)
-                    @continue
-                @else
-                @php
-                    $days_assigned = $schedule->getUnpublishedSchedulersForEmployee($employee);
-                    //dd($days_assigned);
-                @endphp
-                @endif
                 <div
                 class="flex gap-[24px] items-center flex-1 min-w-fit border-[0.5px] border-[#EDEFF4] text-[13px] font-medium text-[#4F4F4F] py-[16px]"
               >
+                <div
+                  class="flex-1 min-w-[124px] flex items-center gap-[8px] pl-[8px]"
+                >
 
+                  <p class="font-bold text-[14px] text-[#4F4F4F]">{{$employee->getFullNameAttribute()}}</p>
+                </div>
+                <p class="flex-1 min-w-[148px] text-center">
+                  {{$employee->email}}
+                </p>
                 <p class="flex-1 min-w-[82px] text-center">{{$schedule->role}}</p>
                 <p class="flex-1 min-w-[100px] text-center">{{$schedule->start_at->format('h a'). ' - '. $schedule->end_at->format('h a')}}</p>
                 <p class="flex-1 min-w-[86px] text-center">{{$schedule->break}}</p>
-                <p class="flex-1 min-w-[120px] text-center">{{$schedule->frequency != 'daily' ? $schedule->frequency : $days_assigned}}</p>
+                <p class="flex-1 min-w-[120px] text-center">{{$schedule->start_at->format('l')}}</p>
                 <p class="flex-1 min-w-[160px]">
                   {{$schedule->shift_note}}
                 </p>
               </div>
+              @if(($index + 1) % 7 == 0) @pageBreak @endif
                 @empty
 
                 @endforelse
             </div>
           </div>
-
-
-
         </section>
       </div>
     </div>
-</main>
 </body>
 </html>

@@ -122,7 +122,7 @@
               <option class="block px-4 py-2" value="monthly">Monthly</option>
             </select>
 
-          {{-- end new foilter --}}
+          {{-- end new filter --}}
         </div>
 
         <div class="flex md:flex-1 justify-between items-center">
@@ -192,13 +192,9 @@
 
         <button
         class="flex-1 py-[16px] lg:py-[10px] flex flex-col items-center justify-center text-[14px] lg:text-[12px] font-medium lg:font-semibold text-[#80868C] lg:text-[#A7A7A7] hover:bg-[#3984E61A]"
-      >
+        onclick="toggleScheduleGrids('{{ $loop->index }}')">
         <p class="w-fit flex flex-col lg:items-start">
-          <span
-            >{{ $day->format('l') }}
-
-              </span
-          >
+              <span>{{substr($day->format('l'), 0, 3)}}<span class="hidden lg:inline-block lg:leading-none">{{substr($day->format('l'), 3)}}</span></span>
           <span
             class="lg:font-medium lg:text-[24px] lg:text-[#A7A7A7] lg:leading-none lg:justify-self-start"
             >{{ $day->format('j') }}</span
@@ -212,7 +208,8 @@
         <!-- data cells -->
         <div class="flex flex-col gap-[8px] lg:gap-0" id="data-cells">
           <!-- data row -->
-          @forelse ($employees as $user)
+
+          @forelse ($employees as $userIndex => $user)
           @php
                 $schedules = $user['schedulers'];
                 $totalTime = $schedules->sum(function ($schedule) {
@@ -233,6 +230,258 @@
             class="flex-1 h-fit flex lg:border-b-[0.5px] lg:border-b-[#EDEFF4]"
           >
 
+            {{-- mobile cell display --}}
+            <div
+            class="flex-1 h-fit flex lg:hidden gap-[14px] items-center border-[0.5px] border-[#EDEFF4] bg-[#FBF0E9] p-[14px]"
+          >
+            <div class="flex items-center gap-[12px] w-[60%]">
+              <img
+                src="{{asset('user.jpg')}}"
+                class="w-[42px] h-[42px] object-cover rounded-full"
+                alt=""
+              />
+
+              <div class="flex-1 font-medium leading-tight">
+                <p class="font-semibold text-[14px] text-[#4F4F4F]">
+                  {{$user->getFullNameAttribute()}}
+                </p>
+                <p class="text-[12px] text-[#3984E6]">{{$totalScheduledTime}}Hrs</p>
+                <p
+                  class="flex items-center gap-[4px] text-[10px] text-[#80868C]"
+                >
+                @if(!$schedule_count)
+                <svg
+                width="12"
+                height="8"
+                viewBox="0 0 12 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.205078 4.70504L3.00008 7.50004L3.70508 6.79004L0.915078 4.00004M11.1201 0.790039L5.83008 6.08504L3.75008 4.00004L3.03508 4.70504L5.83008 7.50004L11.8301 1.50004M9.00008 1.50004L8.29508 0.790039L5.12008 3.96504L5.83008 4.67004L9.00008 1.50004Z"
+                  fill="#40AD93"
+                />
+              </svg>
+                    Delivered via Email
+                @else
+                    You Have </br> Unpublished Schedule
+                @endif
+                </p>
+              </div>
+            </div>
+
+            {{-- schedule grid --}}
+            @foreach($monthGrid->first() as $dayIndex => $day)
+            @php
+            $todayEvents = collect($user['schedulers'])
+            ->filter(function ($event) use ($day) {
+            return $event['start_at']->isSameDay($day);
+            });
+
+            $scheduleGridId = 'scheduleGrid-' . $day->format('Y-m-d');
+
+            @endphp
+            @forelse ($todayEvents as $event)
+
+            <div class="flex-1 flex items-center justify-between schedule-grid hidden"
+            id="user{{ $userIndex }}ScheduleGrid{{ $dayIndex }}" style="background: {{$event['role_colour']}}";>
+              <div class="text-[12px] text-[#4F4F4F]">
+                <p class="font-bold">{{$event['start_at']->format('h a')}} -
+                  {{$event['end_at']->format('h a')}}</p>
+                <p class="font-medium">{{$event['role']}}</p>
+              </div>
+
+              <button
+                id="tableDropdown{{$event['uuid']}}"
+                data-dropdown-toggle="tableDropdownMenu{{$event['uuid']}}"
+                class=""
+                type="button"
+              >
+                <svg
+                  width="18"
+                  height="4"
+                  viewBox="0 0 18 4"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM16 0C14.9 0 14 0.9 14 2C14 3.1 14.9 4 16 4C17.1 4 18 3.1 18 2C18 0.9 17.1 0 16 0ZM9 0C7.9 0 7 0.9 7 2C7 3.1 7.9 4 9 4C10.1 4 11 3.1 11 2C11 0.9 10.1 0 9 0Z"
+                    fill="#80868C"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="tableDropdownMenu{{$event['uuid']}}"
+                class="z-10 hidden shadow w-[97px]"
+              >
+                <ul
+                  class="py-2 text-[14px] text-[#4F4F4F] font-medium bg-white-0 rounded-[8px] flex flex-col gap-[16px]"
+                  aria-labelledby="tableDropdown"
+                >
+
+
+                  <li>
+                    <a
+                      href="#"
+
+                      wire:click.prevent="$dispatch('openEditModal', { id: {{ $event['id'] }}, date: '{{$day}}' })"
+                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
+                    >
+                      <svg
+                        width="16"
+                        height="15"
+                        viewBox="0 0 16 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.71667 5L10.5 5.78333L2.93333 13.3333H2.16667V12.5667L9.71667 5ZM12.7167 0C12.5083 0 12.2917 0.0833333 12.1333 0.241667L10.6083 1.76667L13.7333 4.89167L15.2583 3.36667C15.5833 3.04167 15.5833 2.5 15.2583 2.19167L13.3083 0.241667C13.1417 0.075 12.9333 0 12.7167 0ZM9.71667 2.65833L0.5 11.875V15H3.625L12.8417 5.78333L9.71667 2.65833Z"
+                          fill="#80868C"
+                        />
+                      </svg>
+
+                      Edit</a
+                    >
+                  </li>
+
+                  <li>
+                    <a
+                      wire:click.prevent="copy('{{ $event['id'] }}')"
+                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
+                    >
+                      <svg
+                        width="14"
+                        height="17"
+                        viewBox="0 0 14 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13.2748 5.16667L8.6665 0.558333C8.54941 0.44109 8.39054 0.375146 8.22484 0.375H6.1665C5.55872 0.375 4.97582 0.616443 4.54605 1.04621C4.11628 1.47598 3.87484 2.05888 3.87484 2.66667V3.70833H2.83317C2.22538 3.70833 1.64249 3.94978 1.21272 4.37955C0.782947 4.80932 0.541504 5.39221 0.541504 6V14.3333C0.541504 14.9411 0.782947 15.524 1.21272 15.9538C1.64249 16.3836 2.22538 16.625 2.83317 16.625H8.6665C9.27429 16.625 9.85719 16.3836 10.287 15.9538C10.7167 15.524 10.9582 14.9411 10.9582 14.3333V13.2917H11.1665C11.7743 13.2917 12.3572 13.0502 12.787 12.6205C13.2167 12.1907 13.4582 11.6078 13.4582 11V5.58333C13.4516 5.42634 13.3862 5.27757 13.2748 5.16667ZM8.87484 2.50833L11.3248 4.95833H8.87484V2.50833ZM9.70817 14.3333C9.70817 14.6096 9.59842 14.8746 9.40307 15.0699C9.20772 15.2653 8.94277 15.375 8.6665 15.375H2.83317C2.5569 15.375 2.29195 15.2653 2.0966 15.0699C1.90125 14.8746 1.7915 14.6096 1.7915 14.3333V6C1.7915 5.72373 1.90125 5.45878 2.0966 5.26343C2.29195 5.06808 2.5569 4.95833 2.83317 4.95833H3.87484V11C3.87484 11.6078 4.11628 12.1907 4.54605 12.6205C4.97582 13.0502 5.55872 13.2917 6.1665 13.2917H9.70817V14.3333ZM11.1665 12.0417H6.1665C5.89024 12.0417 5.62529 11.9319 5.42993 11.7366C5.23458 11.5412 5.12484 11.2763 5.12484 11V2.66667C5.12484 2.3904 5.23458 2.12545 5.42993 1.9301C5.62529 1.73475 5.89024 1.625 6.1665 1.625H7.62484V5.58333C7.627 5.74842 7.69354 5.90614 7.81028 6.02289C7.92703 6.13963 8.08475 6.20617 8.24984 6.20833H12.2082V11C12.2082 11.2763 12.0984 11.5412 11.9031 11.7366C11.7077 11.9319 11.4428 12.0417 11.1665 12.0417Z"
+                          fill="#80868C"
+                        />
+                      </svg>
+
+                      Copy</a
+                    >
+                  </li>
+
+                  <li>
+                    <a
+                      href="#"
+                      wire:click.prevent="$dispatch('openDeleteModal', { id: {{ $event['id'] }} })"
+                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#E1473D]"
+                    >
+                      <svg
+                        width="14"
+                        height="15"
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M2.8335 15C2.37516 15 1.98266 14.8367 1.656 14.51C1.32933 14.1833 1.16627 13.7911 1.16683 13.3333V2.5H0.333496V0.833333H4.50016V0H9.50016V0.833333H13.6668V2.5H12.8335V13.3333C12.8335 13.7917 12.6702 14.1842 12.3435 14.5108C12.0168 14.8375 11.6246 15.0006 11.1668 15H2.8335ZM11.1668 2.5H2.8335V13.3333H11.1668V2.5ZM4.50016 11.6667H6.16683V4.16667H4.50016V11.6667ZM7.8335 11.6667H9.50016V4.16667H7.8335V11.6667Z"
+                          fill="#E1473D"
+                        />
+                      </svg>
+
+                      Delete</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            @empty
+
+
+            <div class="flex-1 flex items-center justify-between hidden schedule-grid hidden"
+                id="user{{ $userIndex }}ScheduleGrid{{ $dayIndex }}" wire:ignore.self
+            >
+
+              <button
+                id="tableDropdown{{ $userIndex }}ScheduleGrid{{ $dayIndex }}"
+                data-dropdown-toggle="tableDropdownMenu{{ $userIndex }}ScheduleGrid{{ $dayIndex }}"
+                class=""
+                type="button"
+              >
+                <svg
+                  width="18"
+                  height="4"
+                  viewBox="0 0 18 4"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM16 0C14.9 0 14 0.9 14 2C14 3.1 14.9 4 16 4C17.1 4 18 3.1 18 2C18 0.9 17.1 0 16 0ZM9 0C7.9 0 7 0.9 7 2C7 3.1 7.9 4 9 4C10.1 4 11 3.1 11 2C11 0.9 10.1 0 9 0Z"
+                    fill="#80868C"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="tableDropdownMenu{{ $userIndex }}ScheduleGrid{{ $dayIndex }}"
+                class="z-10 hidden shadow w-[97px]"
+              >
+                <ul
+                  class="py-2 text-[14px] text-[#4F4F4F] font-medium bg-white-0 rounded-[8px] flex flex-col gap-[16px]"
+                  aria-labelledby="tableDropdown"
+                >
+                  <li>
+                    <a
+                    @if($day->isFuture() || $day->isToday()) wire:click.prevent="onDayClick({{$user}}, '{{$day}}')"
+                    @endif
+                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
+                    >
+                      <svg
+                        width="10"
+                        height="11"
+                        viewBox="0 0 10 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                          fill="#80868C"
+                        />
+                      </svg>
+
+                      Add</a
+                    >
+                  </li>
+
+                  <li>
+                    <a
+                    @if($day->isFuture() || $day->isToday()) wire:click.prevent="paste({{$user['id']}}, '{{ $day }}')" @endif
+                      class="flex items-center gap-[8px] px-[12px] text-[12px] font-medium text-[#80868C]"
+                    >
+                      <svg
+                        width="10"
+                        height="11"
+                        viewBox="0 0 10 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                          fill="#80868C"
+                        />
+                      </svg>
+
+                      Paste</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            @endforelse
+            @php $userIndex++; @endphp
+            @endforeach
+
+            {{-- end schedule grid --}}
+          </div>
+            {{-- end Mobile Cell --}}
             <div id="desktop-cells"
               class="flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4]"
             >
@@ -290,9 +539,7 @@
         @forelse ($todayEvents as $event)
 
             <div
-              id="row-1-1"
-              {{-- ondrop="drop(event)"
-              ondragover="allowDrop(event)" --}}
+                id="row-1-1"
                 wire:drop="drop({{$user['id']}}, '{{ $day }}')"
                 wire:dragover.prevent
               class="flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
@@ -300,12 +547,10 @@
             >
               <button
                 id="user1-shift1"
-                {{-- draggable="true" --}}
-                {{-- ondragstart="drag(event)" --}}
                 wire:dragstart="drag('{{ $event['id'] }}')"
                 draggable="true"
                 class="group w-full flex flex-col items-center justify-center py-[6px] text-[10px] text-[#4F4F4F] border-[1px] border-[{{strtoupper($event['role_colour'])}}]  relative"
-                style="background: {{$event['role_colour']}}";
+                style="background: {{$event['role_colour']}}; border-color: {{$event['border_colour']}}"
               >
               <span class="font-bold">{{$event['start_at']->format('h a')}} -
                 {{$event['end_at']->format('h a')}}</span>
@@ -320,7 +565,9 @@
                   class="cursor-pointer"
                   type='button'
                   wire:click="$dispatch('openEditModal', { id: {{ $event['id'] }}, date: '{{$day}}' })"
+                  data-tooltip-target="edit{{$event['uuid']}}"
                   >
+
                     <svg
                       width="16"
                       height="15"
@@ -334,8 +581,22 @@
                       />
                     </svg>
                   </div>
+                  {{-- edit tooltip --}}
+                  <div
+                        id="edit{{$event['uuid']}}"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                      >
+                        Edit Schedule
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                      </div>
 
-                  <div class="cursor-pointer" type='button'>
+                  <div
+                    class="cursor-pointer"
+                    type='button'
+                    wire:click="copy('{{ $event['id'] }}')"
+                    data-tooltip-target="copy{{$event['uuid']}}"
+                    >
                     <svg
                       width="14"
                       height="17"
@@ -349,9 +610,19 @@
                       />
                     </svg>
                   </div>
+                  {{-- copy tooltip --}}
+                  <div
+                        id="copy{{$event['uuid']}}"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                      >
+                        Copy Schedule
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                  </div>
 
                   <div class="cursor-pointer" type='button'
-                  wire:click="$dispatch('openDeleteModal', { id: {{ $event['id'] }} })"
+                    wire:click="$dispatch('openDeleteModal', { id: {{ $event['id'] }} })"
+                    data-tooltip-target="delete{{$event['uuid']}}"
                   >
                     <svg
                       width="14"
@@ -366,48 +637,91 @@
                       />
                     </svg>
                   </div>
+                  {{-- delete tooltip --}}
+                  <div
+                        id="delete{{$event['uuid']}}"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                      >
+                        Delete Schedule
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                      </div>
                 </div>
               </button>
             </div>
             @empty
-                <div
-                    id="row-1-2"
-                    {{-- ondrop="drop(event)"
-                    ondragover="allowDrop(event)" --}}
-                    wire:drop="drop({{$user['id']}}, '{{ $day }}')"
-                    wire:dragover.prevent
-                    class="group flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
-            >
+            <div
+            id="row-1-2"
+            @if($day->isFuture() || $day->isToday())
+                wire:drop="drop({{$user['id']}}, '{{ $day }}')"
+                wire:dragover.prevent
+            @endif
 
-              <div
+            class="group flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
+        >
+
+            <div
                 class="absolute top-0 bottom-0 right-0 left-0 bg-[#FBF0E9] hidden group-hover:flex items-center justify-center gap-[8px] transition-all"
-
-              >
+            >
                 <div
-
-                  wire:click="onDayClick({{$user}}, '{{$day}}')"
-
-                  type="button"
-                  class="cursor-pointer"
-
-
+                    @if($day->isFuture() || $day->isToday()) wire:click="onDayClick({{$user}}, '{{$day}}')"
+                    @endif
+                    type="button"
+                    class="cursor-pointer"
+                    data-tooltip-target="add{{$user['uuid'].$day->toDateString()}}"
                 >
-                  <svg
-                    width="10"
-                    height="11"
-                    viewBox="0 0 10 11"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
-                      fill="#4F4F4F"
-                    />
-                  </svg>
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 10 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M5.625 4.875V0.5H4.375V4.875H0V6.125H4.375V10.5H5.625V6.125H10V4.875H5.625Z"
+                            fill="#4F4F4F"
+                        />
+                    </svg>
                 </div>
+
+                {{-- Add tooltip --}}
+                <div
+                id="add{{$user['uuid'].$day->toDateString()}}"
+                role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+              >
+              @if($day->isFuture() || $day->isToday()) Add Schedule @else Invalid Date @endif
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
+
+                <div
+                    @if($day->isFuture() || $day->isToday()) wire:click="paste({{$user['id']}}, '{{ $day }}')" @endif
+                    type="button"
+                    class="cursor-pointer"
+                    data-tooltip-target="paste{{$user['uuid'].$day->toDateString()}}"
+                >
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M15 0H5C3.9 0 3 0.9 3 2V16C3 17.1 3.9 18 5 18H15C16.1 18 17 17.1 17 16V2C17 0.9 16.1 0 15 0ZM6 2H14V8H6V2ZM6 9H14V10H6V9ZM6 11H14V14H6V11ZM15 16H5V2H5L5 16H15Z" fill="#4F4F4F"/>
+                    </svg>
+                </div>
+
+                {{-- Add tooltip --}}
+                <div
+                id="paste{{$user['uuid'].$day->toDateString()}}"
+                role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+              >
+                @if($day->isFuture() || $day->isToday()) Paste Schedule @else Invalid Date @endif
+                <div class="tooltip-arrow" data-popper-arrow></div>
               </div>
             </div>
-
+        </div>
             @endforelse
             @endforeach
 
@@ -546,7 +860,25 @@
         });
 
   </script>
+
   @endscript
 
+  @section('pageScript')
+
+  <script>
+    function toggleScheduleGrids(dayIndex) {
+        // Hide all schedule grids for all users
+        document.querySelectorAll('.schedule-grid').forEach(function(grid) {
+            grid.classList.add('hidden');
+        });
+
+        // Show the schedule grids associated with the clicked date for each user
+        document.querySelectorAll('[id^=user][id$=ScheduleGrid' + dayIndex + ']').forEach(function(grid) {
+            grid.classList.remove('hidden');
+        });
+    }
+</script>
+
+  @endsection
 
 

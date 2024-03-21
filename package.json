@@ -29,6 +29,7 @@
         "flowbite": "^2.3.0",
         "laravel-mix": "^6.0.49",
         "mitt": "^3.0.0",
+        "puppeteer": "^22.4.1",
         "vue3-click-away": "^1.2.4"
     }
 }

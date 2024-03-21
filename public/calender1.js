@@ -1,8 +1,7 @@
 // constants
 const isLeapYear = (year) => {
     return (
-      (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
-      (year % 100 === 0 && year % 400 === 0)
+      (year % 4 === 0 && year % 100 !== 0) || (year % 100 === 0 && year % 400 === 0)
     );
   };
 
@@ -103,12 +102,10 @@ const isLeapYear = (year) => {
 
         if (i >= first_day.getDay()) {
           let dayOfMonth = i - first_day.getDay() + 1;
-          day.textContent = i - first_day.getDay() + 1;
-          const dateId = `${i - first_day.getDay() + 1}/${
-            currentMonth.value + 1
-          }/${currentYear.value}`;
+          day.textContent = dayOfMonth;
+          const dateId = `${dayOfMonth}/${currentMonth.value + 1}/${currentYear.value}`;
 
-          day.setAttribute("for", dateId + calenderID);
+          day.setAttribute("for", dateId);
           const inputElement = document.createElement("input");
           inputElement.type = "checkbox";
           inputElement.setAttribute("name", calenderID);
@@ -123,15 +120,12 @@ const isLeapYear = (year) => {
           );
 
           day.appendChild(inputElement);
-          inputElement.id = dateId + calenderID;
+          inputElement.id = dateId;
           inputElement.value = dateId;
 
-
-          inputElement.addEventListener("click", () => {
-            const selectedDates = Array.from(
-              document.querySelectorAll(`input[name="${calenderID}"]:checked`)
-            ).map((input) => input.value);
-            Livewire.dispatch("updateDate", { selected_date: selectedDates });
+          inputElement.addEventListener('click', () => {
+            const selectedDates = Array.from(document.querySelectorAll(`input[name="${calenderID}"]:checked`)).map(input => input.value);
+            Livewire.dispatch('updateDate', {selected_date: selectedDates});
           });
 
           // Disable past dates
@@ -142,7 +136,7 @@ const isLeapYear = (year) => {
           }
 
           if (
-            i - first_day.getDay() + 1 === currentDate.getDate() &&
+            dayOfMonth === currentDate.getDate() &&
             year === currentDate.getFullYear() &&
             month === currentDate.getMonth()
           ) {

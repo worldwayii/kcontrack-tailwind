@@ -182,9 +182,9 @@
          </div>
        </div>
 
-       <div class="w-full flex flex-col gap-[2px]" id="assignment">
+       <div class="w-full flex flex-col gap-[2px]" id="assignment-direct">
          <label
-           id="shiftd"
+           id="shift-direct"
            class="text-[12px] font-semibold text-[#4F4F4F]"
          >
            Assign Days
@@ -194,7 +194,7 @@
            class="w-full text-[12px] font-semibold text-[#4F4F4F] bg-white-0 border-[0.5px] border-[#EDEFF4]"
          >
            <li
-             data-checkbox-subselection-target="daily-selection"
+             data-checkbox-subselection-target="daily-selection-direct"
              class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
            >
              <div class="flex items-center ps-3">
@@ -213,8 +213,8 @@
                </label>
              </div>
              <div
-               id="daily-selectiond"
-               class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col"
+               id="daily-selection-direct"
+               class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col hidden"
              >
                <div class="flex flex-col gap-[4px]">
                  <p class="font-semibold text-[12px] text-[#4F4F4F]">
@@ -234,6 +234,9 @@
                           value="{{$weekDates['Monday']}}"
                           wire:model='date'
                           class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime($weekDates['Monday']) < strtotime('today'))
+                                disabled
+                          @endif
                         />
                       </label>
                     </li>
@@ -331,6 +334,302 @@
                </div>
              </div>
            </li>
+
+           <li
+           data-checkbox-subselection-target="biweekly-selection-direct"
+           class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+           wire:ignore
+         >
+           <div class="flex items-center ps-3">
+             <input
+               id="biweekly-direct"
+               type="radio"
+               value="biweekly"
+               wire:model='frequency'
+               name="schedule_list_options"
+               class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+             />
+             <label
+               for="biweekly-direct"
+               class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+               >Bi-Weekly
+             </label>
+           </div>
+           <!-- calender form component -->
+           <div
+             id="biweekly-selection-direct"
+             data-calender-element="biweekly-calender-direct"
+             class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+           >
+             <!-- months list display -->
+             <div
+               data-calender-months="biweekly-calender-direct"
+               class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+             ></div>
+
+             <div class="flex flex-col gap-[8px] mx-auto relative">
+               <div
+                 class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+               >
+                 <!-- previous year button -->
+                 <div
+                   data-calender-prev-year="biweekly-calender-direct"
+                   class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                 >
+                   <svg
+                     width="5"
+                     height="8"
+                     viewBox="0 0 5 8"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                   >
+                     <path
+                       d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                       fill="#80868C"
+                     />
+                   </svg>
+                 </div>
+
+                 <p>
+                   <!-- month display and picker -->
+                   <span
+                     data-calender-month-picker="biweekly-calender-direct"
+                     class="cursor-pointer"
+                   >
+                     January
+                   </span>
+
+                   <!-- year display -->
+                   <span data-calender-year="biweekly-calender-direct">
+                     2024
+                   </span>
+                 </p>
+
+                 <!-- next year button -->
+                 <div
+                   data-calender-next-year="biweekly-calender-direct"
+                   class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                 >
+                   <svg
+                     width="5"
+                     height="8"
+                     viewBox="0 0 5 8"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                   >
+                     <path
+                       d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                       fill="#80868C"
+                     />
+                   </svg>
+                 </div>
+               </div>
+             </div>
+
+             <!-- calender days -->
+             <div
+               data-calender-days="biweekly-calender-direct"
+               class="grid grid-cols-7 text-[14px] text-[#222730]"
+             ></div>
+           </div>
+         </li>
+
+         <li
+           data-checkbox-subselection-target="monthly-selection-direct"
+           class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+           wire:ignore
+         >
+           <div class="flex items-center ps-3">
+             <input
+               id="monthly-direct"
+               type="radio"
+               value="monthly"
+               wire:model='frequency'
+               name="schedule_list_options"
+               class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+             />
+             <label
+               for="monthly-direct"
+               class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+               >Monthly
+             </label>
+           </div>
+           <!-- calender form component -->
+           <div
+             id="monthly-selection-direct"
+             data-calender-element="monthly-calender-direct"
+             class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+           >
+             <!-- months list display -->
+             <div
+               data-calender-months="monthly-calender-direct"
+               class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+             ></div>
+
+             <div class="flex flex-col gap-[8px] mx-auto relative">
+               <div
+                 class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+               >
+                 <!-- previous year button -->
+                 <div
+                   data-calender-prev-year="monthly-calender-direct"
+                   class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                 >
+                   <svg
+                     width="5"
+                     height="8"
+                     viewBox="0 0 5 8"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                   >
+                     <path
+                       d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                       fill="#80868C"
+                     />
+                   </svg>
+                 </div>
+
+                 <p>
+                   <!-- month display and picker -->
+                   <span
+                     data-calender-month-picker="monthly-calender-direct"
+                     class="cursor-pointer"
+                   >
+                     January
+                   </span>
+
+                   <!-- year display -->
+                   <span data-calender-year="monthly-calender-direct">
+                     2024
+                   </span>
+                 </p>
+
+                 <!-- next year button -->
+                 <div
+                   data-calender-next-year="monthly-calender-direct"
+                   class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                 >
+                   <svg
+                     width="5"
+                     height="8"
+                     viewBox="0 0 5 8"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                   >
+                     <path
+                       d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                       fill="#80868C"
+                     />
+                   </svg>
+                 </div>
+               </div>
+             </div>
+
+             <!-- calender days -->
+             <div
+               data-calender-days="monthly-calender-direct"
+               class="grid grid-cols-7 text-[14px] text-[#222730]"
+             ></div>
+           </div>
+         </li>
+         <li
+           data-checkbox-subselection-target="customise-selection-direct"
+           class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+           wire:ignore
+         >
+           <div class="flex items-center ps-3">
+             <input
+               id="customise-direct"
+               type="radio"
+               value="customised"
+               wire:model='frequency'
+               name="schedule_list_options"
+               class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+             />
+             <label
+               for="customise-direct"
+               class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+               >Customise
+             </label>
+           </div>
+           <!-- calender form component -->
+           <div
+             id="customise-selection-direct"
+             data-calender-element="customise-calender-direct"
+             class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+           >
+             <!-- months list display -->
+             <div
+               data-calender-months="customise-calender-direct"
+               class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+             ></div>
+
+             <div class="flex flex-col gap-[8px] mx-auto relative">
+               <div
+                 class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+               >
+                 <!-- previous year button -->
+                 <div
+                   data-calender-prev-year="customise-calender-direct"
+                   class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                 >
+                   <svg
+                     width="5"
+                     height="8"
+                     viewBox="0 0 5 8"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                   >
+                     <path
+                       d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                       fill="#80868C"
+                     />
+                   </svg>
+                 </div>
+
+                 <p>
+                   <!-- month display and picker -->
+                   <span
+                     data-calender-month-picker="customise-calender-direct"
+                     class="cursor-pointer"
+                   >
+                     January
+                   </span>
+
+                   <!-- year display -->
+                   <span data-calender-year="customise-calender-direct">
+                     2024
+                   </span>
+                 </p>
+
+                 <!-- next year button -->
+                 <div
+                   data-calender-next-year="customise-calender-direct"
+                   class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                 >
+                   <svg
+                     width="5"
+                     height="8"
+                     viewBox="0 0 5 8"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                   >
+                     <path
+                       d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                       fill="#80868C"
+                     />
+                   </svg>
+                 </div>
+               </div>
+             </div>
+
+             <!-- calender days -->
+             <div
+               data-calender-days="customise-calender-direct"
+               class="grid grid-cols-7 text-[14px] text-[#222730]"
+             ></div>
+           </div>
+         </li>
          </ul>
          @error('date')
             <div class="text-sm text-red-600">{{ $message }}</div>

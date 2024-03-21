@@ -1,6 +1,6 @@
-<form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" wire:ignore>
+<form action="" class="flex flex-col gap-[24px]" wire:submit.prevent="create" wire:ignore.self>
     <div class="flex flex-col gap-[12px]">
-      <div class="flex flex-col gap-[4px]">
+      <div class="flex flex-col gap-[4px]" wire:ignore>
         <p class="font-semibold text-[12px] text-[#4F4F4F]">
           Select Employee
         </p>
@@ -8,6 +8,7 @@
         <div
           class="w-full bg-white-0 rounded-[8px] border-[0.7px] border-[#E6E6E6]"
         >
+
           <div
             data-multiselect-target="employee-select"
             class="w-full h-[40px] flex cursor-pointer"
@@ -50,7 +51,8 @@
               <input
                 type="checkbox"
                 id="{{$employee->uuid}}"
-                name="employee"
+                name="employee{{$employee->uuid}}"
+                value="{{$employee->uuid}}"
                 wire:model='employeeArr'
                 class="w-[15px] h-[15px] rounded-[2px] border-[#D9D9D9]"
               />
@@ -74,9 +76,7 @@
               </div>
             </label>
             @empty
-
-           @endforelse
-
+        @endforelse
           </div>
         </div>
 
@@ -148,7 +148,7 @@
         </div>
       </div>
 
-      <div class="w-full flex flex-col gap-[2px]">
+      <div class="w-full flex flex-col gap-[2px]" wire:ignore>
         <label id="roleb" class="text-[12px] font-semibold text-[#4F4F4F]">
           Role Selection
         </label>
@@ -168,7 +168,7 @@
           @error('role')
            <div class="text-sm text-red-600">{{ $message }}</div>
            @enderror
-          <div onmouseover="keepb()" onmouseout="leaveb()" class="relative">
+          <div onmouseover="keepb()" onmouseout="leaveb()" class="relative" wire:ignore>
            <select
            class="absolute hidden"
            wire:model='role_colour'
@@ -250,8 +250,7 @@
           </div>
         </div>
       </div>
-
-      <div class="w-full flex flex-col gap-[2px]" id="assignment">
+      <div class="w-full flex flex-col gap-[2px]" wire:ignore>
         <label
           id="shift"
           class="text-[12px] font-semibold text-[#4F4F4F]"
@@ -263,26 +262,26 @@
           class="w-full text-[12px] font-semibold text-[#4F4F4F] bg-white-0 border-[0.5px] border-[#EDEFF4]"
         >
           <li
-            data-checkbox-subselection-target="daily-selection"
+            data-checkbox-subselection-target="daily-selection-1"
             class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
           >
             <div class="flex items-center ps-3">
               <input
-                id="dailyb"
+                id="daily-1"
                 type="radio"
                 value="daily"
-                name="schedule_list_options"
                 wire:model='frequency'
-                class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2 @error('frequency') border-red-500 @enderror"
+                name="schedule_list_options"
+                class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
               />
               <label
-                for="dailyb"
+                for="daily-1"
                 class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
                 >Daily
               </label>
             </div>
             <div
-              id="daily-selectionb"
+              id="daily-selection-1"
               class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col hidden"
             >
               <div class="flex flex-col gap-[4px]">
@@ -291,413 +290,415 @@
                 </p>
 
                 <ul class="h-fit flex-1 flex justify-between">
-                  <li class="">
-                    <label
-                      for="Mb"
-                      class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                    >
-                      M
-                      <input
-                        type="checkbox"
-                        id="Mb"
-                        value="{{date('d/m/Y', strtotime('monday this week'))}}"
-                        wire:model='date'
-                        class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                      />
-                    </label>
-                  </li>
-                  <li class="">
-                    <label
-                      for="Tb"
-                      class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                    >
-                      T
-                      <input
-                        type="checkbox"
-                        id="Tb"
-                        value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
-                        wire:model='date'
-                        class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                      />
-                    </label>
-                  </li>
-                  <li class="">
-                    <label
-                      for="Wb"
-                      class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                    >
-                      W
-                      <input
-                        type="checkbox"
-                        id="Wb"
-                        value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
-                        wire:model='date'
-                        class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                      />
-                    </label>
-                  </li>
-                  <li class="">
-                    <label
-                      for="Thub"
-                      class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                    >
-                      T
-                      <input
-                        type="checkbox"
-                        id="Thub"
-                        value="{{date('d/m/Y', strtotime('thursday this week'))}}"
-                        wire:model='date'
-                        class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                      />
-                    </label>
-                  </li>
-                  <li class="">
-                    <label
-                      for="Fb"
-                      class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                    >
-                      F
-                      <input
-                        type="checkbox"
-                        id="Fb"
-                        value="{{date('d/m/Y', strtotime('friday this week'))}}"
-                        wire:model='date'
-                        class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                      />
-                    </label>
-                  </li>
-                  <li class="">
-                    <label
-                      for="Sb"
-                      class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                    >
-                      S
-                      <input
-                        type="checkbox"
-                        id="Sb"
-                        value="{{date('d/m/Y', strtotime('saturday this week'))}}"
-                        wire:model='date'
-                        class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                      />
-                    </label>
-                  </li>
-                  <li class="">
-                    <label
-                      for="Sunb"
-                      class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
-                    >
-                      S
-                      <input
-                        type="checkbox"
-                        id="Sunb"
-                        value="{{date('d/m/Y', strtotime('sunday'))}}"
-                        wire:model='date'
-                        class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
-                      />
-                    </label>
-                  </li>
-                </ul>
+                    <li class="">
+                      <label
+                        for="Mb"
+                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                      >
+                        M
+                        <input
+                          type="checkbox"
+                          id="Mb"
+                          value="{{date('d/m/Y', strtotime('monday this week'))}}"
+                          wire:model='date'
+                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime('today') > strtotime('monday this week')) disabled @endif
+                        />
+                      </label>
+                    </li>
+                    <li class="">
+                     <label for="Tb" class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]">
+                         T
+                         <input type="checkbox" id="Tb"
+                                value="{{date('d/m/Y', strtotime('tuesday this week'))}}"
+                                wire:model='date'
+                                class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                                @if(strtotime('today') > strtotime('tuesday this week')) disabled @endif />
+                     </label>
+                 </li>
+
+                    <li class="">
+                      <label
+                        for="Wb"
+                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                      >
+                        W
+                        <input
+                          type="checkbox"
+                          id="Wb"
+                          value="{{date('d/m/Y', strtotime('wednesday this week'))}}"
+                          wire:model='date'
+                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime('today') > strtotime('wednesday this week')) disabled @endif
+                        />
+                      </label>
+                    </li>
+                    <li class="">
+                      <label
+                        for="Thub"
+                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                      >
+                        T
+                        <input
+                          type="checkbox"
+                          id="Thub"
+                          value="{{date('d/m/Y', strtotime('thursday this week'))}}"
+                          wire:model='date'
+                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime('today') > strtotime('thursday this week')) disabled @endif
+                        />
+                      </label>
+                    </li>
+                    <li class="">
+                      <label
+                        for="Fb"
+                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                      >
+                        F
+                        <input
+                          type="checkbox"
+                          id="Fb"
+                          value="{{date('d/m/Y', strtotime('friday this week'))}}"
+                          wire:model='date'
+                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime('today') > strtotime('friday this week')) disabled @endif
+                        />
+                      </label>
+                    </li>
+                    <li class="">
+                      <label
+                        for="Sb"
+                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                      >
+                        S
+                        <input
+                          type="checkbox"
+                          id="Sb"
+                          value="{{date('d/m/Y', strtotime('saturday this week'))}}"
+                          wire:model='date'
+                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime('today') > strtotime('saturday this week')) disabled @endif
+                        />
+                      </label>
+                    </li>
+                    <li class="">
+                      <label
+                        for="Sunb"
+                        class="w-[32px] h-[32px] border-[0.7px] border-[#E6E6E6] flex items-center justify-center text-[12px] font-semibold text-[#4F4F4F] rounded-[8px] relative has-[:checked]:text-white-0 has-[:checked]:bg-gradient-to-br has-[:checked]:from-[#092C86] has-[:checked]:via-[#092C86] has-[:checked]:to-[#F828BE]"
+                      >
+                        S
+                        <input
+                          type="checkbox"
+                          id="Sunb"
+                          value="{{date('d/m/Y', strtotime('sunday'))}}"
+                          wire:model='date'
+                          class="absolute top-0 left-0 right-0 bottom-0 z-10 invisible @error('date') border-red-500 @enderror"
+                          @if(strtotime('today') > strtotime('sunday')) disabled @endif
+                        />
+                      </label>
+                    </li>
+                  </ul>
               </div>
             </div>
           </li>
 
-               <li
-                 data-checkbox-subselection-target="biweekly-selection"
-                 class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
-               >
-                 <div class="flex items-center ps-3">
-                   <input
-                     id="biweeklyb"
-                     type="radio"
-                     value="biweekly"
-                     wire:model='frequency'
-                     name="schedule_list_options"
-                     class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
-                   />
-                   <label
-                     for="biweeklyb"
-                     class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
-                     >Bi-Weekly
-                   </label>
-                 </div>
-                 <!-- calender form component -->
-                 <div
-                   id="biweekly-selectionb"
-                   data-calender-element="biweekly-calender"
-                   class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
-                 >
-                   <!-- months list display -->
-                   <div
-                     data-calender-months="biweekly-calender"
-                     class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
-                   ></div>
+          <li
+            data-checkbox-subselection-target="biweekly-selection-1"
+            class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+          >
+            <div class="flex items-center ps-3">
+              <input
+                id="biweekly-1"
+                type="radio"
+                value="biweekly"
+                wire:model='frequency'
+                name="schedule_list_options"
+                class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+              />
+              <label
+                for="biweekly-1"
+                class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+                >Bi-Weekly
+              </label>
+            </div>
+            <!-- calender form component -->
+            <div
+              id="biweekly-selection-1"
+              data-calender-element="biweekly-calender-1"
+              class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+            >
+              <!-- months list display -->
+              <div
+                data-calender-months="biweekly-calender-1"
+                class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+              ></div>
 
-                   <div class="flex flex-col gap-[8px] mx-auto relative">
-                     <div
-                       class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
-                     >
-                       <!-- previous year button -->
-                       <div
-                         data-calender-prev-year="biweekly-calender"
-                         class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                       >
-                         <svg
-                           width="5"
-                           height="8"
-                           viewBox="0 0 5 8"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                         >
-                           <path
-                             d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
-                             fill="#80868C"
-                           />
-                         </svg>
-                       </div>
+              <div class="flex flex-col gap-[8px] mx-auto relative">
+                <div
+                  class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+                >
+                  <!-- previous year button -->
+                  <div
+                    data-calender-prev-year="biweekly-calender-1"
+                    class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                  >
+                    <svg
+                      width="5"
+                      height="8"
+                      viewBox="0 0 5 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                        fill="#80868C"
+                      />
+                    </svg>
+                  </div>
 
-                       <p>
-                         <!-- month display and picker -->
-                         <span
-                           data-calender-month-picker="biweekly-calender"
-                           class="cursor-pointer"
-                         >
-                           January
-                         </span>
+                  <p>
+                    <!-- month display and picker -->
+                    <span
+                      data-calender-month-picker="biweekly-calender-1"
+                      class="cursor-pointer"
+                    >
+                      January
+                    </span>
 
-                         <!-- year display -->
-                         <span data-calender-year="biweekly-calender">
-                           2024
-                         </span>
-                       </p>
+                    <!-- year display -->
+                    <span data-calender-year="biweekly-calender-1">
+                      2024
+                    </span>
+                  </p>
 
-                       <!-- next year button -->
-                       <div
-                         data-calender-next-year="biweekly-calender"
-                         class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                       >
-                         <svg
-                           width="5"
-                           height="8"
-                           viewBox="0 0 5 8"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                         >
-                           <path
-                             d="M5 4L-3.49691e-07 0L0 8L5 4Z"
-                             fill="#80868C"
-                           />
-                         </svg>
-                       </div>
-                     </div>
-                   </div>
+                  <!-- next year button -->
+                  <div
+                    data-calender-next-year="biweekly-calender-1"
+                    class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                  >
+                    <svg
+                      width="5"
+                      height="8"
+                      viewBox="0 0 5 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                        fill="#80868C"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
 
-                   <!-- calender days -->
-                   <div
-                     data-calender-days="biweekly-calender"
-                     class="grid grid-cols-7 text-[14px] text-[#222730]"
-                   ></div>
-                 </div>
-               </li>
-               <li
-                 data-checkbox-subselection-target="monthly-selection"
-                 class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
-               >
-                 <div class="flex items-center ps-3">
-                   <input
-                     id="monthlyb"
-                     type="radio"
-                     value="monthly"
-                     wire:model='frequency'
-                     name="schedule_list_options"
-                     class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
-                   />
-                   <label
-                     for="monthly"
-                     class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
-                     >Monthly
-                   </label>
-                 </div>
-                 <!-- calender form component -->
-                 <div
-                   id="monthly-selectionb"
-                   data-calender-element="monthly-calender"
-                   class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
-                 >
-                   <!-- months list display -->
-                   <div
-                     data-calender-months="monthly-calender"
-                     class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
-                   ></div>
+              <!-- calender days -->
+              <div
+                data-calender-days="biweekly-calender-1"
+                class="grid grid-cols-7 text-[14px] text-[#222730]"
+              ></div>
+            </div>
+          </li>
 
-                   <div class="flex flex-col gap-[8px] mx-auto relative">
-                     <div
-                       class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
-                     >
-                       <!-- previous year button -->
-                       <div
-                         data-calender-prev-year="monthly-calender"
-                         class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                       >
-                         <svg
-                           width="5"
-                           height="8"
-                           viewBox="0 0 5 8"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                         >
-                           <path
-                             d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
-                             fill="#80868C"
-                           />
-                         </svg>
-                       </div>
+          <li
+            data-checkbox-subselection-target="monthly-selection-1"
+            class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+          >
+            <div class="flex items-center ps-3">
+              <input
+                id="monthly-1"
+                type="radio"
+                value="monthly"
+                wire:model='frequency'
+                name="schedule_list_options"
+                class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+              />
+              <label
+                for="monthly-1"
+                class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+                >Monthly
+              </label>
+            </div>
+            <!-- calender form component -->
+            <div
+              id="monthly-selection-1"
+              data-calender-element="monthly-calender-1"
+              class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+            >
+              <!-- months list display -->
+              <div
+                data-calender-months="monthly-calender-1"
+                class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+              ></div>
 
-                       <p>
-                         <!-- month display and picker -->
-                         <span
-                           data-calender-month-picker="monthly-calender"
-                           class="cursor-pointer"
-                         >
-                           January
-                         </span>
+              <div class="flex flex-col gap-[8px] mx-auto relative">
+                <div
+                  class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+                >
+                  <!-- previous year button -->
+                  <div
+                    data-calender-prev-year="monthly-calender-1"
+                    class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                  >
+                    <svg
+                      width="5"
+                      height="8"
+                      viewBox="0 0 5 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                        fill="#80868C"
+                      />
+                    </svg>
+                  </div>
 
-                         <!-- year display -->
-                         <span data-calender-year="monthly-calender">
-                           2024
-                         </span>
-                       </p>
+                  <p>
+                    <!-- month display and picker -->
+                    <span
+                      data-calender-month-picker="monthly-calender-1"
+                      class="cursor-pointer"
+                    >
+                      January
+                    </span>
 
-                       <!-- next year button -->
-                       <div
-                         data-calender-next-year="monthly-calender"
-                         class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                       >
-                         <svg
-                           width="5"
-                           height="8"
-                           viewBox="0 0 5 8"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                         >
-                           <path
-                             d="M5 4L-3.49691e-07 0L0 8L5 4Z"
-                             fill="#80868C"
-                           />
-                         </svg>
-                       </div>
-                     </div>
-                   </div>
+                    <!-- year display -->
+                    <span data-calender-year="monthly-calender-1">
+                      2024
+                    </span>
+                  </p>
 
-                   <!-- calender days -->
-                   <div
-                     data-calender-days="monthly-calender"
-                     class="grid grid-cols-7 text-[14px] text-[#222730]"
-                   ></div>
-                 </div>
-               </li>
-               <li
-                 data-checkbox-subselection-target="customise-selection"
-                 class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
-               >
-                 <div class="flex items-center ps-3">
-                   <input
-                     id="customiseb"
-                     type="radio"
-                     value="customised"
-                     wire:model='frequency'
-                     name="schedule_list_options"
-                     class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
-                   />
-                   <label
-                     for="customise"
-                     class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
-                     >Customise
-                   </label>
-                 </div>
-                 <!-- calender form component -->
-                 <div
-                   id="customise-selectionb"
-                   data-calender-element="customise-calender"
-                   class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
-                 >
-                   <!-- months list display -->
-                   <div
-                     data-calender-months="customise-calender"
-                     class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
-                   ></div>
+                  <!-- next year button -->
+                  <div
+                    data-calender-next-year="monthly-calender-1"
+                    class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                  >
+                    <svg
+                      width="5"
+                      height="8"
+                      viewBox="0 0 5 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                        fill="#80868C"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
 
-                   <div class="flex flex-col gap-[8px] mx-auto relative">
-                     <div
-                       class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
-                     >
-                       <!-- previous year button -->
-                       <div
-                         data-calender-prev-year="customise-calender"
-                         class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                       >
-                         <svg
-                           width="5"
-                           height="8"
-                           viewBox="0 0 5 8"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                         >
-                           <path
-                             d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
-                             fill="#80868C"
-                           />
-                         </svg>
-                       </div>
+              <!-- calender days -->
+              <div
+                data-calender-days="monthly-calender-1"
+                class="grid grid-cols-7 text-[14px] text-[#222730]"
+              ></div>
+            </div>
+          </li>
+          <li
+            data-checkbox-subselection-target="customise-selection-1"
+            class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
+          >
+            <div class="flex items-center ps-3">
+              <input
+                id="customise-1"
+                type="radio"
+                value="customised"
+                wire:model='frequency'
+                name="schedule_list_options"
+                class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2"
+              />
+              <label
+                for="customise-1"
+                class="w-full py-3 ms-2 text-[12px] font-semibold text-[#4F4F4F]"
+                >Customise
+              </label>
+            </div>
+            <!-- calender form component -->
+            <div
+              id="customise-selection-1"
+              data-calender-element="customise-calender-1"
+              class="w-full py-[14px] px-[22px] border-[0.5px] border-[#EDEFF4] flex-col relative hidden"
+            >
+              <!-- months list display -->
+              <div
+                data-calender-months="customise-calender-1"
+                class="absolute top-0 bottom-0 left-0 right-0 bg-white-0 hidden grid-cols-3 gap-2 w-full h-full items-center justify-center text-center z-10"
+              ></div>
 
-                       <p>
-                         <!-- month display and picker -->
-                         <span
-                           data-calender-month-picker="customise-calender"
-                           class="cursor-pointer"
-                         >
-                           January
-                         </span>
+              <div class="flex flex-col gap-[8px] mx-auto relative">
+                <div
+                  class="w-full flex items-center justify-center gap-[12px] font-semibold text-[12px] text-[#4F4F4F]"
+                >
+                  <!-- previous year button -->
+                  <div
+                    data-calender-prev-year="customise-calender-1"
+                    class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                  >
+                    <svg
+                      width="5"
+                      height="8"
+                      viewBox="0 0 5 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1.74846e-07 4L5 0L5 8L1.74846e-07 4Z"
+                        fill="#80868C"
+                      />
+                    </svg>
+                  </div>
 
-                         <!-- year display -->
-                         <span data-calender-year="customise-calender">
-                           2024
-                         </span>
-                       </p>
+                  <p>
+                    <!-- month display and picker -->
+                    <span
+                      data-calender-month-picker="customise-calender-1"
+                      class="cursor-pointer"
+                    >
+                      January
+                    </span>
 
-                       <!-- next year button -->
-                       <div
-                         data-calender-next-year="customise-calender"
-                         class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
-                       >
-                         <svg
-                           width="5"
-                           height="8"
-                           viewBox="0 0 5 8"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                         >
-                           <path
-                             d="M5 4L-3.49691e-07 0L0 8L5 4Z"
-                             fill="#80868C"
-                           />
-                         </svg>
-                       </div>
-                     </div>
-                   </div>
+                    <!-- year display -->
+                    <span data-calender-year="customise-calender-1">
+                      2024
+                    </span>
+                  </p>
 
-                   <!-- calender days -->
-                   <div
-                     data-calender-days="customise-calender"
-                     class="grid grid-cols-7 text-[14px] text-[#222730]"
-                   ></div>
-                 </div>
-               </li>
+                  <!-- next year button -->
+                  <div
+                    data-calender-next-year="customise-calender-1"
+                    class="w-[16px] h-[16px] flex items-center justify-center cursor-pointer"
+                  >
+                    <svg
+                      width="5"
+                      height="8"
+                      viewBox="0 0 5 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 4L-3.49691e-07 0L0 8L5 4Z"
+                        fill="#80868C"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- calender days -->
+              <div
+                data-calender-days="customise-calender-1"
+                class="grid grid-cols-7 text-[14px] text-[#222730]"
+              ></div>
+            </div>
+          </li>
         </ul>
-        @error('date')
-           <div class="text-sm text-red-600">{{ $message }}</div>
-       @enderror
       </div>
-
+        @error('date')
+            <div class="text-sm text-red-600">{{ $message }}</div>
+        @enderror
       <div class="w-full flex flex-col gap-[2px]">
         <label
           id="shiftb"
@@ -723,3 +724,13 @@
       Save
     </button>
   </form>
+  @script
+  <script>
+      $wire.on('alert', () => {
+          console.log('can you see me');
+              // Show the modal
+              document.getElementById('create_schedule_bulk').classList.add('hidden');
+              document.querySelector("body > div[modal-backdrop]")?.remove()
+      });
+  </script>
+  @endscript

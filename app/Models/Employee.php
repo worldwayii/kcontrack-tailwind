@@ -35,7 +35,6 @@ class Employee extends Model
             : static::query()
             ->where('first_name', 'like', "%{$search}%")
             ->orWhere('last_name', 'like', "%{$search}%")
-            ->orWhere('email', 'like', "%{$search}%")
             ->orWhere('staff_number', 'like', "%{$search}%")
             ->orWhere('role', 'like', "%{$search}%")
             ->orWhere('phone_number', 'like', "%{$search}%")
