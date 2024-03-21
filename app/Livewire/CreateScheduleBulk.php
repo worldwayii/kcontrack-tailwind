@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Scheduler;
 use App\Models\Employee;
 use App\Rules\CheckScheduleConflictBulkRule;
+use App\Rules\ScheduleTimeConflictBulkRule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -49,17 +50,16 @@ class CreateScheduleBulk extends Component
 
     protected function rules()
     {
-        //$employee =  Employee::where('uuid', $this->employee)->first();
 
         return [
                 'employeeArr' => 'required',
                 'start_at' => 'required',
-                'end_at' => 'required',
+                'end_at' => ['required', new ScheduleTimeConflictBulkRule($this->employeeArr, $this->date, $this->start_at)],
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
                 'border_colour' => 'nullable|string',
                 'frequency' => 'required',
-                'date' => ['required', new CheckScheduleConflictBulkRule($this->employeeArr)],
+                'date' => 'required',
                 'pay_rate' => 'nullable',
                 'break' => 'required|string',
                 'shift_note' => 'required|string',
