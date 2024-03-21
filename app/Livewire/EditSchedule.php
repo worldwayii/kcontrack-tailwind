@@ -7,6 +7,7 @@ use App\Models\Scheduler;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Rules\CheckScheduleConflictRule;
+use App\Rules\ScheduleTimeConflictRule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -92,9 +93,9 @@ class EditSchedule extends Component
     {
         return [
         'start_at' => 'required',
-        'end_at' => 'required',
+        'end_at' => ['required', new ScheduleTimeConflictRule($this->employee->id, $this->date, $this->start_at, $this->originalDate)],
         'role' => 'required|string',
-        'date' => ['required', new CheckScheduleConflictRule($this->employee->id, $this->originalDate)],
+        'date' => ['required'],
         'role_colour' => 'nullable|string',
         'border_colour' => 'nullable|string',
         'pay_rate' => 'nullable',

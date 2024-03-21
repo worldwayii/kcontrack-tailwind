@@ -56,13 +56,13 @@ class CreateSchedule extends Component
 
         return [
                 'employee' => 'required|string',
-                'start_at' => ['required', new ScheduleTimeConflictRule($employee->id)],
-                'end_at' => 'required',
+                'start_at' => ['required'],
+                'end_at' => ['required', new ScheduleTimeConflictRule($employee->id, $this->date, $this->start_at)],
                 'role' => 'required|string',
                 'role_colour' => 'nullable|string',
                 'border_colour' => 'nullable|string',
                 'frequency' => 'nullable',
-                'date' => ['required', 'string'],
+                'date' => ['required'],
                 'pay_rate' => 'nullable',
                 'break' => 'required|string',
                 'shift_note' => 'required|string',

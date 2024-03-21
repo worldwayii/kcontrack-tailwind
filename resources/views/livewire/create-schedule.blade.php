@@ -41,7 +41,7 @@
              <div class="flex-1 h-[40px] flex items-center bg-[#FFFFFF]">
                <select
                  id="time"
-                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('start_at') border-red-500 @enderror" wire:model='start_at'
+                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('start_at') border-red-500 @enderror" wire:model.live='start_at'
                >
                @include('includes.time-options')
                </select>
@@ -51,7 +51,7 @@
              <div class="flex-1 h-[40px] flex items-center bg-[#FFFFFF]">
                <select
                  id="time"
-                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('end_at') border-red-500 @enderror" wire:model='end_at'
+                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('end_at') border-red-500 @enderror" wire:model.live='end_at'
                >
                @include('includes.time-options')
                </select>
