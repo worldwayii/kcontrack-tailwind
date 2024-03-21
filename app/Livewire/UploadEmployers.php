@@ -30,10 +30,8 @@ class UploadEmployers extends Component
     public function saveFile()
     {
         $this->authorize('store',Company::class);
-        dd($this->file);
 
         $this->validate();
-        dd('$validated');
 
         try {
             $csv = Reader::createFromPath($this->file->getRealPath())->setHeaderOffset(0);
