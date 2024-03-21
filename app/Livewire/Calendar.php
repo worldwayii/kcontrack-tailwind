@@ -166,14 +166,14 @@ class Calendar extends Component
     {
         if($entity == 'create'){
             $this->dispatch('openCreateDirectModal', $employee, $date);
-            Log::info("opening modal");
+
         }
     }
 
     public function drag($scheduler_id)
     {
         $this->draggedSchedulerId = $scheduler_id;
-        Log::info(['drag-scheduler-id' => $scheduler_id]);
+
     }
 
     public function drop($employee_id, $day)
@@ -183,7 +183,7 @@ class Calendar extends Component
         $scheduler = Scheduler::findOrfail($this->draggedSchedulerId);
         $alreadyHasSchedule = Scheduler::whereDate('start_at', $day)->where('employee_id', $employee_id)->count();
         if(!$alreadyHasSchedule){
-                Log::info(['drop-employee-id' => $employee_id, 'date' => $day]);
+
                 $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->start_at->format('g:i'));
                 $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->end_at->format('g:i'));
 
@@ -196,10 +196,8 @@ class Calendar extends Component
 
                 Scheduler::where('id', $scheduler->id)->update($load);
 
-                $this->dispatch('$refresh');
-        }else{
-                $this->dispatch('$refresh');
-    }
+        }
+        $this->dispatch('$refresh');
     }
 
 
@@ -242,7 +240,7 @@ class Calendar extends Component
 
 
     public function openDirectModal(){
-        Log::info("about to show modal");
+
     }
 
 

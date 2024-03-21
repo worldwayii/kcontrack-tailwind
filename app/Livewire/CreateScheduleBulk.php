@@ -30,7 +30,6 @@ class CreateScheduleBulk extends Component
     $frequency;
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
-    // protected $debug = true;
 
     public function mount(){
         $this->employees = Employee::all();
@@ -40,7 +39,6 @@ class CreateScheduleBulk extends Component
     {
         $this->role_colour = $role_colour;
         $this->border_colour = $border_colour;
-        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
     public function updateDate($selected_date){
@@ -49,7 +47,6 @@ class CreateScheduleBulk extends Component
 
     protected function rules()
     {
-        //$employee =  Employee::where('uuid', $this->employee)->first();
 
         return [
                 'employeeArr' => 'required',
@@ -67,10 +64,6 @@ class CreateScheduleBulk extends Component
             ];
     }
 
-
-    // protected function prepareForValidation($attributes){
-    //     dd($attributes);
-    // }
 
     public function updated($propertyName)
 {
@@ -129,7 +122,6 @@ class CreateScheduleBulk extends Component
         DB::commit();
         $this->dispatch('alert', type: 'success', title: 'New Schedules created Successfully', position: 'center', timer: '2500');
     }catch(\Exception $e){
-        Log::critical("create-schedule-error: ". $e->getMessage());
         DB::rollback();
         $this->dispatch('alert', type: 'error', title: 'Schedule Could not be Created Please Try Again', position: 'center', timer: '2500');
     }

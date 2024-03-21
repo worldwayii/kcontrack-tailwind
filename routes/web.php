@@ -20,8 +20,16 @@ use App\Http\Controllers\SchedulerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 })->name('home');
+
+Route::get('/demo', function () {
+    return view('demo');
+})->name('demo');
+
+Route::get('/getting-started', function () {
+    return view('welcome');
+})->name('welcome');
 
 
 

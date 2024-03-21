@@ -37,7 +37,6 @@ class CreateScheduleDirect extends Component
     {
         $this->role_colour = $role_colour;
         $this->border_colour = $border_colour;
-        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
     public function updateDate($selected_date){
@@ -139,7 +138,6 @@ public function updated($propertyName)
         DB::commit();
         $this->dispatch('alert', type: 'success', title: 'New Schedule created Successfully', position: 'center', timer: '2500');
     }catch(\Exception $e){
-        Log::critical("create-schedule-error: ". $e->getMessage());
         DB::rollback();
         $this->dispatch('alert', type: 'error', title: 'Schedule Could not be Created Please Try Again', position: 'center', timer: '2500');
     }

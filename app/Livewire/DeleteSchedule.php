@@ -15,7 +15,7 @@ class DeleteSchedule extends Component
 
     public function openDeleteModal($id){
         $this->id = $id;
-        Log::info(['open-delete-modal-id' => $id]);
+
     }
 
     public function delete(){
@@ -23,7 +23,7 @@ class DeleteSchedule extends Component
         Scheduler::where('id', $this->id)->delete();
         $this->dispatch('alert', type: 'success', title: 'Schedule Deleted Successfully', position: 'center', timer: '2000');
         }catch(\Exception $e){
-            Log::info(['delete-schedule-error' => $e->getMessage()]);
+
             $this->dispatch('alert', type: 'error', title: 'Something Went wrong Please Try Again', position: 'center', timer: '2000');
         }
     }
