@@ -57,7 +57,7 @@ class EditSchedule extends Component
         $this->shift_note = $scheduler->shift_note;
         $this->role_colour = $scheduler->role_colour;
         $this->border_colour = $scheduler->border_colour;
-        $this->start_at = $scheduler->start_at->format('g:i');
+        $this->start_at = $scheduler->start_at->format('H:i');
         $this->end_at = $scheduler->end_at->format('H:i');
         $this->frequency = $scheduler->frequency;
         //$this->dispatch('$refresh');

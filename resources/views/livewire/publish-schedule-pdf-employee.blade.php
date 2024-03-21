@@ -180,7 +180,7 @@
             >
 
                     <p>
-                        Scheduled By: {{$employee->user->name}} | Date Scheduled: {{now()->format('d/m/y')}} | Time: {{now()->format('h:i:s A')}}
+                        Scheduled By: {{$user->company->first_name}} | Date Scheduled: {{now()->format('d/m/y')}} | Time: {{now()->format('h:i:s A')}}
                     </p>
 
             </div>
@@ -200,6 +200,9 @@
             </div>
 
             <div class="flex flex-col gap-[4px]">
+                @php
+                    $itemCount = 0;
+                @endphp
                 @forelse ($employee->schedulers->where('published', false) as $index => $schedule)
 
                 <div
@@ -222,7 +225,14 @@
                   {{$schedule->shift_note}}
                 </p>
               </div>
-              @if(($index + 1) % 7 == 0) @pageBreak @endif
+              @php
+                $itemCount++;
+              @endphp
+
+              @if ($itemCount % 8 == 0)
+                  @pageBreak
+              @endif
+
                 @empty
 
                 @endforelse

@@ -1,14 +1,14 @@
                 <option selected>Select</option>
-                 <option value="0:00">00:00AM</option>
-                 <option value="1:00">01:00AM</option>
-                 <option value="2:00">02:00AM</option>
-                 <option value="3:00">03:00AM</option>
-                 <option value="4:00">04:00AM</option>
-                 <option value="5:00">05:00AM</option>
-                 <option value="6:00">06:00AM</option>
-                 <option value="7:00">07:00AM</option>
-                 <option value="8:00">08:00AM</option>
-                 <option value="9:00">09:00AM</option>
+                 <option value="00:00">12:00AM</option>
+                 <option value="01:00">01:00AM</option>
+                 <option value="02:00">02:00AM</option>
+                 <option value="03:00">03:00AM</option>
+                 <option value="04:00">04:00AM</option>
+                 <option value="05:00">05:00AM</option>
+                 <option value="06:00">06:00AM</option>
+                 <option value="07:00">07:00AM</option>
+                 <option value="08:00">08:00AM</option>
+                 <option value="09:00">09:00AM</option>
                  <option value="10:00">10:00AM</option>
                  <option value="11:00">11:00AM</option>
                  <option value="12:00">12:00PM</option>
