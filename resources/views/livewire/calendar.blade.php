@@ -539,6 +539,7 @@
         @if($eventCount > 1)
         <div
         id="row-1-1"
+        wire:key="row-1-1-{{$user['id']}}-{{$day}}"
         wire:drop="drop({{$user['id']}}, '{{ $day }}')"
         wire:dragover.prevent
         class="flex-1 hidden lg:flex lg:flex-col gap-[1.1px] py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
@@ -760,6 +761,7 @@
             wire:drop="drop({{$user['id']}}, '{{ $day }}')"
             wire:dragover.prevent
             class="flex-1 hidden lg:flex lg:flex-col py-[7px] px-[2px] border-[0.5px] border-r-[#EDEFF4] relative"
+
         >
 
               <button
@@ -981,9 +983,6 @@
           @empty
 @endforelse
 
-
-
-
         </div>
       </div>
 
@@ -1099,13 +1098,11 @@
        });
 
        $wire.on('openDeleteModal', () => {
-            console.log('can you see me on open delete modal');
             document.getElementById('delete_modal').classList.remove('hidden');
             document.querySelector("body > div[modal-backdrop]")?.add();
         });
 
         $wire.on('openEditModal', () => {
-            console.log('can you see me on open Edit modal');
             document.getElementById('edit_modal').classList.remove('hidden');
             document.querySelector("body > div[modal-backdrop]")?.add();
         });
@@ -1123,7 +1120,6 @@
             grid.classList.add('hidden');
         });
 
-        // Show the schedule grids associated with the clicked date for each user
         document.querySelectorAll('[id^=user][id$=ScheduleGrid' + dayIndex + ']').forEach(function(grid) {
             grid.classList.remove('hidden');
         });

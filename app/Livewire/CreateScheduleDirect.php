@@ -94,6 +94,11 @@ class CreateScheduleDirect extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function resetDateError()
+    {
+        $this->resetErrorBag('end_at');
+    }
+
     public function rgbToHex($rgb) {
         $rgb = $rgb != null ? $rgb : 'rgb(217, 227, 252)';
         return '#'.Str::of($rgb)->replace(['rgb(', ')', ' '], '')->explode(',')
