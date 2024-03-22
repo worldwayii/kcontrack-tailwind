@@ -25,7 +25,7 @@ class TimeHasPassedRule implements ValidationRule
         $scheduleEndDateTime = $inputDate->clone()->setTimeFromTimeString($this->end);
 
         if (!$now->lt($scheduleStartDateTime) || !$now->lt($scheduleEndDateTime)) {
-            $fail("The selected time range ($this->start - $this->end) has passed for today ". $inputDate->format('l'));
+            $fail("The selected time range ". ($scheduleStartDateTime->format('g:i a'). ' - '. $scheduleEndDateTime->format('g:i a')). ' has passed for today '. $inputDate->format('l'));
         }
     }
 }
