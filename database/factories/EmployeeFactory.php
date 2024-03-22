@@ -23,7 +23,7 @@ class EmployeeFactory extends Factory
         $faker = fake();
         return [
 
-        'uuid' => Str::uuid(),
+        'uuid' => (string) $faker->uuid,
         'user_id' => function () {
             return User::factory()->create()->id;
         },

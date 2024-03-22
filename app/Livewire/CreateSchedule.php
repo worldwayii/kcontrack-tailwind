@@ -69,6 +69,9 @@ class CreateSchedule extends Component
             ];
     }
 
+    public function myRules(){
+        return $this->rules();
+    }
 
     public function updated($propertyName)
 {

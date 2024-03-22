@@ -67,15 +67,13 @@ class CreateScheduleBulk extends Component
             ];
     }
 
+    public function myRules(){
+        return $this->rules();
+    }
 
-    // protected function prepareForValidation($attributes){
-    //     dd($attributes);
-    // }
-
-    public function updated($propertyName)
-{
-    $this->validateOnly($propertyName);
-}
+    public function updated($propertyName){
+        $this->validateOnly($propertyName);
+    }
 
 
     public function rgbToHex($rgb) {
