@@ -7,6 +7,7 @@ use App\Models\Scheduler;
 use App\Models\Employee;
 use App\Rules\CheckScheduleConflictRule;
 use App\Rules\ScheduleTimeConflictRule;
+use App\Rules\TimeHasPassedRule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -62,7 +63,7 @@ class CreateSchedule extends Component
                 'role_colour' => 'nullable|string',
                 'border_colour' => 'nullable|string',
                 'frequency' => 'nullable',
-                'date' => ['required'],
+                'date' => ['required', new TimeHasPassedRule($this->start_at, $this->end_at)],
                 'pay_rate' => 'nullable',
                 'break' => 'required|string',
                 'shift_note' => 'required|string',

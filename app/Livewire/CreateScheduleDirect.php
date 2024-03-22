@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Rules\CheckScheduleConflictRule;
 use App\Rules\ScheduleTimeConflictRule;
+use App\Rules\TimeHasPassedRule;
 use App\Models\Employee;
 
 class CreateScheduleDirect extends Component
@@ -82,7 +83,7 @@ class CreateScheduleDirect extends Component
             'role_colour' => 'nullable|string',
             'border_colour' => 'nullable|string',
             'frequency' => 'required',
-            'date' => ['required'],
+            'date' => ['required', new TimeHasPassedRule($this->start_at, $this->end_at)],
             'pay_rate' => 'nullable',
             'break' => 'required|string',
             'shift_note' => 'required|string',

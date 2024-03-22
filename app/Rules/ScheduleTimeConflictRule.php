@@ -18,12 +18,10 @@ class ScheduleTimeConflictRule implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        Log::info(["about to validate time conflict"]);
         $employeeId = $this->employeeId;
         $dates = is_array($this->dates) ? $this->dates : [$this->dates];
         $start = $this->start;
         $end = $value;
-        Log::info(["about to validate time conflict" => $dates]);
 
         foreach ($dates as $date) {
 

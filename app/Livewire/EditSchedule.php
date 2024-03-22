@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Rules\CheckScheduleConflictRule;
 use App\Rules\ScheduleTimeConflictRule;
+use App\Rules\TimeHasPassedRule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -95,7 +96,7 @@ class EditSchedule extends Component
         'start_at' => 'required',
         'end_at' => ['required', new ScheduleTimeConflictRule($this->employee->id, $this->date, $this->start_at, $this->originalDate)],
         'role' => 'required|string',
-        'date' => ['required'],
+        'date' => ['required', new TimeHasPassedRule($this->start_at, $this->end_at)],
         'role_colour' => 'nullable|string',
         'border_colour' => 'nullable|string',
         'pay_rate' => 'nullable',
