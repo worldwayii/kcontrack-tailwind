@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Scheduler;
 use App\Models\Employee;
 use App\Rules\CheckScheduleConflictBulkRule;
+use App\Rules\ScheduleTimeConflictBulkRule;
+use App\Rules\TimeHasPassedRule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,22 +16,23 @@ use Illuminate\Support\Str;
 class CreateScheduleBulk extends Component
 {
     public
-    $employee,
-    $employeeArr = [],
-    $employees,
-    $day,
-    $date = [],
-    $start_at,
-    $end_at,
-    $role,
-    $pay_rate,
-    $break,
-    $shift_note,
-    $role_colour,
-    $border_colour,
-    $frequency;
+        $employee,
+        $employeeArr = [],
+        $employees,
+        $day,
+        $date = [],
+        $start_at,
+        $end_at,
+        $role,
+        $pay_rate,
+        $break,
+        $shift_note,
+        $role_colour,
+        $border_colour,
+        $frequency;
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
+    // protected $debug = true;
 
     public function mount(){
         $this->employees = Employee::all();
@@ -39,6 +42,7 @@ class CreateScheduleBulk extends Component
     {
         $this->role_colour = $role_colour;
         $this->border_colour = $border_colour;
+        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
     public function updateDate($selected_date){
@@ -49,82 +53,85 @@ class CreateScheduleBulk extends Component
     {
 
         return [
-                'employeeArr' => 'required',
-                'start_at' => 'required',
-                'end_at' => 'required',
-                'role' => 'required|string',
-                'role_colour' => 'nullable|string',
-                'border_colour' => 'nullable|string',
-                'frequency' => 'required',
-                'date' => ['required', new CheckScheduleConflictBulkRule($this->employeeArr)],
-                'pay_rate' => 'nullable',
-                'break' => 'required|string',
-                'shift_note' => 'required|string',
+            'employeeArr' => 'required',
+            'start_at' => 'required',
+            'end_at' => ['required', new ScheduleTimeConflictBulkRule($this->employeeArr, $this->date, $this->start_at)],
+            'role' => 'required|string',
+            'role_colour' => 'nullable|string',
+            'border_colour' => 'nullable|string',
+            'frequency' => 'required',
+            'date' => ['required', new TimeHasPassedRule($this->start_at, $this->end_at)],
+            'pay_rate' => 'nullable',
+            'break' => 'required|string',
+            'shift_note' => 'required|string',
 
-            ];
+        ];
     }
 
+    public function myRules(){
+        return $this->rules();
+    }
 
-    public function updated($propertyName)
-{
-    $this->validateOnly($propertyName);
-}
+    public function updated($propertyName){
+        $this->validateOnly($propertyName);
+    }
 
 
     public function rgbToHex($rgb) {
         return '#'.Str::of($rgb)->replace(['rgb(', ')', ' '], '')->explode(',')
-            ->map(function ($value) {
-                return str_pad(dechex($value), 2, '0', STR_PAD_LEFT);
-            })->implode('');
+                ->map(function ($value) {
+                    return str_pad(dechex($value), 2, '0', STR_PAD_LEFT);
+                })->implode('');
     }
 
     public function create(){
         DB::beginTransaction();
         $data = $this->validate();
         try{
-        $employees = Employee::whereIn('uuid', $data['employeeArr'])->get();
+            $employees = Employee::whereIn('uuid', $data['employeeArr'])->get();
 
-        $schedules = [];
+            $schedules = [];
 
-        foreach ($data['date'] as $date) {
-            $day = $date;
-            $currentDate = Carbon::now();
-            $dayCarbon = Carbon::createFromFormat('d/m/Y', $day);
+            foreach ($data['date'] as $date) {
+                $day = $date;
+                $currentDate = Carbon::now();
+                $dayCarbon = Carbon::createFromFormat('d/m/Y', $day);
 
-            if ($dayCarbon->isSameDay($currentDate) || $dayCarbon->isFuture()) {
-            foreach ($employees as $employee) {
-                $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
-                $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
+                if ($dayCarbon->isSameDay($currentDate) || $dayCarbon->isFuture()) {
+                    foreach ($employees as $employee) {
+                        $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['start_at']);
+                        $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($data['end_at']);
 
-                $schedules[] = [
-                    'uuid' => Str::uuid(),
-                    'user_id' => $employee->user_id,
-                    'company_id' => $employee->company_id,
-                    'employee_id' => $employee->id,
-                    'start_at' => $start_at,
-                    'end_at' => $end_at,
-                    'role' => $data['role'],
-                    'pay_rate' => 'Monthly',
-                    'break' => $data['break'],
-                    'frequency' => $data['frequency'],
-                    'role_colour' => $this->role_colour ? $this->rgbToHex($data['role_colour']) :'#b37bb3',
-                    'border_colour' => $this->border_colour ? $this->rgbToHex($data['border_colour']) : '#b37bb3',
-                    'shift_note' => $data['shift_note'],
-                ];
+                        $schedules[] = [
+                            'uuid' => Str::uuid(),
+                            'user_id' => $employee->user_id,
+                            'company_id' => $employee->company_id,
+                            'employee_id' => $employee->id,
+                            'start_at' => $start_at,
+                            'end_at' => $end_at,
+                            'role' => $data['role'],
+                            'pay_rate' => 'Monthly',
+                            'break' => $data['break'],
+                            'frequency' => $data['frequency'],
+                            'role_colour' => $this->role_colour ? $this->rgbToHex($data['role_colour']) :'#b37bb3',
+                            'border_colour' => $this->border_colour ? $this->rgbToHex($data['border_colour']) : '#b37bb3',
+                            'shift_note' => $data['shift_note'],
+                        ];
+                    }
+                }else{
+                    continue;
+                }
             }
-        }else{
-            continue;
-        }
-        }
 
-        // Bulk insert schedules
-        Scheduler::insert($schedules);
-        DB::commit();
-        $this->dispatch('alert', type: 'success', title: 'New Schedules created Successfully', position: 'center', timer: '2500');
-    }catch(\Exception $e){
-        DB::rollback();
-        $this->dispatch('alert', type: 'error', title: 'Schedule Could not be Created Please Try Again', position: 'center', timer: '2500');
-    }
+            // Bulk insert schedules
+            Scheduler::insert($schedules);
+            DB::commit();
+            $this->dispatch('alert', type: 'success', title: 'New Schedules created Successfully', position: 'center', timer: '2500');
+        }catch(\Exception $e){
+            Log::critical("create-schedule-error: ". $e->getMessage());
+            DB::rollback();
+            $this->dispatch('alert', type: 'error', title: 'Schedule Could not be Created Please Try Again', position: 'center', timer: '2500');
+        }
     }
 
     public function render()

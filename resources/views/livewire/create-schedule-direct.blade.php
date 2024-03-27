@@ -32,7 +32,7 @@
              <div class="flex-1 h-[40px] flex items-center bg-[#FFFFFF]">
                <select
                  id="timed"
-                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('start_at') border-red-500 @enderror" wire:model='start_at'>
+                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('start_at') border-red-500 @enderror" wire:model.live='start_at' @change='resetDateError'>
                  @include('includes.time-options')
                </select>
 
@@ -41,7 +41,8 @@
              <div class="flex-1 h-[40px] flex items-center bg-[#FFFFFF]">
                <select
                  id="timed"
-                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('end_at') border-red-500 @enderror" wire:model='end_at'
+                 class="w-full h-[40px] px-[12px] flex items-center bg-[#FFFFFF] border-[0.7px] border-[#E6E6E6] text-[#A7A7A7] font-medium text-[11px] rounded-[8px] @error('end_at') border-red-500 @enderror" wire:model.live='end_at'
+                 @change='resetDateError'
                >
                @include('includes.time-options')
                </select>
@@ -100,7 +101,7 @@
            @error('role')
             <div class="text-sm text-red-600">{{ $message }}</div>
             @enderror
-           <div onmouseover="keepd()" onmouseout="leaved()" class="relative">
+           <div onmouseover="keepd()" onmouseout="leaved()" class="relative" wire:ignore>
             <select
             class="absolute hidden"
             wire:model='role_colour'

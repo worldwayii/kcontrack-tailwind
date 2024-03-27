@@ -7,6 +7,8 @@ use App\Models\Scheduler;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Rules\CheckScheduleConflictRule;
+use App\Rules\ScheduleTimeConflictRule;
+use App\Rules\TimeHasPassedRule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -55,8 +57,9 @@ class EditSchedule extends Component
         $this->break = $scheduler->break;
         $this->shift_note = $scheduler->shift_note;
         $this->role_colour = $scheduler->role_colour;
-        $this->start_at = $scheduler->start_at->format('g:i');
-        $this->end_at = $scheduler->end_at->format('g:i');
+        $this->border_colour = $scheduler->border_colour;
+        $this->start_at = $scheduler->start_at->format('H:i');
+        $this->end_at = $scheduler->end_at->format('H:i');
         $this->frequency = $scheduler->frequency;
         //$this->dispatch('$refresh');
         Log::info(['open-edit-modal-id' => $id]);
@@ -91,9 +94,9 @@ class EditSchedule extends Component
     {
         return [
         'start_at' => 'required',
-        'end_at' => 'required',
+        'end_at' => ['required', new ScheduleTimeConflictRule($this->employee->id, $this->date, $this->start_at, $this->originalDate)],
         'role' => 'required|string',
-        'date' => ['required', new CheckScheduleConflictRule($this->employee->id, $this->originalDate)],
+        'date' => ['required', new TimeHasPassedRule($this->start_at, $this->end_at)],
         'role_colour' => 'nullable|string',
         'border_colour' => 'nullable|string',
         'pay_rate' => 'nullable',

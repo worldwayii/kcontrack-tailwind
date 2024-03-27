@@ -117,9 +117,7 @@ class Calendar extends Component
         $this->gridEndsAt = $this->endsAt->clone()->endOfWeek($this->weekEndsAt);
     }
 
-    /**
-     * @throws Exception
-     */
+
     public function monthGrid()
     {
         $firstDayOfGrid = $this->gridStartsAt;
@@ -145,12 +143,12 @@ class Calendar extends Component
     {
         $filter = $this->filter;
 
-      return  Employee::search($this->search)
-                ->when($filter !== '', function ($query) use ($filter) {
-                    return $query->whereHas('schedulers', function ($subQuery) use ($filter) {
-                        $subQuery->where('frequency', $filter);
+        return  Employee::search($this->search)
+            ->when($filter !== '', function ($query) use ($filter) {
+                return $query->whereHas('schedulers', function ($subQuery) use ($filter) {
+                    $subQuery->where('frequency', $filter);
                 });
-        })->with('schedulers')->get();
+            })->with('schedulers')->get();
     }
 
 
@@ -166,27 +164,27 @@ class Calendar extends Component
     {
         if($entity == 'create'){
             $this->dispatch('openCreateDirectModal', $employee, $date);
-
+            Log::info("opening modal");
         }
     }
 
     public function drag($scheduler_id)
     {
         $this->draggedSchedulerId = $scheduler_id;
-
     }
 
     public function drop($employee_id, $day)
     {
         // Handle drop event
         $date = Carbon::parse($day)->format('d/m/Y');
-        $scheduler = Scheduler::findOrfail($this->draggedSchedulerId);
+        $scheduler = Scheduler::findOrFail($this->draggedSchedulerId);
         $alreadyHasSchedule = Scheduler::whereDate('start_at', $day)->where('employee_id', $employee_id)->count();
+
         if(!$alreadyHasSchedule){
-
-                $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->start_at->format('g:i'));
-                $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->end_at->format('g:i'));
-
+            $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->start_at->format('H:i'));
+            $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($scheduler->end_at->format('H:i'));
+            $now = now();
+            if($now->lt($start_at) || $now->lt($end_at)){
                 $load = [
                     'start_at' => $start_at,
                     'end_at' => $end_at,
@@ -196,8 +194,13 @@ class Calendar extends Component
 
                 Scheduler::where('id', $scheduler->id)->update($load);
 
+                $this->dispatch('$refresh');
+            }else{
+                $this->dispatch('alert', type: 'error', title: 'You cannot Drag to the past', position: 'center', timer: '1500');
+            }
+        }else{
+            $this->dispatch('$refresh');
         }
-        $this->dispatch('$refresh');
     }
 
 
@@ -214,25 +217,30 @@ class Calendar extends Component
             $date = Carbon::parse($day)->format('d/m/Y');
 
             $eventToCopy = Scheduler::findOrFail($this->copiedEventId);
-            $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->start_at->format('g:i'));
-            $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->end_at->format('g:i'));
+            $start_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->start_at->format('H:i'));
+            $end_at = Carbon::createFromFormat('d/m/Y', $date)->setTimeFromTimeString($eventToCopy->end_at->format('H:i'));
             $alreadyExists = Scheduler::where('employee_id', $userId)->whereDate('start_at', $start_at)->count();
             if($alreadyExists){
                 $this->copiedEventId = null;
                 $this->dispatch('$refresh');
                 return;
             }
-        if ($eventToCopy) {
-            $event = $eventToCopy->replicate();
-            $event->start_at = $start_at;
-            $event->end_at = $end_at;
-            $event->employee_id = $userId;
-            $event->published = false;
-            $event->save();
-        }
+            $now = now();
+            if($now->lt($start_at) || $now->lt($end_at)){
+                if ($eventToCopy) {
+                    $event = $eventToCopy->replicate();
+                    $event->start_at = $start_at;
+                    $event->end_at = $end_at;
+                    $event->employee_id = $userId;
+                    $event->published = false;
+                    $event->save();
+                }
+            }else{
+                $this->dispatch('alert', type: 'error', title: 'You cannot Copy to the past', position: 'center', timer: '1500');
+            }
 
-        // Reset copied event ID
-        $this->copiedEventId = null;
+            // Reset copied event ID
+            $this->copiedEventId = null;
         }
 
         $this->dispatch('$refresh');
@@ -240,7 +248,7 @@ class Calendar extends Component
 
 
     public function openDirectModal(){
-
+        Log::info("about to show modal");
     }
 
 
@@ -267,4 +275,3 @@ class Calendar extends Component
 
 
 }
-

@@ -180,7 +180,7 @@
             >
 
                     <p>
-                        Date Scheduled: {{now()->format('d/m/y')}} | Time: {{now()->format('h:i:s A')}}
+                        Scheduled By: {{$user->company->first_name}} | Date Scheduled: {{now()->format('d/m/y')}} | Time: {{now()->format('h:i:s A')}}
                     </p>
 
             </div>
@@ -190,7 +190,7 @@
             <div
               class="flex gap-[24px] items-center flex-1 min-w-fit py-[16px] bg-[#EDF0F6] border-[0.5px] border-[#EDF0F6] font-semibold text-[14px] text-[#4F4F4F]"
             >
-              
+
               <p class="flex-1 min-w-[82px] text-center">Job Role</p>
               <p class="flex-1 min-w-[100px] text-center">Time Frame</p>
               <p class="flex-1 min-w-[86px] text-center">Breaks</p>
@@ -199,6 +199,9 @@
             </div>
 
             <div class="flex flex-col gap-[4px]">
+                @php
+                    $itemCount = 0;
+                @endphp
                 @forelse ($employees as $employee)
                 @php
                     $schedule = $employee->schedulers->first();
@@ -224,6 +227,14 @@
                   {{$schedule->shift_note}}
                 </p>
               </div>
+
+              @php
+                $itemCount++;
+              @endphp
+
+              @if ($itemCount % 8 == 0)
+                  @pageBreak
+              @endif
                 @empty
 
                 @endforelse

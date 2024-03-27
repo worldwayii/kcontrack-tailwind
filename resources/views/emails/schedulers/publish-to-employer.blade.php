@@ -175,7 +175,7 @@
       </a>
 
       <div class="flex flex-col gap-3">
-        <p>Hi {{$user->name}}</p>
+        <p>Hi {{$user->company->first_name}}</p>
 
         <p>
           {{$detail}}
