@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use App\Rules\CheckScheduleConflictRule;
 use App\Rules\ScheduleTimeConflictRule;
 use App\Rules\TimeHasPassedRule;
 use App\Models\Employee;

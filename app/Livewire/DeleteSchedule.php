@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Scheduler;
-use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Log;
 
 class DeleteSchedule extends Component

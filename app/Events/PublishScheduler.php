@@ -21,7 +21,6 @@ class PublishScheduler
      */
     public function __construct(public $employees, public array $messages,  public User $user)
     {
-        Log::info("about to fire publish event");
     }
 
     /**

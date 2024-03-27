@@ -5,7 +5,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Scheduler;
 use App\Models\Employee;
-use App\Rules\CheckScheduleConflictRule;
 use App\Rules\ScheduleTimeConflictRule;
 use App\Rules\TimeHasPassedRule;
 use Carbon\Carbon;
@@ -44,7 +43,6 @@ class CreateSchedule extends Component
     {
         $this->role_colour = $role_colour;
         $this->border_colour = $border_colour;
-        Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
 
     public function updateDate($selected_date){

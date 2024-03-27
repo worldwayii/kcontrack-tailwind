@@ -5,7 +5,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Scheduler;
 use App\Models\Employee;
-use App\Rules\CheckScheduleConflictBulkRule;
 use App\Rules\ScheduleTimeConflictBulkRule;
 use App\Rules\TimeHasPassedRule;
 use Carbon\Carbon;
@@ -32,7 +31,6 @@ class CreateScheduleBulk extends Component
     $frequency;
 
     protected $listeners = ['roleColorChanged', 'livewireEvent' => '$refresh', 'updateDate'];
-    // protected $debug = true;
 
     public function mount(){
         $this->employees = Employee::all();

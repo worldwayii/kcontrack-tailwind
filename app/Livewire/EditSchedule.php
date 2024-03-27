@@ -48,8 +48,9 @@ class EditSchedule extends Component
         $this->border_colour = $border_colour;
         Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
-    
+
     public function openEditModal($id, $date){
+        $this->reset();
         $this->id = $id;
         $this->scheduler = Scheduler::findOrFail($id);
         $scheduler = $this->scheduler;
@@ -79,7 +80,6 @@ class EditSchedule extends Component
         for ($i = 0; $i < 7; $i++){
             $weekDates[$daysOfWeek[$i]] = $startOfWeek->copy()->addDays($i)->format('d/m/Y');
         }
-        //dd($weekDates);
         return $weekDates;
     }
 
@@ -110,7 +110,6 @@ class EditSchedule extends Component
 }
 
 public function updatedDate($value) {
-    //dd($value);
     $this->resetValidation();
     $this->date = $value;
 }

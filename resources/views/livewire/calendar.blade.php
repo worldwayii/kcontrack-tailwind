@@ -395,7 +395,7 @@
             @empty
 
 
-            <div class="flex-1 flex items-center justify-between hidden schedule-grid hidden"
+            <div class="flex-1 flex items-center justify-between schedule-grid hidden"
                 id="user{{ $userIndex }}ScheduleGrid{{ $dayIndex }}" wire:ignore.self
             >
 
@@ -718,7 +718,7 @@
             role="tooltip"
             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
           >
-          @if($day->isFuture() || $day->isToday()) Add Schedule @else Invalid Date @endif
+          @if($day->isFuture() || $day->isToday()) Add Schedule @else Date Passed @endif
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
 
@@ -745,7 +745,7 @@
             role="tooltip"
             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
           >
-            @if($day->isFuture() || $day->isToday()) Paste Schedule @else Invalid Date @endif
+            @if($day->isFuture() || $day->isToday()) Paste Schedule @else Date Passed @endif
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
         </div>
@@ -942,7 +942,7 @@
                 role="tooltip"
                 class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
               >
-              @if($day->isFuture() || $day->isToday()) Add Schedule @else Invalid Date @endif
+              @if($day->isFuture() || $day->isToday()) Add Schedule @else Date Passed @endif
                 <div class="tooltip-arrow" data-popper-arrow></div>
               </div>
 
@@ -969,7 +969,7 @@
                 role="tooltip"
                 class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
               >
-                @if($day->isFuture() || $day->isToday()) Paste Schedule @else Invalid Date @endif
+                @if($day->isFuture() || $day->isToday()) Paste Schedule @else Date Passed @endif
                 <div class="tooltip-arrow" data-popper-arrow></div>
               </div>
             </div>
