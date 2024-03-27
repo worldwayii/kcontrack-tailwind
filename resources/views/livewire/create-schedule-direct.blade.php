@@ -183,7 +183,7 @@
          </div>
        </div>
 
-       <div class="w-full flex flex-col gap-[2px]" id="assignment-direct">
+       <div class="w-full flex flex-col gap-[2px]" id="assignment-direct" >
          <label
            id="shift-direct"
            class="text-[12px] font-semibold text-[#4F4F4F]"

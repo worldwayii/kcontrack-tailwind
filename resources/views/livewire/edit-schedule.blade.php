@@ -170,7 +170,7 @@
          </div>
        </div>
 
-       <div class="w-full flex flex-col gap-[2px]" id="assignment">
+       <div class="w-full flex flex-col gap-[2px]" id="assignment-edit" wire:key="randomKey">
         <label
           id="shiftd"
           class="text-[12px] font-semibold text-[#4F4F4F]"
@@ -182,7 +182,7 @@
           class="w-full text-[12px] font-semibold text-[#4F4F4F] bg-white-0 border-[0.5px] border-[#EDEFF4]"
         >
           <li
-            data-checkbox-subselection-target="daily-selection"
+            data-checkbox-subselection-target="daily-selection-edit"
             class="w-full flex flex-col border-[0.5px] border-[#EDEFF4]"
           >
             <div class="flex items-center ps-3">
@@ -191,7 +191,7 @@
                 type="radio"
                 value="daily"
                 name="schedule_list_options"
-                wire:model='frequency'
+                wire:model.live='frequency'
                 class="w-[16px] h-[16px] text-blue-600 bg-white-0 border-[5px] border-[#D9D9D9] focus:ring-2 @error('frequency') border-red-500 @enderror"
               />
               <label

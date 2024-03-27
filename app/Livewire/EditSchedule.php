@@ -30,11 +30,17 @@ class EditSchedule extends Component
     $shift_note,
     $role_colour,
     $border_colour,
-    $frequency;
+    $frequency,
+    $randomKey;
 
-    protected $listeners = ['openEditModal', 'roleColorChanged',];
+    protected $listeners = ['openEditModal', 'roleColorChanged', 'reload' => '$refresh'];
 
     protected $debug = true;
+
+    public function mount()
+    {
+        $this->randomKey = uniqid();
+    }
 
     public function roleColorChanged($role_colour, $border_colour)
     {
@@ -42,12 +48,12 @@ class EditSchedule extends Component
         $this->border_colour = $border_colour;
         Log::info(['role colour' => $role_colour, 'border colour' => $border_colour]);
     }
+    
     public function openEditModal($id, $date){
         $this->id = $id;
         $this->scheduler = Scheduler::findOrFail($id);
         $scheduler = $this->scheduler;
         $this->employee = $scheduler->employee;
-        //dd($this->employee);
         $date = Carbon::parse($date);
         $this->day = $date;
         $this->weekDates = $this->calculateWeekDates($date->clone());
@@ -61,8 +67,6 @@ class EditSchedule extends Component
         $this->start_at = $scheduler->start_at->format('H:i');
         $this->end_at = $scheduler->end_at->format('H:i');
         $this->frequency = $scheduler->frequency;
-        //$this->dispatch('$refresh');
-        Log::info(['open-edit-modal-id' => $id]);
     }
 
     public function calculateWeekDates($originalDate)
